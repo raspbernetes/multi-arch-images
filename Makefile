@@ -10,10 +10,10 @@ else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 5),armv8)
 else ifeq ($(LOCAL_ARCH),aarch64)
     TARGET_ARCH ?= arm64
 	BUILDX ?= arm64
-else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 4),armv7)
+else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 5),armv7)
     TARGET_ARCH ?= arm
 	BUILDX ?= arm/v7
-else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 4),armv6)
+else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 5),armv6)
 	TARGET_ARCH ?= arm
 	BUILDX ?= arm/v6
 else
@@ -32,14 +32,21 @@ else
     $(error This system's OS $(LOCAL_OS) isn't supported)
 endif
 
+FLUX_VERSION ?= 1.18.0
+KUSTOMIZE_VERSION ?= v3.5.4
+SOPS_VERSION ?= v3.5.0
+KUBECTL_VERSION ?= v1.15.9
+
 .PHONY: flux
 flux: 
-	$(CONTAINER_CLI) buildx build --platform $(TARGET_OS)/$(BUILDX) --build-arg=GOOS=$(TARGET_OS) --build-arg=GOARCH=$(TARGET_ARCH) --file build/flux/Dockerfile .
-
-
-
-
-	# docker buildx build \                                                                                                                          (kubernetes-admin@kubernetes/flux)
-    # --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
-    # --output "type=image,push=false" \
-    # -f ./docker/Dockerfile .
+	$(CONTAINER_CLI) buildx build \
+		--platform $(TARGET_OS)/$(BUILDX) \
+		--build-arg=GOOS=$(TARGET_OS) \
+		--build-arg=GOARCH=$(TARGET_ARCH) \
+		--build-arg=FLUX_VERSION=$(FLUX_VERSION) \
+		--build-arg=KUSTOMIZE_VERSION=$(KUSTOMIZE_VERSION) \
+		--build-arg=SOPS_VERSION=$(SOPS_VERSION) \
+		--build-arg=KUBECTL_VERSION=$(KUBECTL_VERSION) \
+		--file build/flux/Dockerfile \
+		--tag xunholy/flux:latest --push \
+		./build/flux/
