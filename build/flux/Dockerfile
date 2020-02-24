@@ -35,13 +35,13 @@ RUN ARCH="$(apk --print-arch)"; \
     && curl -L -o /usr/local/bin/fluxctl https://github.com/fluxcd/flux/releases/download/${VERSION}/fluxctl_linux_${GOARCH} \
     && chmod +x /usr/local/bin/fluxctl
 
-COPY --from=xunholy/scratch:fluxd /usr/local/bin/fluxd /usr/local/bin/fluxd
+COPY --from=xunholy/fluxd:latest /usr/local/bin/fluxd /usr/local/bin/fluxd
 RUN chmod +x /usr/local/bin/fluxd
 
-COPY --from=xunholy/scratch:kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=xunholy/kustomize:latest /usr/local/bin/kustomize /usr/local/bin/kustomize
 RUN chmod +x /usr/local/bin/kustomize
 
-COPY --from=xunholy/scratch:sops /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=xunholy/sops:latest /usr/local/bin/sops /usr/local/bin/sops
 RUN chmod +x /usr/local/bin/sops
 
 COPY --from=quay.io/squaremo/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
