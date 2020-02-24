@@ -1,9 +1,9 @@
-name: buildx
+name: platforms
 
 on: [push]
 
 jobs:
-  buildx:
+  available:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

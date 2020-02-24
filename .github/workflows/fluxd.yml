@@ -28,7 +28,7 @@ jobs:
       - name: Build Container Image
         run: |
           docker buildx build \
-            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:${GITHUB_SHA} \
             --tag k8sathome/fluxd:${GITHUB_SHA} \
             -f ./build/fluxd/Dockerfile \

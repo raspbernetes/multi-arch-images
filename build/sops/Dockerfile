@@ -11,8 +11,8 @@ RUN apk add --no-cache git
 
 # build sops
 WORKDIR /go/src/github.com/mozilla/sops
-RUN apkArch="$(apk --print-arch)"; \
-    case "$apkArch" in \
+RUN ARCH="$(apk --print-arch)"; \
+    case "$ARCH" in \
     armv7) export GOARCH='arm' GOARM=7 ;; \
     aarch64) export GOARCH='arm64' ;; \
     x86_64) export GOARCH='amd64' ;; \

@@ -20,8 +20,8 @@ RUN chmod +x /home/flux/known_hosts.sh && \
 COPY ./ssh_config /etc/ssh/ssh_config
 
 # hadolint ignore=SC2086
-RUN apkArch="$(apk --print-arch)"; \
-    case "$apkArch" in \
+RUN ARCH="$(apk --print-arch)"; \
+    case "$ARCH" in \
     armv7) export GOARCH='arm' GOARM=7 ;; \
     aarch64) export GOARCH='arm64' ;; \
     x86_64) export GOARCH='amd64' ;; \
