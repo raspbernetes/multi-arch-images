@@ -4,7 +4,7 @@ ARG GOARCH
 ## Build Fluxd
 FROM golang:1.13-alpine as fluxd
 
-ARG FLUX_VERSION
+ARG FLUX_VERSION=1.18.0
 
 WORKDIR /go/src/github.com/fluxcd/flux
 
@@ -15,7 +15,7 @@ RUN apk add --no-cache git && \
 ## Build Kustomize
 FROM golang:1.13-alpine as kustomize
 
-ARG KUSTOMIZE_VERSION
+ARG KUSTOMIZE_VERSION=v3.5.4
 
 WORKDIR /go/src/github.com/kubernetes-sigs/kustomize
 
@@ -27,7 +27,7 @@ RUN apk add --no-cache git && \
 ## Build Sops
 FROM golang:1.13-alpine as sops
 
-ARG SOPS_VERSION
+ARG SOPS_VERSION=v3.5.0
 
 WORKDIR /go/src/github.com/mozilla/sops
 
@@ -38,7 +38,7 @@ RUN apk add --no-cache git && \
 # Final Image
 FROM alpine:3.10
 
-ARG KUBECTL_VERSION
+ARG KUBECTL_VERSION=v1.15.9
 
 WORKDIR /home/flux
 

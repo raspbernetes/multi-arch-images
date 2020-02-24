@@ -1,4 +1,4 @@
-name: flux
+name: flux-test
 
 on:
   push:
@@ -26,8 +26,4 @@ jobs:
 
       - name: Build Container Image
         run: |
-          docker buildx build \
-            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
-            --tag flux:${GITHUB_SHA} \
-            -f ./build/flux/Dockerfile \
-            --push ./build/flux/
+          LOCAL_ARCH=armv7l LOCAL_OS=Linux make flux

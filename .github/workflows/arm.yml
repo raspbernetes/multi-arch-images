@@ -1,19 +1,19 @@
-on: [push]
+# on: [push]
 
-jobs:
-  armv7_job:
-    runs-on: ubuntu-18.04
-    name: Build on ARMv7
-    steps:
-      - uses: actions/checkout@v1.0.0
-      - uses: uraimo/run-on-arch-action@v1.0.5
-        id: runcmd
-        with:
-          architecture: armv7
-          distribution: ubuntu18.04
-          run: |
-            uname -m
-            echo ::set-output name=uname::$(uname -m)
-      - name: Get the output
-        run: |
-          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+# jobs:
+#   armv7_job:
+#     runs-on: ubuntu-18.04
+#     name: Build on ARMv7
+#     steps:
+#       - uses: actions/checkout@v1.0.0
+#       - uses: uraimo/run-on-arch-action@v1.0.5
+#         id: runcmd
+#         with:
+#           architecture: armv7
+#           distribution: ubuntu18.04
+#           run: |
+#             uname -m
+#             echo ::set-output name=uname::$(uname -m)
+#       - name: Get the output
+#         run: |
+#           echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
