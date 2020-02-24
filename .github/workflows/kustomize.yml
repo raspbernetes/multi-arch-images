@@ -1,10 +1,10 @@
-name: flux
+name: kustomize
 
 on:
   push:
     paths:
-      - 'build/flux/**'
-      - '!build/flux/*.md'
+      - 'build/kustomize/**'
+      - '!build/kustomize/*.md'
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${GITHUB_SHA} \
-            --tag k8sathome/flux:${GITHUB_SHA} \
-            -f ./build/flux/Dockerfile \
-            --push ./build/flux/
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/kustomize:${GITHUB_SHA} \
+            --tag k8sathome/kustomize:${GITHUB_SHA} \
+            -f ./build/kustomize/Dockerfile \
+            --push ./build/kustomize/
