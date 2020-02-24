@@ -28,8 +28,10 @@ jobs:
       - name: Build Container Image
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --platform z \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:${GITHUB_SHA} \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:latest \
             --tag k8sathome/sops:${GITHUB_SHA} \
+            --tag k8sathome/sops:latest \
             -f ./build/sops/Dockerfile \
             --push ./build/sops/

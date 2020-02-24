@@ -30,6 +30,8 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:${GITHUB_SHA} \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:latest \
             --tag k8sathome/fluxd:${GITHUB_SHA} \
+            --tag k8sathome/fluxd:latest \
             -f ./build/fluxd/Dockerfile \
             --push ./build/fluxd/
