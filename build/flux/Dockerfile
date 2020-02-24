@@ -1,5 +1,5 @@
-ARG GOOS
-ARG GOARCH
+ARG GOOS=linux
+ARG GOARCH=arm
 
 ## Build Fluxd
 FROM golang:1.13-alpine as fluxd

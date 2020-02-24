@@ -3,10 +3,11 @@ name: flux
 on:
   push:
     paths:
-      - build/flux/**
+      - 'build/flux/**'
+      - '!build/flix/*.md'
 
 jobs:
-  flux:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,6 +29,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
-            --tag flux:${GITHUB_SHA} \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${GITHUB_SHA} \
+            --tag k8sathome/flux:${GITHUB_SHA} \
             -f ./build/flux/Dockerfile \
             --push ./build/flux/
