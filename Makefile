@@ -51,8 +51,6 @@ flux:
 		--build-arg=GOOS=$(TARGET_OS) \
 		--build-arg=GOARCH=$(TARGET_ARCH) \
 		--build-arg=FLUX_VERSION=$(FLUX_VERSION) \
-		--build-arg=KUSTOMIZE_VERSION=$(KUSTOMIZE_VERSION) \
-		--build-arg=SOPS_VERSION=$(SOPS_VERSION) \
 		--build-arg=KUBECTL_VERSION=$(KUBECTL_VERSION) \
 		--file build/flux/Dockerfile \
 		--tag xunholy/flux:$(TAG) \

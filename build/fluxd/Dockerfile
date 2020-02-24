@@ -1,4 +1,4 @@
-ARG VERSION
+ARG VERSION=1.18.0
 
 FROM golang:1.13-alpine as build
 
@@ -21,7 +21,7 @@ RUN apkArch="$(apk --print-arch)"; \
     && echo "apk arch: $(apk --print-arch)" \
     && echo "parsed arch: ${GOARCH}" \
     && echo "----------------------------------" \
-    && git clone --depth 1 -b ${VERSION:-1.17.0} https://github.com/fluxcd/flux.git . \
+    && git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/flux.git . \
     && go build -o fluxd ./cmd/fluxd
 
 FROM scratch

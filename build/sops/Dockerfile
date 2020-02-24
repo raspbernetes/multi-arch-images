@@ -1,4 +1,4 @@
-ARG VERSION
+ARG VERSION=v3.5.0
 
 FROM golang:1.13-alpine as build
 
@@ -13,15 +13,15 @@ RUN apk add --no-cache git
 WORKDIR /go/src/github.com/mozilla/sops
 RUN apkArch="$(apk --print-arch)"; \
     case "$apkArch" in \
-        armv7) export GOARCH='arm' GOARM=7 ;; \
-        aarch64) export GOARCH='arm64' ;; \
-        x86_64) export GOARCH='amd64' ;; \
+    armv7) export GOARCH='arm' GOARM=7 ;; \
+    aarch64) export GOARCH='arm64' ;; \
+    x86_64) export GOARCH='amd64' ;; \
     esac; \
     echo "----------------------------------" \
     && echo "apk arch: $(apk --print-arch)" \
     && echo "parsed arch: ${GOARCH}" \
     && echo "----------------------------------" \
-    && git clone --depth 1 -b ${VERSION:-v3.5.0} https://github.com/mozilla/sops.git . \
+    && git clone --depth 1 -b ${VERSION} https://github.com/mozilla/sops.git . \
     && go build -o sops ./cmd/sops
 
 FROM scratch

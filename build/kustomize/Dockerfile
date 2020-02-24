@@ -1,4 +1,4 @@
-ARG VERSION
+ARG VERSION=v3.5.4
 
 FROM golang:1.13-alpine as build
 
