@@ -1,6 +1,6 @@
-ARG VERSION=1.18.0
-
 FROM golang:1.13-alpine as build
+
+ARG VERSION=1.18.0
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \

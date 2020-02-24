@@ -1,7 +1,7 @@
+FROM alpine:3.10
+
 ARG KUBECTL_VERSION=v1.15.9
 ARG VERSION=1.18.0
-
-FROM alpine:3.10
 
 WORKDIR /home/flux
 
