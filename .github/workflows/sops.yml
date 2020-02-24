@@ -1,10 +1,11 @@
 name: sops
 
-on:
-  push:
-    paths:
-      - 'build/sops/**'
-      - '!build/sops/*.md'
+on: [push]
+# on:
+#   push:
+#     paths:
+#       - 'build/sops/**'
+#       - '!build/sops/*.md'
 
 jobs:
   build:
@@ -28,7 +29,7 @@ jobs:
       - name: Build Container Image
         run: |
           docker buildx build \
-            --platform z \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:${GITHUB_SHA} \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:latest \
             --tag k8sathome/sops:${GITHUB_SHA} \

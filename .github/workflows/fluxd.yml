@@ -1,10 +1,11 @@
 name: fluxd
 
-on:
-  push:
-    paths:
-      - 'build/fluxd/**'
-      - '!build/fluxd/*.md'
+on: [push]
+# on:
+# push:
+#   paths:
+#     - 'build/fluxd/**'
+#     - '!build/fluxd/*.md'
 
 jobs:
   build:
