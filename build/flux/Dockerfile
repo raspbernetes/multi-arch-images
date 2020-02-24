@@ -35,7 +35,7 @@ RUN apk add --no-cache git && \
     git clone --depth 1 -b ${SOPS_VERSION} https://github.com/mozilla/sops.git . && \
     CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} GO111MODULE=on go build -o sops ./cmd/sops
 
-## Build Final Image
+# Final Image
 FROM alpine:3.10
 
 ARG KUBECTL_VERSION
