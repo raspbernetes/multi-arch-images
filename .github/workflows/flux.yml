@@ -1,9 +1,11 @@
 name: flux
 
-on:
-  push:
-    paths:
-      - build/flux
+on: [push]
+
+# on:
+#   push:
+#     paths:
+#       - build/flux
 
 jobs:
   flux:
