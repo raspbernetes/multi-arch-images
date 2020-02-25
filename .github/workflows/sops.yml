@@ -1,11 +1,10 @@
 name: sops
 
-on: [push]
-# on:
-#   push:
-#     paths:
-#       - 'build/sops/**'
-#       - '!build/sops/*.md'
+on:
+  push:
+    paths:
+      - 'build/sops/**'
+      - '!build/sops/*.md'
 
 jobs:
   build:

@@ -27,4 +27,3 @@ RUN ARCH="$(apk --print-arch)"; \
 FROM scratch
 
 COPY --from=build /go/src/github.com/mozilla/sops/sops /usr/local/bin/sops
-

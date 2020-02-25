@@ -55,4 +55,3 @@ flux:
 		--file build/flux/Dockerfile \
 		--tag xunholy/flux:$(TAG) \
 		./build/flux/ --push
-

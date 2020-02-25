@@ -1,12 +1,10 @@
 name: flux
 
-on: [push]
-
-# on:
-#   push:
-#     paths:
-#       - 'build/flux/**'
-#       - '!build/flux/*.md'
+on:
+  push:
+    paths:
+      - 'build/flux/**'
+      - '!build/flux/*.md'
 
 jobs:
   build:

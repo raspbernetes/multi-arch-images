@@ -48,4 +48,3 @@ COPY --from=quay.io/squaremo/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
 ENV PATH=/bin:/usr/bin:/usr/local/bin:/usr/lib/kubeyaml
 
 ENTRYPOINT ["/sbin/tini", "--", "fluxd"]
-

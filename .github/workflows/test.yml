@@ -3,7 +3,7 @@ name: platforms
 on: [push]
 
 jobs:
-  available:
+  list:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

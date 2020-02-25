@@ -1,11 +1,10 @@
 name: kustomize
 
-on: [push]
-# on:
-# push:
-#   paths:
-#     - 'build/kustomize/**'
-#     - '!build/kustomize/*.md'
+on:
+  push:
+    paths:
+      - 'build/kustomize/**'
+      - '!build/kustomize/*.md'
 
 jobs:
   build:

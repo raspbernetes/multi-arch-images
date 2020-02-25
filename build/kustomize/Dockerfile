@@ -29,4 +29,3 @@ RUN ARCH="$(apk --print-arch)"; \
 FROM scratch
 
 COPY --from=build /go/src/github.com/kubernetes-sigs/kustomize/kustomize/kustomize /usr/local/bin/kustomize
-
