@@ -5,6 +5,8 @@ ENV GO111MODULE=on \
     CGO_ENABLED=0 \
     GOOS=linux
 
+RUN apk add --no-cache git
+
 # Copy in the go src
 WORKDIR /go/src/github.com/open-policy-agent/gatekeeper
 RUN ARCH="$(apk --print-arch)"; \
