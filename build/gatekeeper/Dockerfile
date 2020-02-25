@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM golang:1.13.3 as builder
+FROM golang:1.13-alpine as builder
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
