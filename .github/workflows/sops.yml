@@ -1,0 +1,37 @@
+name: sops
+
+on:
+  push:
+    paths:
+      - 'build/sops/**'
+      - '!build/sops/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:${GITHUB_SHA} \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:latest \
+            --tag k8sathome/sops:${GITHUB_SHA} \
+            --tag k8sathome/sops:latest \
+            -f ./build/sops/Dockerfile \
+            --push ./build/sops/

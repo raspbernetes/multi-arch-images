@@ -1,3 +1,5 @@
+SHELL := /bin/bash -o pipefail
+
 CONTAINER_CLI ?= docker
 
 LOCAL_ARCH ?= $(shell uname -m)
@@ -32,21 +34,24 @@ else
     $(error This system's OS $(LOCAL_OS) isn't supported)
 endif
 
+TAG ?= $(shell git rev-parse --verify HEAD)
+ifeq ($(TAG),)
+  $(error "TAG cannot be empty")
+endif
+
 FLUX_VERSION ?= 1.18.0
 KUSTOMIZE_VERSION ?= v3.5.4
 SOPS_VERSION ?= v3.5.0
 KUBECTL_VERSION ?= v1.15.9
 
 .PHONY: flux
-flux: 
+flux:
 	$(CONTAINER_CLI) buildx build \
 		--platform $(TARGET_OS)/$(BUILDX) \
 		--build-arg=GOOS=$(TARGET_OS) \
 		--build-arg=GOARCH=$(TARGET_ARCH) \
 		--build-arg=FLUX_VERSION=$(FLUX_VERSION) \
-		--build-arg=KUSTOMIZE_VERSION=$(KUSTOMIZE_VERSION) \
-		--build-arg=SOPS_VERSION=$(SOPS_VERSION) \
 		--build-arg=KUBECTL_VERSION=$(KUBECTL_VERSION) \
 		--file build/flux/Dockerfile \
-		--tag xunholy/flux:latest --push \
-		./build/flux/
+		--tag xunholy/flux:$(TAG) \
+		./build/flux/ --push

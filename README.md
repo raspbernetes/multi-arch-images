@@ -13,4 +13,3 @@ A list of unsupported Kubernetes tools that have active issues open. This is to 
 - Gatekeeper - https://github.com/open-policy-agent/gatekeeper/issues/496
 - Istio - https://github.com/istio/istio/issues/21094
 - Sealed Secrets - https://github.com/bitnami-labs/sealed-secrets/issues/360
-
