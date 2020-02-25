@@ -29,7 +29,17 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${GITHUB_SHA} \
-            --tag k8sathome/flux:${GITHUB_SHA} \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:experimental \
+            -f ./build/flux/Dockerfile \
+            ./build/flux/
+  publish:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Build Container Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:experimental \
             -f ./build/flux/Dockerfile \
             --push ./build/flux/
