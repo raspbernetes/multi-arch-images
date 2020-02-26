@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     env:
-      VERSION: $(cat build/flux/version.txt)
+      VERSION: $(cat build/flux/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,5 +32,6 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${{ env.VERSION }} \
+            --tag k8sathome/fluxd:${{ env.VERSION }} \
             -f ./build/flux/Dockerfile \
             ./build/flux/ --push

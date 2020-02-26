@@ -14,10 +14,8 @@ jobs:
 
       - name: Fetch release version
         run: |
-          curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
-          jq -r ".tag_name" > build/flux/.version && \
-          VERSION=$(cat build/flux/.version) && \
-          echo $VERSION > build/fluxd/.version
+          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
+          jq -r ".tag_name" > build/flux/.version
 
       - name: Check for modified files
         id: git-check

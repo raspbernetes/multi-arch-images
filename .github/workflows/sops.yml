@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/sops/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -29,9 +31,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:${GITHUB_SHA} \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:latest \
-            --tag k8sathome/sops:${GITHUB_SHA} \
-            --tag k8sathome/sops:latest \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/sops:${{ env.VERSION }} \
+            --tag k8sathome/sops:${{ env.VERSION }} \
             -f ./build/sops/Dockerfile \
             --push ./build/sops/
