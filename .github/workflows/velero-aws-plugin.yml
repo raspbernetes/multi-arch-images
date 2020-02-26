@@ -1,0 +1,37 @@
+name: velero-aws-plugin
+
+on:
+  push:
+    paths:
+      - 'build/velero-aws-plugin/**'
+      - '!build/velero-aws-plugin/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/velero-aws-plugin/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/velero-aws-plugin:${{ env.VERSION }} \
+            --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
+            -f ./build/velero-aws-plugin/Dockerfile \
+            --push ./build/velero-aws-plugin/
