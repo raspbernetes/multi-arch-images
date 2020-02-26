@@ -1,4 +1,4 @@
-name: Get latest Gatekeeper release version
+name: Get latest Velero release version
 
 on:
   schedule:
@@ -14,8 +14,8 @@ jobs:
 
       - name: Fetch release version
         run: |
-          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
-          jq -r ".tag_name" > build/gatekeeper/.version
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero/releases/latest | \
+          jq -r ".tag_name" > build/velero/.version
 
       - name: Check for modified files
         id: git-check
