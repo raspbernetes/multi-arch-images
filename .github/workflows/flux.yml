@@ -10,6 +10,7 @@ jobs:
   build:
     env:
       VERSION: $(cat build/flux/version.txt)
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,10 +32,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:experimental \
-            -f ./build/flux/Dockerfile \
-            ./build/flux/
-  publish:
+            
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
