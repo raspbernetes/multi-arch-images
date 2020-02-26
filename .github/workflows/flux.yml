@@ -33,4 +33,4 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${{ env.VERSION }} \
             -f ./build/flux/Dockerfile \
-            ./build/flux/
+            ./build/flux/ --push
