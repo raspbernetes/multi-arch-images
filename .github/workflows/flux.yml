@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    env:
+      VERSION: $(cat build/flux/version.txt)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,6 +42,6 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:experimental \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/flux:${{ env.VERSION }} \
             -f ./build/flux/Dockerfile \
             --push ./build/flux/
