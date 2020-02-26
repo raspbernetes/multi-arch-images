@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/fluxd/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -29,9 +31,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:${GITHUB_SHA} \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:latest \
-            --tag k8sathome/fluxd:${GITHUB_SHA} \
-            --tag k8sathome/fluxd:latest \
+            --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:${{ env.VERSION }} \
+            --tag k8sathome/fluxd:${{ env.VERSION }} \
             -f ./build/fluxd/Dockerfile \
             --push ./build/fluxd/

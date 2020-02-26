@@ -1,0 +1,32 @@
+name: Get latest Flux release version
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.REPO_SCOPED_TOKEN }}
+
+      - name: Fetch release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest | \
+          jq -r ".tag_name" > build/kustomize/.version && \
+          VERSION=$(cat build/kustomize/.version | cut -c 11-) && \
+          echo $VERSION > build/kustomize/.version
+
+      - name: Check for modified files
+        id: git-check
+        run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+
+      - name: Commit latest release version
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'Michael Fornaro'
+          git config --global user.email 'xunholy@users.noreply.github.com'
+          git commit -am "Adding new release version"
+          git push
