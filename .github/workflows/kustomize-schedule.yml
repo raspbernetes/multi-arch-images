@@ -1,4 +1,4 @@
-name: Get latest Gatekeeper release version
+name: Get latest Kustomize release version
 
 on:
   schedule:
@@ -14,8 +14,10 @@ jobs:
 
       - name: Fetch release version
         run: |
-          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
-          jq -r ".tag_name" > build/gatekeeper/.version
+          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest | \
+          jq -r ".tag_name" > build/kustomize/.version && \
+          VERSION=$(cat build/kustomize/.version | cut -c 11-) && \
+          echo $VERSION > build/kustomize/.version
 
       - name: Check for modified files
         id: git-check

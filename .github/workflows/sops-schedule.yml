@@ -1,4 +1,4 @@
-name: Get latest Flux release version
+name: Get latest Sops release version
 
 on:
   schedule:
