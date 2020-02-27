@@ -25,6 +25,6 @@ jobs:
         if: steps.git-check.outputs.modified == 'true'
         run: |
           git config --global user.name 'Michael Fornaro'
-          git config --global user.email 'xunholy@users.noreply.github.com'
+          git config --global user.email '20387402+xUnholy@users.noreply.github.com'
           git commit -am "Adding new release version"
           git push
