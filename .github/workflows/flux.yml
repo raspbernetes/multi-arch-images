@@ -5,6 +5,12 @@ on:
     paths:
       - 'build/flux/**'
       - '!build/flux/*.md'
+  pull_request:
+    paths:
+      - 'build/flux/**'
+      - '!build/flux/*.md'
+    branches:
+      - master
 
 jobs:
   build:

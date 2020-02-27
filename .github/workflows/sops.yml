@@ -5,6 +5,12 @@ on:
     paths:
       - 'build/sops/**'
       - '!build/sops/*.md'
+  pull_request:
+    paths:
+      - 'build/sops/**'
+      - '!build/sops/*.md'
+    branches:
+      - master
 
 jobs:
   build:
