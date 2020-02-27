@@ -6,6 +6,9 @@ on:
       - 'build/fluxd/**'
       - '!build/fluxd/*.md'
   pull_request:
+    paths:
+      - 'build/fluxd/**'
+      - '!build/fluxd/*.md'
     branches:
       - master
 

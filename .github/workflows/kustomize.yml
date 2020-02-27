@@ -6,6 +6,9 @@ on:
       - 'build/kustomize/**'
       - '!build/kustomize/*.md'
   pull_request:
+    paths:
+      - 'build/kustomize/**'
+      - '!build/kustomize/*.md'
     branches:
       - master
 
