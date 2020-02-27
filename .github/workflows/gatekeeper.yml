@@ -5,6 +5,9 @@ on:
     paths:
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:

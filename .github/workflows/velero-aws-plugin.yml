@@ -5,6 +5,9 @@ on:
     paths:
       - 'build/velero-aws-plugin/**'
       - '!build/velero-aws-plugin/*.md'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:

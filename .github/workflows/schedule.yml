@@ -1,4 +1,4 @@
-name: Get latest Kustomize release version
+name: Get latest release versions
 
 on:
   schedule:
@@ -12,12 +12,32 @@ jobs:
         with:
           token: ${{ secrets.REPO_SCOPED_TOKEN }}
 
-      - name: Fetch release version
+      - name: Fetch flux release version
+        run: |
+          curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
+          jq -r ".tag_name" > build/flux/.version
+
+      - name: Fetch gatekeeper release version
+        run: |
+          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
+          jq -r ".tag_name" > build/gatekeeper/.version
+
+      - name: Fetch kustomize release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest | \
           jq -r ".tag_name" > build/kustomize/.version && \
           VERSION=$(cat build/kustomize/.version | cut -c 11-) && \
           echo $VERSION > build/kustomize/.version
+
+      - name: Fetch sealed secets release version
+        run: |
+          curl -sL https://api.github.com/repos/bitnami-labs/sealed-secrets/releases/latest | \
+          jq -r ".tag_name" > build/sealed-secrets/.version
+
+      - name: Fetch sops release version
+        run: |
+          curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
+          jq -r ".tag_name" > build/sops/.version
 
       - name: Check for modified files
         id: git-check
