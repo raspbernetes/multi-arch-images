@@ -1,4 +1,3 @@
-
 FROM golang:1.13-alpine as build
 
 ARG VERSION=v1.0.0
