@@ -8,8 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-        # with:
-        #   token: ${{ secrets.REPO_SCOPED_TOKEN }}
       - name: Fetch flux release version
         run: |
           curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
