@@ -46,5 +46,5 @@ jobs:
         run: |
           git config --global user.name 'Michael Fornaro'
           git config --global user.email '20387402+xUnholy@users.noreply.github.com'
-          git commit -am "Adding new release version"
+          git commit -am "Adding new release version" || exit 0
           git push || exit 0
