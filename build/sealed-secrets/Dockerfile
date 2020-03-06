@@ -14,7 +14,7 @@ WORKDIR /go/src/github.com/bitnami-labs/sealed-secrets
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3) && \
+    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
     git clone --depth 1 -b ${VERSION} https://github.com/bitnami-labs/sealed-secrets.git . && \
     go build -o controller ./cmd/controller
 
