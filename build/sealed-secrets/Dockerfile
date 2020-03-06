@@ -1,33 +1,29 @@
-FROM golang:1.13-alpine as build
+FROM --platform=$BUILDPLATFORM golang:1.13-alpine as build
 
 ARG VERSION
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
-    GOOS=linux \
     VERSION=${VERSION}
 
-RUN apk add --no-cache curl ca-certificates git
+RUN apk add --no-cache curl git
 
 WORKDIR /go/src/github.com/bitnami-labs/sealed-secrets
-RUN ARCH="$(apk --print-arch)"; \
-    case "$ARCH" in \
-    armv7) export GOARCH='arm' GOARM=7 ;; \
-    aarch64) export GOARCH='arm64' ;; \
-    x86_64) export GOARCH='amd64' ;; \
-    esac; \
-    echo "----------------------------------" \
-    && echo "apk arch: $(apk --print-arch)" \
-    && echo "parsed arch: ${GOARCH}" \
-    && echo "----------------------------------" \
-    && git clone --depth 1 -b ${VERSION} https://github.com/bitnami-labs/sealed-secrets.git . \
-    && go build -o controller ./cmd/controller
 
-FROM alpine:3.10
+RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
+    export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3) && \
+    git clone --depth 1 -b ${VERSION} https://github.com/bitnami-labs/sealed-secrets.git . && \
+    go build -o controller ./cmd/controller
 
-RUN apk add --no-cache ca-certificates
+# Use distroless as minimal base image to package the manager binary
+# Refer to https://github.com/GoogleContainerTools/distroless for more details
+FROM gcr.io/distroless/static:nonroot
 
 COPY --from=build /go/src/github.com/bitnami-labs/sealed-secrets/controller /usr/local/bin/controller
-RUN chmod +x /usr/local/bin/controller
+
+USER nonroot:nonroot
 
 ENTRYPOINT ["controller"]
