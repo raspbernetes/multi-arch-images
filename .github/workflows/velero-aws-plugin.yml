@@ -47,10 +47,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-<<<<<<< HEAD
             --tag k8sathome/velero-aws-plugin:latest \
-=======
->>>>>>> 26f6c1a99c8fb91410f7941af03b1590d3bebdd7
             --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
             --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
             -f ./build/velero-aws-plugin/Dockerfile \
