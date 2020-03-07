@@ -23,7 +23,7 @@ RUN ARCH="$(apk --print-arch)"; \
     go mod init && \
     go build -o velero-plugin-for-aws ./velero-plugin-for-aws
 
-FROM alpine:3.10
+FROM alpine:3.11
 WORKDIR /plugin
 RUN apk add --no-cache bash ca-certificates
 COPY --from=build /go/src/github.com/vmware-tanzu/velero-plugin-for-aws/velero-plugin-for-aws ./velero-plugin-for-aws
