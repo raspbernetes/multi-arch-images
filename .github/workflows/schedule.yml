@@ -37,6 +37,11 @@ jobs:
           curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
           jq -r ".tag_name" > build/sops/.version
 
+      - name: Fetch pihole release version
+        run: |
+          curl -sL https://api.github.com/repos/eko/pihole-exporter/releases/latest | \
+          jq -r ".tag_name" > build/pihole/.version
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)

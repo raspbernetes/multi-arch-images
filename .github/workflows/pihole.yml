@@ -1,0 +1,54 @@
+name: pihole
+
+on:
+  push:
+    paths:
+      - 'build/pihole/**'
+      - '!build/pihole/*.md'
+  pull_request:
+    paths:
+      - 'build/pihole/**'
+      - '!build/pihole/*.md'
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/pihole/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag raspbernetes/pihole:${{ github.sha }} \
+            -f ./build/pihole/Dockerfile \
+            --push ./build/pihole/
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag raspbernetes/pihole:latest \
+            --tag raspbernetes/pihole:${{ env.VERSION }} \
+            --tag k8sathome/pihole:${{ env.VERSION }} \
+            -f ./build/pihole/Dockerfile \
+            --push ./build/pihole/
