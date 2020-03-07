@@ -1,3 +1,3 @@
-![Pihole](https://github.com/raspbernetes/multi-arch-images/workflows/kustomize/badge.svg)
+![Pihole](https://github.com/raspbernetes/multi-arch-images/workflows/pihole/badge.svg)
 
 # Pihole
