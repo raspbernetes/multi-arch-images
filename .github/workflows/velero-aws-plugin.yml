@@ -37,7 +37,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/velero-aws-plugin:${{ env.VERSION }} \
+            --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
             --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
             -f ./build/velero-aws-plugin/Dockerfile \
             --push ./build/velero-aws-plugin/

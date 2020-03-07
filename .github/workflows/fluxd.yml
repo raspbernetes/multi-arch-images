@@ -38,7 +38,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/fluxd:${{ env.VERSION }} \
+            --tag raspbernetes/fluxd:${{ env.VERSION }} \
             --tag k8sathome/fluxd:${{ env.VERSION }} \
             -f ./build/fluxd/Dockerfile \
             --push ./build/fluxd/

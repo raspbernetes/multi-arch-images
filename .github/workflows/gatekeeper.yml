@@ -37,7 +37,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/gatekeeper:${{ env.VERSION }} \
+            --tag raspbernetes/gatekeeper:${{ env.VERSION }} \
             --tag k8sathome/gatekeeper:${{ env.VERSION }} \
             -f ./build/gatekeeper/Dockerfile \
             --push ./build/gatekeeper/
