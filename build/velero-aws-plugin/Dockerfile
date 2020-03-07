@@ -18,7 +18,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go mod init && \
     go build -o velero-plugin-for-aws ./velero-plugin-for-aws
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 WORKDIR /plugin
 
