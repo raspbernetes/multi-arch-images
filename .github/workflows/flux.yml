@@ -38,6 +38,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+<<<<<<< HEAD
             --tag raspbernetes/flux:${{ github.sha }} \
             -f ./build/flux/Dockerfile \
             ./build/flux/ --push
@@ -48,6 +49,8 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag raspbernetes/flux:latest \
+=======
+>>>>>>> 26f6c1a99c8fb91410f7941af03b1590d3bebdd7
             --tag raspbernetes/flux:${{ env.VERSION }} \
             --tag k8sathome/fluxd:${{ env.VERSION }} \
             -f ./build/flux/Dockerfile \
