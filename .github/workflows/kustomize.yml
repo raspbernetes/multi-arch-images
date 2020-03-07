@@ -47,6 +47,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag raspbernetes/kustomize:latest \
             --tag raspbernetes/kustomize:${{ env.VERSION }} \
             --tag k8sathome/kustomize:${{ env.VERSION }} \
             -f ./build/kustomize/Dockerfile \

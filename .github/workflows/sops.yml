@@ -47,6 +47,7 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag raspbernetes/sops:latest \
             --tag raspbernetes/sops:${{ env.VERSION }} \
             --tag k8sathome/sops:${{ env.VERSION }} \
             -f ./build/sops/Dockerfile \
