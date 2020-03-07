@@ -1,7 +1,9 @@
-FROM alpine:3.11
+FROM --platform=$BUILDPLATFORM alpine:3.11
 
 ARG KUBECTL_VERSION=v1.15.9
 ARG VERSION=1.18.0
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 
 WORKDIR /home/flux
 
@@ -16,24 +18,15 @@ RUN chmod +x /home/flux/known_hosts.sh && \
     sh /home/flux/known_hosts.sh /etc/ssh/ssh_known_hosts && \
     rm /home/flux/known_hosts.sh
 
-# Add default SSH config, which points at the private key we'll mount
 COPY ./ssh_config /etc/ssh/ssh_config
 
-# hadolint ignore=SC2086
-RUN ARCH="$(apk --print-arch)"; \
-    case "$ARCH" in \
-    armv7) export GOARCH='arm' GOARM=7 ;; \
-    aarch64) export GOARCH='arm64' ;; \
-    x86_64) export GOARCH='amd64' ;; \
-    esac; \
-    echo "----------------------------------" \
-    && echo "apk arch: $(apk --print-arch)" \
-    && echo "parsed arch: ${GOARCH}" \
-    && echo "----------------------------------" \
-    && curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl \
-    && chmod +x /usr/local/bin/kubectl \
-    && curl -L -o /usr/local/bin/fluxctl https://github.com/fluxcd/flux/releases/download/${VERSION}/fluxctl_linux_${GOARCH} \
-    && chmod +x /usr/local/bin/fluxctl
+RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
+    export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
+    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl && \
+    chmod +x /usr/local/bin/kubectl && \
+    curl -L -o /usr/local/bin/fluxctl https://github.com/fluxcd/flux/releases/download/${VERSION}/fluxctl_linux_${GOARCH} && \
+    chmod +x /usr/local/bin/fluxctl
 
 COPY --from=xunholy/fluxd:latest /usr/local/bin/fluxd /usr/local/bin/fluxd
 RUN chmod +x /usr/local/bin/fluxd

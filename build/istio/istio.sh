@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-COMPONENTS='pilot proxyv2 app app_sidecar test_policybackend mixer mixer_codegen citadel galley sidecar_injector kubectl istioctl operator'
-TAG=9fdbf4f32acb6edd967340930dd54a7cb2730f8e
+COMPONENTS='operator istioctl galley citadel mixer_codegen mixer test_policybackend app_sidecar app proxyv2 pilot'
+TAG=9a02d46ea3d5b7cfcad6108e2b84c30f5d10ad88
 DOCKER_HUP_REPO=docker.io/xunholy
 
 for COMPONENT in $COMPONENTS; do

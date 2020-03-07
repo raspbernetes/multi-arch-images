@@ -1,29 +1,26 @@
-FROM golang:1.13-alpine as build
+FROM --platform=$BUILDPLATFORM golang:1.13-alpine as build
 
 ARG VERSION=1.18.0
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 
 ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux
+    CGO_ENABLED=0
 
-# hadolint ignore=DL3018
 RUN apk add --no-cache git
 
-# build flux
 WORKDIR /go/src/github.com/fluxcd/flux
-RUN ARCH="$(apk --print-arch)"; \
-    case "$ARCH" in \
-    armv7) export GOARCH='arm' GOARM=7 ;; \
-    aarch64) export GOARCH='arm64' ;; \
-    x86_64) export GOARCH='amd64' ;; \
-    esac; \
-    echo "----------------------------------" \
-    && echo "apk arch: $(apk --print-arch)" \
-    && echo "parsed arch: ${GOARCH}" \
-    && echo "----------------------------------" \
-    && git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/flux.git . \
-    && go build -o fluxd ./cmd/fluxd
 
-FROM scratch
+RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
+    export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
+    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/flux.git . && \
+    go build -o fluxd ./cmd/fluxd
+
+# Use distroless as minimal base image to package the manager binary
+# Refer to https://github.com/GoogleContainerTools/distroless for more details
+FROM gcr.io/distroless/static:nonroot
 
 COPY --from=build /go/src/github.com/fluxcd/flux/fluxd /usr/local/bin/fluxd
+
+USER nonroot:nonroot
