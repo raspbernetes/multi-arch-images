@@ -34,6 +34,16 @@ jobs:
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --tag raspbernetes/sops:${{ github.sha }} \
+            -f ./build/sops/Dockerfile \
+            --push ./build/sops/
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
