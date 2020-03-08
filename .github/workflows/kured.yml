@@ -1,21 +1,21 @@
-name: flux
+name: kured
 
 on:
   push:
     paths:
-      - 'build/flux/**'
-      - '!build/flux/*.md'
+      - 'build/kured/**'
+      - '!build/kured/*.md'
   pull_request:
     paths:
-      - 'build/flux/**'
-      - '!build/flux/*.md'
+      - 'build/kured/**'
+      - '!build/kured/*.md'
     branches:
       - master
 
 jobs:
   build:
     env:
-      VERSION: $(cat build/flux/.version)
+      VERSION: $(cat build/kured/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,17 +38,17 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/flux:${{ github.sha }} \
-            -f ./build/flux/Dockerfile \
-            ./build/flux/ --push
+            --tag raspbernetes/kured:${{ github.sha }} \
+            -f ./build/kured/Dockerfile \
+            ./build/kured/ --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/flux:latest \
-            --tag raspbernetes/flux:${{ env.VERSION }} \
-            --tag k8sathome/fluxd:${{ env.VERSION }} \
-            -f ./build/flux/Dockerfile \
-            ./build/flux/ --push
+            --tag raspbernetes/kured:latest \
+            --tag raspbernetes/kured:${{ env.VERSION }} \
+            --tag k8sathome/kuredd:${{ env.VERSION }} \
+            -f ./build/kured/Dockerfile \
+            ./build/kured/ --push
