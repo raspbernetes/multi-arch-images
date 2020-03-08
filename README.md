@@ -13,7 +13,7 @@ This repostiory is only used to store the unofficial docker images that will be 
 | flux | [raspbernetes/flux](https://hub.docker.com/repository/docker/raspbernetes/flux) | arm/arm64/amd64 | [issue ref](https://github.com/fluxcd/flux/issues/1761)|
 | fluxd | [raspbernetes/fluxd](https://hub.docker.com/repository/docker/raspbernetes/fluxd) | arm/arm64/amd64 | N/A|
 | velero-aws-plugin | [raspbernetes/velero-aws-plugin](https://hub.docker.com/repository/docker/raspbernetes/velero-aws-plugin) | arm/arm64/amd64 | [issue ref](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
-| pihole-Exporter | [raspbernetes/pihole-exporter](https://hub.docker.com/repository/docker/raspbernetes/pihole-exporter) | arm/arm64/amd64 | N/A|
+| pihole-Exporter | [raspbernetes/pihole-exporter](https://hub.docker.com/repository/docker/raspbernetes/pihole-exporter) | arm/arm64/amd64 | [issue ref](https://github.com/eko/pihole-exporter/issues/13)|
 | kured | [raspbernetes/kured](https://hub.docker.com/repository/docker/raspbernetes/kured) | arm/arm64/amd64 |[issue ref](https://github.com/weaveworks/kured/issues/23)|
 
 ## Future Images
