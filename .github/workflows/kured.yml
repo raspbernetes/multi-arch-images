@@ -1,22 +1,22 @@
-name: pihole-exporter
+name: kured
 
 on:
   push:
     paths:
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
+      - 'build/kured/**'
+      - '!build/kured/*.md'
   pull_request:
     paths:
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
+      - 'build/kured/**'
+      - '!build/kured/*.md'
     branches:
       - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     env:
-      VERSION: $(cat build/pihole-exporter/.version)
+      VERSION: $(cat build/kured/.version)
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -38,17 +38,17 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/pihole-exporter:${{ github.sha }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            --push ./build/pihole-exporter/
+            --tag raspbernetes/kured:${{ github.sha }} \
+            -f ./build/kured/Dockerfile \
+            ./build/kured/ --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/pihole-exporter:latest \
-            --tag raspbernetes/pihole-exporter:${{ env.VERSION }} \
-            --tag k8sathome/pihole-exporter:${{ env.VERSION }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            --push ./build/pihole-exporter/
+            --tag raspbernetes/kured:latest \
+            --tag raspbernetes/kured:${{ env.VERSION }} \
+            --tag k8sathome/kuredd:${{ env.VERSION }} \
+            -f ./build/kured/Dockerfile \
+            ./build/kured/ --push
