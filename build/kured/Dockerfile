@@ -13,11 +13,10 @@ RUN apk add --no-cache git
 
 WORKDIR /go/src/github.com/weaveworks/kured
 
-RUN curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl"
-
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
     git clone --depth 1 -b ${VERSION} https://github.com/weaveworks/kured.git . && \
     go build -o kured ./cmd/kured
 
