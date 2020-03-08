@@ -1,3 +1,3 @@
-![kured](https://github.com/raspbernetes/multi-arch-images/workflows/kured/badge.svg)
+![helm-operator](https://github.com/raspbernetes/multi-arch-images/workflows/helm-operator/badge.svg)
 
-# Kured
+# Helm Operator
