@@ -11,14 +11,14 @@ RUN apk add --no-cache openssh-client curl ca-certificates tini git gnutls gnupg
     apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing git-secret
 
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
-COPY ./kubeconfig /root/.kube/config
 
-COPY ./known_hosts.sh /home/flux/known_hosts.sh
+ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/known_hosts.sh /home/flux/known_hosts.sh
+ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/ssh_config /etc/ssh/ssh_config
+ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kubeconfig /root/.kube/config
+
 RUN chmod +x /home/flux/known_hosts.sh && \
     sh /home/flux/known_hosts.sh /etc/ssh/ssh_known_hosts && \
     rm /home/flux/known_hosts.sh
-
-COPY ./ssh_config /etc/ssh/ssh_config
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
