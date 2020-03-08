@@ -42,6 +42,11 @@ jobs:
           curl -sL https://api.github.com/repos/eko/pihole-exporter/releases/latest | \
           jq -r ".tag_name" > build/pihole-exporter/.version
 
+      - name: Fetch kured release version
+        run: |
+          curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
+          jq -r ".tag_name" > build/kured/.version
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)

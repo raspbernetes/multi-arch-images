@@ -1,22 +1,22 @@
-name: pihole-exporter
+name: flux
 
 on:
   push:
     paths:
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
+      - 'build/flux/**'
+      - '!build/flux/*.md'
   pull_request:
     paths:
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
+      - 'build/flux/**'
+      - '!build/flux/*.md'
     branches:
       - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     env:
-      VERSION: $(cat build/pihole-exporter/.version)
+      VERSION: $(cat build/flux/.version)
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -38,17 +38,17 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/pihole-exporter:${{ github.sha }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            --push ./build/pihole-exporter/
+            --tag raspbernetes/flux:${{ github.sha }} \
+            -f ./build/flux/Dockerfile \
+            ./build/flux/ --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --tag raspbernetes/pihole-exporter:latest \
-            --tag raspbernetes/pihole-exporter:${{ env.VERSION }} \
-            --tag k8sathome/pihole-exporter:${{ env.VERSION }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            --push ./build/pihole-exporter/
+            --tag raspbernetes/flux:latest \
+            --tag raspbernetes/flux:${{ env.VERSION }} \
+            --tag k8sathome/fluxd:${{ env.VERSION }} \
+            -f ./build/flux/Dockerfile \
+            ./build/flux/ --push
