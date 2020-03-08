@@ -4,17 +4,17 @@ This repostiory is only used to store the unofficial docker images that will be 
 
 ## Available Images
 
-| Name | Image | Architecture | Issue |
-|------|-------|--------------|-------|
-| sealed Secrets | [raspbernetes/sealed-secrets](https://hub.docker.com/repository/docker/raspbernetes/sealed-secrets) | arm/arm64/amd64 | [issue ref](https://github.com/open-policy-agent/gatekeeper/issues/496)|
-| gatekeeper | [raspbernetes/gatekeeper](https://hub.docker.com/repository/docker/raspbernetes/gatekeeper) | arm/arm64/amd64 | [issue ref](https://github.com/bitnami-labs/sealed-secrets/issues/360)|
-| sops | [raspbernetes/sops](https://hub.docker.com/repository/docker/raspbernetes/sops) | arm/arm64/amd64 | N/A|
-| kustomize | [raspbernetes/kustomize](https://hub.docker.com/repository/docker/raspbernetes/kustomize) | arm/arm64/amd64 | N/A|
-| flux | [raspbernetes/flux](https://hub.docker.com/repository/docker/raspbernetes/flux) | arm/arm64/amd64 | [issue ref](https://github.com/fluxcd/flux/issues/1761)|
-| fluxd | [raspbernetes/fluxd](https://hub.docker.com/repository/docker/raspbernetes/fluxd) | arm/arm64/amd64 | N/A|
-| velero-aws-plugin | [raspbernetes/velero-aws-plugin](https://hub.docker.com/repository/docker/raspbernetes/velero-aws-plugin) | arm/arm64/amd64 | [issue ref](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
-| pihole-Exporter | [raspbernetes/pihole-exporter](https://hub.docker.com/repository/docker/raspbernetes/pihole-exporter) | arm/arm64/amd64 | [issue ref](https://github.com/eko/pihole-exporter/issues/13)|
-| kured | [raspbernetes/kured](https://hub.docker.com/repository/docker/raspbernetes/kured) | arm/arm64/amd64 |[issue ref](https://github.com/weaveworks/kured/issues/23)|
+| Name | Docker Image | Architecture | Upstream Issue |
+|------|--------------|--------------|----------------|
+| sealed Secrets | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/sealed-secrets)](https://hub.docker.com/r/raspbernetes/sealed-secrets) | arm/arm64/amd64 | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/bitnami-labs/sealed-secrets/360)](https://github.com/bitnami-labs/sealed-secrets/issues/360)|
+| gatekeeper | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/gatekeeper)](https://hub.docker.com/r/raspbernetes/gatekeeper) | arm/arm64/amd64 | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/open-policy-agent/gatekeeper/496)](https://github.com/open-policy-agent/gatekeeper/issues/496)|
+| sops | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/sops)](https://hub.docker.com/r/raspbernetes/sops) | arm/arm64/amd64 | N/A|
+| kustomize | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kustomize)](https://hub.docker.com/r/raspbernetes/kustomize) | arm/arm64/amd64 | N/A|
+| flux | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flux)](https://hub.docker.com/r/raspbernetes/flux) | arm/arm64/amd64 | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/flux/1761)](https://github.com/fluxcd/flux/issues/1761)|
+| fluxd | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/fluxd)](https://hub.docker.com/r/raspbernetes/fluxd) | arm/arm64/amd64 | N/A|
+| velero-aws-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-aws-plugin)](https://hub.docker.com/r/raspbernetes/velero-aws-plugin) | arm/arm64/amd64 | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/vmware-tanzu/velero-plugin-for-aws/18)](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
+| pihole-Exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/pihole-exporter)](https://hub.docker.com/r/raspbernetes/pihole-exporter) | arm/arm64/amd64 | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/eko/pihole-exporter/13)](https://github.com/eko/pihole-exporter/issues/13)|
+| kured | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kured)](https://hub.docker.com/r/raspbernetes/kured) | arm/arm64/amd64 |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/weaveworks/kured/23)](https://github.com/weaveworks/kured/issues/23)|
 
 ## Future Images
 
