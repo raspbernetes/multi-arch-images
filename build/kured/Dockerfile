@@ -9,7 +9,7 @@ ARG BUILDPLATFORM
 ENV GO111MODULE=on \
     CGO_ENABLED=0
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git curl
 
 WORKDIR /go/src/github.com/weaveworks/kured
 
