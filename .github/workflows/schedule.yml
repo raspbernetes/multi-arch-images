@@ -40,7 +40,7 @@ jobs:
       - name: Fetch pihole release version
         run: |
           curl -sL https://api.github.com/repos/eko/pihole-exporter/releases/latest | \
-          jq -r ".tag_name" > build/pihole/.version
+          jq -r ".tag_name" > build/pihole-exporter/.version
 
       - name: Check for modified files
         id: git-check
