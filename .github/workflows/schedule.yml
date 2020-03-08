@@ -27,11 +27,6 @@ jobs:
           VERSION=$(cat build/kustomize/.version | cut -c 11-) && \
           echo $VERSION > build/kustomize/.version
 
-      - name: Fetch sealed secets release version
-        run: |
-          curl -sL https://api.github.com/repos/bitnami-labs/sealed-secrets/releases/latest | \
-          jq -r ".tag_name" > build/sealed-secrets/.version
-
       - name: Fetch sops release version
         run: |
           curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \

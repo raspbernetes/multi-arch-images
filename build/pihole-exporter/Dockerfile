@@ -1,10 +1,7 @@
-FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:1.13-alpine as build
+FROM golang:1.13-alpine as build
 
 ARG VERSION=0.0.8
 ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-
-RUN printf "I am running on ${BUILDPLATFORM:-linux/amd64}, building for ${TARGETPLATFORM:-linux/amd64}\n$(uname -a)\n"
 
 WORKDIR /go/src/github.com/eko/pihole-exporter
 

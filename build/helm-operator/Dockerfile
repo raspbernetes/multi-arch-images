@@ -1,13 +1,10 @@
-FROM --platform=${TARGETPLATFORM:-linux/amd64} golang:1.13-alpine as build
+FROM golang:1.13-alpine as build
 
 ARG VERSION=1.0.0-rc9
 ARG KUBECTL_VERSION=v1.15.7
 ARG HELM_VERSION=v2.16.1
 ARG HELM3_VERSION=v3.1.1
 ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-
-RUN printf "I am running on ${BUILDPLATFORM:-linux/amd64}, building for ${TARGETPLATFORM:-linux/amd64}\n$(uname -a)\n"
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0
