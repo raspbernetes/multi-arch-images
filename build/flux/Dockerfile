@@ -1,9 +1,11 @@
-FROM --platform=$BUILDPLATFORM alpine:3.11
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.11
 
 ARG KUBECTL_VERSION=v1.15.9
 ARG VERSION=1.18.0
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
+
+RUN printf "I am running on ${BUILDPLATFORM:-linux/amd64}, building for ${TARGETPLATFORM:-linux/amd64}\n$(uname -a)\n"
 
 WORKDIR /home/flux
 
