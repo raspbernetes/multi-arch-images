@@ -40,19 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/gatekeeper:${{ github.sha }} \
             -f ./build/gatekeeper/Dockerfile \
             ./build/gatekeeper/ \
-            --push --no-cache
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/gatekeeper:latest \
             --tag raspbernetes/gatekeeper:${{ env.VERSION }} \
             --tag k8sathome/gatekeeper:${{ env.VERSION }} \
             -f ./build/gatekeeper/Dockerfile \
             ./build/gatekeeper/ \
-            --push --no-cache
+            --push

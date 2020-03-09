@@ -40,17 +40,19 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/helm-operator:${{ github.sha }} \
             -f ./build/helm-operator/Dockerfile \
-            ./build/helm-operator/ --push
+            --push ./build/helm-operator/
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/helm-operator:latest \
             --tag raspbernetes/helm-operator:${{ env.VERSION }} \
             --tag k8sathome/helm-operator:${{ env.VERSION }} \
             -f ./build/helm-operator/Dockerfile \
-            ./build/helm-operator/ --push
+            --push ./build/helm-operator/
