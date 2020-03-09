@@ -20,14 +20,14 @@ This repository is only used to store the unofficial docker images that will be 
 
 > _**Note:** These are images that we would like to support in the future, if you have time feel free to open a PR._
 
-| Name | Issue |
-|------|-------|
-| istio | [issue ref](https://github.com/istio/istio/issues/21094) |
+| Name | Upstream Issue |
+|------|----------------|
+| istio | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/istio/istio/21094)](https://github.com/istio/istio/issues/21094)|
 
 ## Deprecated Images
 
 > _**Note:** These are images that we used to support but now have official support from the upstream developers._
 
-| Name | Since version | Upstream Issue |
-|------|---------------|----------------|
-| sealed secrets | `v0.10.0` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/bitnami-labs/sealed-secrets/360)](https://github.com/bitnami-labs/sealed-secrets/issues/360)|
+| Name | Since version |
+|------|---------------|
+| sealed secrets | `v0.10.0` |
