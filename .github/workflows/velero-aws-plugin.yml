@@ -3,10 +3,12 @@ name: velero-aws-plugin
 on:
   push:
     paths:
+      - '.github/workflows/velero-aws-plugin.yml'
       - 'build/velero-aws-plugin/**'
       - '!build/velero-aws-plugin/*.md'
   pull_request:
     paths:
+      - '.github/workflows/velero-aws-plugin.yml'
       - 'build/velero-aws-plugin/**'
       - '!build/velero-aws-plugin/*.md'
     branches:
@@ -38,17 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/velero-aws-plugin:${{ github.sha }} \
             -f ./build/velero-aws-plugin/Dockerfile \
-            --push ./build/velero-aws-plugin/
+            ./build/velero-aws-plugin/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag k8sathome/velero-aws-plugin:latest \
             --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
             --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
             -f ./build/velero-aws-plugin/Dockerfile \
-            --push ./build/velero-aws-plugin/
+            ./build/velero-aws-plugin/ \
+            --push

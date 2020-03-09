@@ -3,10 +3,12 @@ name: sops
 on:
   push:
     paths:
+      - '.github/workflows/sops.yml'
       - 'build/sops/**'
       - '!build/sops/*.md'
   pull_request:
     paths:
+      - '.github/workflows/sops.yml'
       - 'build/sops/**'
       - '!build/sops/*.md'
     branches:
@@ -38,17 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/sops:${{ github.sha }} \
             -f ./build/sops/Dockerfile \
-            --push ./build/sops/
+            ./build/sops/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/sops:latest \
             --tag raspbernetes/sops:${{ env.VERSION }} \
             --tag k8sathome/sops:${{ env.VERSION }} \
             -f ./build/sops/Dockerfile \
-            --push ./build/sops/
+            ./build/sops/ \
+            --push

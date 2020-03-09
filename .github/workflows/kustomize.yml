@@ -3,10 +3,12 @@ name: kustomize
 on:
   push:
     paths:
+      - '.github/workflows/kustomize.yml'
       - 'build/kustomize/**'
       - '!build/kustomize/*.md'
   pull_request:
     paths:
+      - '.github/workflows/kustomize.yml'
       - 'build/kustomize/**'
       - '!build/kustomize/*.md'
     branches:
@@ -38,17 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kustomize:${{ github.sha }} \
             -f ./build/kustomize/Dockerfile \
-            --push ./build/kustomize/
+            ./build/kustomize/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kustomize:latest \
             --tag raspbernetes/kustomize:${{ env.VERSION }} \
             --tag k8sathome/kustomize:${{ env.VERSION }} \
             -f ./build/kustomize/Dockerfile \
-            --push ./build/kustomize/
+            ./build/kustomize/ \
+            --push

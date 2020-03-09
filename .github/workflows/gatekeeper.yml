@@ -3,10 +3,12 @@ name: gatekeeper
 on:
   push:
     paths:
+      - '.github/workflows/gatekeeper.yml'
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
   pull_request:
     paths:
+      - '.github/workflows/gatekeeper.yml'
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
     branches:
@@ -38,17 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/gatekeeper:${{ github.sha }} \
             -f ./build/gatekeeper/Dockerfile \
-            --push ./build/gatekeeper/
+            ./build/gatekeeper/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/gatekeeper:latest \
             --tag raspbernetes/gatekeeper:${{ env.VERSION }} \
             --tag k8sathome/gatekeeper:${{ env.VERSION }} \
             -f ./build/gatekeeper/Dockerfile \
-            --push ./build/gatekeeper/
+            ./build/gatekeeper/ \
+            --push

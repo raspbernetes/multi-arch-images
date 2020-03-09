@@ -3,10 +3,12 @@ name: kured
 on:
   push:
     paths:
+      - '.github/workflows/kured.yml'
       - 'build/kured/**'
       - '!build/kured/*.md'
   pull_request:
     paths:
+      - '.github/workflows/kured.yml'
       - 'build/kured/**'
       - '!build/kured/*.md'
     branches:
@@ -38,17 +40,21 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kured:${{ github.sha }} \
             -f ./build/kured/Dockerfile \
-            ./build/kured/ --push
+            ./build/kured/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kured:latest \
             --tag raspbernetes/kured:${{ env.VERSION }} \
             --tag k8sathome/kured:${{ env.VERSION }} \
             -f ./build/kured/Dockerfile \
-            ./build/kured/ --push
+            ./build/kured/ \
+            --push
