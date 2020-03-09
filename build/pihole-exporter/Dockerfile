@@ -27,7 +27,7 @@ LABEL name="pihole-exporter"
 
 WORKDIR /root/
 
-COPY --from=builder /go/src/github.com/eko/pihole-exporter/binary pihole-exporter
+COPY --from=build /go/src/github.com/eko/pihole-exporter/binary pihole-exporter
 
 USER nonroot:nonroot
 

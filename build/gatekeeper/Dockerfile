@@ -21,7 +21,7 @@ FROM gcr.io/distroless/static:nonroot
 
 WORKDIR /
 
-COPY --from=builder /go/src/github.com/open-policy-agent/gatekeeper/manager .
+COPY --from=build /go/src/github.com/open-policy-agent/gatekeeper/manager .
 
 USER nonroot:nonroot
 
