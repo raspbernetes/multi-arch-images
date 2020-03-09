@@ -15,6 +15,11 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
           jq -r ".tag_name" > build/flux/.version
 
+      - name: Fetch helm-operator release version
+        run: |
+          curl -sL https://api.github.com/repos/fluxcd/helm-operator/releases/latest | \
+          jq -r ".tag_name" > build/helm-operator/.version
+
       - name: Fetch gatekeeper release version
         run: |
           curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
