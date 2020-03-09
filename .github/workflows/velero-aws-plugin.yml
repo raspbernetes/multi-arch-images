@@ -3,10 +3,12 @@ name: velero-aws-plugin
 on:
   push:
     paths:
+      - '.github/workflows/velero-aws-plugin.yml'
       - 'build/velero-aws-plugin/**'
       - '!build/velero-aws-plugin/*.md'
   pull_request:
     paths:
+      - '.github/workflows/velero-aws-plugin.yml'
       - 'build/velero-aws-plugin/**'
       - '!build/velero-aws-plugin/*.md'
     branches:

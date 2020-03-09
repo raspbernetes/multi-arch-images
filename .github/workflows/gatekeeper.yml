@@ -3,12 +3,12 @@ name: gatekeeper
 on:
   push:
     paths:
-      - '.github/workflows/gatekeeper'
+      - '.github/workflows/gatekeeper.yml'
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
   pull_request:
     paths:
-      - '.github/workflows/gatekeeper'
+      - '.github/workflows/gatekeeper.yml'
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
     branches:

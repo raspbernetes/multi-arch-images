@@ -3,10 +3,12 @@ name: kured
 on:
   push:
     paths:
+      - '.github/workflows/kured.yml'
       - 'build/kured/**'
       - '!build/kured/*.md'
   pull_request:
     paths:
+      - '.github/workflows/kured.yml'
       - 'build/kured/**'
       - '!build/kured/*.md'
     branches:

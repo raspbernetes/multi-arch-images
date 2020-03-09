@@ -3,10 +3,12 @@ name: helm-operator
 on:
   push:
     paths:
+      - '.github/workflows/helm-operator.yml'
       - 'build/helm-operator/**'
       - '!build/helm-operator/*.md'
   pull_request:
     paths:
+      - '.github/workflows/helm-operator.yml'
       - 'build/helm-operator/**'
       - '!build/helm-operator/*.md'
     branches:

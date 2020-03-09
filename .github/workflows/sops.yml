@@ -3,10 +3,12 @@ name: sops
 on:
   push:
     paths:
+      - '.github/workflows/sops.yml'
       - 'build/sops/**'
       - '!build/sops/*.md'
   pull_request:
     paths:
+      - '.github/workflows/sops.yml'
       - 'build/sops/**'
       - '!build/sops/*.md'
     branches:

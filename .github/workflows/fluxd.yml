@@ -3,10 +3,12 @@ name: fluxd
 on:
   push:
     paths:
+      - '.github/workflows/fluxd.yml'
       - 'build/fluxd/**'
       - '!build/fluxd/*.md'
   pull_request:
     paths:
+      - '.github/workflows/fluxd.yml'
       - 'build/fluxd/**'
       - '!build/fluxd/*.md'
     branches:

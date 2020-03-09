@@ -3,10 +3,12 @@ name: kustomize
 on:
   push:
     paths:
+      - '.github/workflows/kustomize.yml'
       - 'build/kustomize/**'
       - '!build/kustomize/*.md'
   pull_request:
     paths:
+      - '.github/workflows/kustomize.yml'
       - 'build/kustomize/**'
       - '!build/kustomize/*.md'
     branches:
