@@ -24,7 +24,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go build -o helm-operator ./cmd/helm-operator && \
     curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
     curl -L -o /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz" && \
-    tar -xvf /tmp/helm-${HELM_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
+    tar -xvf /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm2 && \
     chmod +x /usr/bin/helm2 && \
     curl -L -o /tmp/helm-${HELM3_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-${HELM3_VERSION}-linux-${GOARCH}.tar.gz" && \
