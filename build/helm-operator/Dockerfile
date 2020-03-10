@@ -8,10 +8,6 @@ ENV GO111MODULE=on \
 
 RUN apk add --no-cache ca-certificates 'git>=2.12.0' curl bash
 
-ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/known_hosts.sh /known_hosts.sh
-ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/ssh_config /ssh_config
-ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/helm-repositories.yaml /helm-repositories.yaml
-
 WORKDIR /go/src/github.com/fluxcd/helm-operator
 
 SHELL ["/bin/bash", "-c"]
@@ -23,7 +19,6 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     echo "GOARCH=${GOARCH}" && \
     echo "GOARM=${GOARM}" && \
     git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/helm-operator.git . && \
-    go build -o helm-operator ./cmd/helm-operator && \
     export HELM2_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM2_VERSION ./docker/helm2.version))") && \
     export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \  
     export KUBECTL_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep KUBECTL_VERSION ./docker/kubectl.version))") && \
@@ -32,16 +27,15 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     echo "KUBECTL_VERSION=${KUBECTL_VERSION}" && \
     curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
     curl -L -o /tmp/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz" && \
-    ls -la /tmp && \
     tar -xvf /tmp/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm2 && \
     chmod +x /usr/bin/helm2 && \
     rm -rf /tmp/* && \
     curl -L -o /tmp/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz" && \
-    ls -la /tmp && \
     tar -xvf /tmp/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm3 && \
-    chmod +x /usr/bin/helm3
+    chmod +x /usr/bin/helm3 && \
+    go build -o helm-operator ./cmd/helm-operator
 
 FROM alpine:3.10
 
@@ -53,9 +47,9 @@ RUN apk add --no-cache openssh-client ca-certificates tini 'git>=2.12.0' socat c
 
 RUN mkdir -p /var/fluxd/helm/repository/cache/
 
-COPY --from=build /helm-repositories.yaml /var/fluxd/helm/repository/repositories.yaml
-COPY --from=build /ssh_config /etc/ssh/ssh_config
-COPY --from=build /known_hosts.sh /home/flux/known_hosts.sh
+COPY --from=build /go/src/github.com/fluxcd/helm-operator/docker/helm-repositories.yaml /var/fluxd/helm/repository/repositories.yaml
+COPY --from=build /go/src/github.com/fluxcd/helm-operator/docker/ssh_config /etc/ssh/ssh_config
+COPY --from=build /go/src/github.com/fluxcd/helm-operator/docker/known_hosts.sh /home/flux/known_hosts.sh
 RUN chmod +x /home/flux/known_hosts.sh \
     && sh /home/flux/known_hosts.sh /etc/ssh/ssh_known_hosts \
     && rm -f /home/flux/known_hosts.sh
