@@ -17,11 +17,11 @@ WORKDIR /go/src/github.com/fluxcd/helm-operator
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
-	export HELM2_VERSION =$(echo "$(cut -d'=' -f2 <<< $(grep HELM2_VERSION ./docker/helm2.version))") && \
-    export HELM3_VERSION =$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \
-    export KUBECTL_VERSION =$(echo "$(cut -d'=' -f2 <<< $(grep KUBECTL_VERSION ./docker/kubectl.version))") && \
     git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/helm-operator.git . && \
     go build -o helm-operator ./cmd/helm-operator && \
+    export HELM2_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM2_VERSION ./docker/helm2.version))") && \
+    export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \
+    export KUBECTL_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep KUBECTL_VERSION ./docker/kubectl.version))") && \
     curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
     curl -L -o /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz" && \
     tar -xvf /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
