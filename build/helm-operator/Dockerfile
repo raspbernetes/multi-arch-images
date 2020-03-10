@@ -6,7 +6,7 @@ ARG TARGETPLATFORM
 ENV GO111MODULE=on \
     CGO_ENABLED=0
 
-RUN apk add --no-cache ca-certificates 'git>=2.12.0' curl
+RUN apk add --no-cache ca-certificates 'git>=2.12.0' curl bash
 
 ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/known_hosts.sh /known_hosts.sh
 ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/ssh_config /ssh_config
@@ -14,21 +14,32 @@ ADD https://raw.githubusercontent.com/fluxcd/helm-operator/${VERSION}/docker/hel
 
 WORKDIR /go/src/github.com/fluxcd/helm-operator
 
+SHELL ["/bin/bash", "-c"]
+
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    echo "GOOS=${GOOS}" && \
+    echo "GOARCH=${GOARCH}" && \
+    echo "GOARM=${GOARM}" && \
     git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/helm-operator.git . && \
     go build -o helm-operator ./cmd/helm-operator && \
     export HELM2_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM2_VERSION ./docker/helm2.version))") && \
-    export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \
+    export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \  
     export KUBECTL_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep KUBECTL_VERSION ./docker/kubectl.version))") && \
+    echo "HELM2_VERSION=${HELM2_VERSION}" && \
+    echo "HELM3_VERSION=${HELM3_VERSION}" && \
+    echo "KUBECTL_VERSION=${KUBECTL_VERSION}" && \
     curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
-    curl -L -o /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz" && \
-    tar -xvf /tmp/helm-${HELM2_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
+    curl -L -o /tmp/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz" && \
+    ls -la /tmp && \
+    tar -xvf /tmp/helm-v${HELM2_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm2 && \
     chmod +x /usr/bin/helm2 && \
-    curl -L -o /tmp/helm-${HELM3_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-${HELM3_VERSION}-linux-${GOARCH}.tar.gz" && \
-    tar -xvf /tmp/helm-${HELM3_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
+    rm -rf /tmp/* && \
+    curl -L -o /tmp/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz "https://get.helm.sh/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz" && \
+    ls -la /tmp && \
+    tar -xvf /tmp/helm-v${HELM3_VERSION}-linux-${GOARCH}.tar.gz -C /tmp && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm3 && \
     chmod +x /usr/bin/helm3
 
