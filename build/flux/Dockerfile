@@ -11,8 +11,8 @@ RUN apk add --no-cache openssh-client curl ca-certificates tini git gnutls gnupg
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kubectl.version /home/flux/kubectl.version
-ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kubectl.version /home/flux/kustomize.version
-ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kubectl.version /home/flux/sops.version
+ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kustomize.version /home/flux/kustomize.version
+ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/sops.version /home/flux/sops.version
 
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/known_hosts.sh /home/flux/known_hosts.sh
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/ssh_config /etc/ssh/ssh_config
