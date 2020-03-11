@@ -11,8 +11,8 @@ RUN apk add --no-cache openssh-client curl ca-certificates tini git gnutls gnupg
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kubectl.version /home/flux/kubectl.version
-ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kustomize.version /home/flux/kustomize.version
-ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/sops.version /home/flux/sops.version
+# ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kustomize.version /home/flux/kustomize.version
+# ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/sops.version /home/flux/sops.version
 
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/known_hosts.sh /home/flux/known_hosts.sh
 ADD https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/ssh_config /etc/ssh/ssh_config
@@ -34,13 +34,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     curl -L -o /usr/local/bin/fluxctl https://github.com/fluxcd/flux/releases/download/${VERSION}/fluxctl_linux_${GOARCH} && \
     chmod +x /usr/local/bin/fluxctl
 
-COPY --from=raspbernetes/fluxd:latest /usr/local/bin/fluxd /usr/local/bin/fluxd
+COPY --from=raspbernetes/fluxd:1.18.0 /usr/local/bin/fluxd /usr/local/bin/fluxd
 RUN chmod +x /usr/local/bin/fluxd
 
-COPY --from=raspbernetes/kustomize:latest /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=raspbernetes/kustomize:v3.5.4 /usr/local/bin/kustomize /usr/local/bin/kustomize
 RUN chmod +x /usr/local/bin/kustomize
 
-COPY --from=raspbernetes/sops:latest /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=raspbernetes/sops:v3.5.0 /usr/local/bin/sops /usr/local/bin/sops
 RUN chmod +x /usr/local/bin/sops
 
 COPY --from=quay.io/squaremo/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
