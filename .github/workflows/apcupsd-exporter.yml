@@ -1,0 +1,60 @@
+name: apcupsd-exporter
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apcupsd-exporter.yml'
+      - 'build/apcupsd-exporter/**'
+      - '!build/apcupsd-exporter/*.md'
+  pull_request:
+    paths:
+      - '.github/workflows/apcupsd-exporter.yml'
+      - 'build/apcupsd-exporter/**'
+      - '!build/apcupsd-exporter/*.md'
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/apcupsd-exporter/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/apcupsd-exporter:${{ github.sha }} \
+            -f ./build/apcupsd-exporter/Dockerfile \
+            ./build/apcupsd-exporter/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/apcupsd-exporter:latest \
+            --tag raspbernetes/apcupsd-exporter:${{ env.VERSION }} \
+            --tag k8sathome/apcupsd-exporter:${{ env.VERSION }} \
+            -f ./build/apcupsd-exporter/Dockerfile \
+            ./build/apcupsd-exporter/ \
+            --push
