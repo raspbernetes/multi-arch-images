@@ -48,6 +48,11 @@ jobs:
           curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
           jq -r ".tag_name" > build/kured/.version
 
+      - name: Fetch apcupsd-exporter latest git SHA (no version)
+        run: |
+          curl -sL https://api.github.com/repos/mdlayher/apcupsd_exporter/commits | \
+          jq -r '.[0] .sha' > build/apcupsd-exporter/.version
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
