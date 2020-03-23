@@ -10,11 +10,7 @@ RUN wget https://github.com/squaremo/kubeyaml/archive/${VERSION}.tar.gz \
 
 WORKDIR /home/kubeyaml
 
-#COPY kubeyaml.py requirements.txt ./
-
 RUN /pyinstaller/pyinstaller.sh --noconfirm --clean kubeyaml.py
-#RUN ls -R /src/
-#RUN cat /src/warn*.txt
 
 FROM alpine:3.9
 
