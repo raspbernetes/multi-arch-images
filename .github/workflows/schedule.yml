@@ -53,6 +53,12 @@ jobs:
           curl -sL https://api.github.com/repos/mdlayher/apcupsd_exporter/commits | \
           jq -r '.[0] .sha' > build/apcupsd-exporter/.version
 
+      - name: Fetch kubeyaml release version
+        run: |
+          curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
+          jq -r ".tag_name" > build/kubeyaml/.version
+
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
