@@ -15,7 +15,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
     git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-aws.git . && \
     go mod init && \
-    go build -o velero-plugin-for-aws ./velero-plugin-for-aws
+    go build -mod=mod -o velero-plugin-for-aws ./velero-plugin-for-aws
 
 FROM alpine:3.11
 
