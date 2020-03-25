@@ -43,7 +43,7 @@ RUN chmod +x /usr/local/bin/kustomize
 COPY --from=raspbernetes/sops:v3.5.0 /usr/local/bin/sops /usr/local/bin/sops
 RUN chmod +x /usr/local/bin/sops
 
-COPY --from=quay.io/squaremo/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
+COPY --from=raspbernetes/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
 ENV PATH=/bin:/usr/bin:/usr/local/bin:/usr/lib/kubeyaml
 
 ENTRYPOINT ["/sbin/tini", "--", "fluxd"]
