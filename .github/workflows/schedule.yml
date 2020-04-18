@@ -1,6 +1,9 @@
 name: Get latest release versions
 
 on:
+  push:
+    paths:
+      - '.github/workflows/schedule.yml'
   schedule:
     - cron: '0 10 * * *'
 
