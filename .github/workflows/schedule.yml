@@ -18,7 +18,7 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
           jq -r ".tag_name" > build/flux/.version
 
-      # This API endpoint will need to change when helm-operator has an offical release
+      # This API endpoint will need to change when helm-operator has an official release
       - name: Fetch helm-operator release version
         run: |
           curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
