@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/schedule.yml'
+    branches:
+      - master
   schedule:
     - cron: '0 10 * * *'
 
@@ -63,8 +65,8 @@ jobs:
 
       - name: Fetch Velero AWS plugin release version
         run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
-          jq -r ".tag_name" > build/velero-gcp-plugin/.version
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
+          jq -r ".tag_name" > build/velero-aws-plugin/.version
 
       - name: Fetch Velero GCP plugin release version
         run: |
