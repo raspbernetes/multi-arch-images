@@ -1,0 +1,60 @@
+name: velero-aws-plugin
+
+on:
+  push:
+    paths:
+      - '.github/workflows/velero-aws-plugin.yml'
+      - 'build/velero-aws-plugin/**'
+      - '!build/velero-aws-plugin/*.md'
+  pull_request:
+    paths:
+      - '.github/workflows/velero-aws-plugin.yml'
+      - 'build/velero-aws-plugin/**'
+      - '!build/velero-aws-plugin/*.md'
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/velero-aws-plugin/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/velero-aws-plugin:${{ github.sha }} \
+            -f ./build/velero-aws-plugin/Dockerfile \
+            ./build/velero-aws-plugin/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag k8sathome/velero-aws-plugin:latest \
+            --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
+            --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
+            -f ./build/velero-aws-plugin/Dockerfile \
+            ./build/velero-aws-plugin/ \
+            --push
