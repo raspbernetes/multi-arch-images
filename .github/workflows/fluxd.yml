@@ -6,13 +6,6 @@ on:
       - '.github/workflows/fluxd.yml'
       - 'build/fluxd/**'
       - '!build/fluxd/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/fluxd.yml'
-      - 'build/fluxd/**'
-      - '!build/fluxd/*.md'
-    branches:
-      - master
 
 jobs:
   build:

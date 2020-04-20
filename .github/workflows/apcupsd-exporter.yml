@@ -6,13 +6,6 @@ on:
       - '.github/workflows/apcupsd-exporter.yml'
       - 'build/apcupsd-exporter/**'
       - '!build/apcupsd-exporter/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/apcupsd-exporter.yml'
-      - 'build/apcupsd-exporter/**'
-      - '!build/apcupsd-exporter/*.md'
-    branches:
-      - master
 
 jobs:
   build:

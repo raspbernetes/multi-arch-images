@@ -6,13 +6,6 @@ on:
       - '.github/workflows/pihole-exporter.yml'
       - 'build/pihole-exporter/**'
       - '!build/pihole-exporter/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/pihole-exporter.yml'
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
-    branches:
-      - master
 
 jobs:
   build:

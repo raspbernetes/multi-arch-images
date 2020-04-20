@@ -6,13 +6,6 @@ on:
       - '.github/workflows/gatekeeper.yml'
       - 'build/gatekeeper/**'
       - '!build/gatekeeper/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/gatekeeper.yml'
-      - 'build/gatekeeper/**'
-      - '!build/gatekeeper/*.md'
-    branches:
-      - master
 
 jobs:
   build:
