@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/schedule.yml'
+    branches:
+      - master
   schedule:
     - cron: '0 10 * * *'
 
@@ -60,6 +62,16 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
           jq -r ".tag_name" > build/kubeyaml/.version
+
+      - name: Fetch Velero AWS plugin release version
+        run: |
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
+          jq -r ".tag_name" > build/velero-aws-plugin/.version
+
+      - name: Fetch Velero GCP plugin release version
+        run: |
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
+          jq -r ".tag_name" > build/velero-gcp-plugin/.version
 
       - name: Check for modified files
         id: git-check
