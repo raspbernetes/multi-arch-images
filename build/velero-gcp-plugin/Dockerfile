@@ -1,7 +1,7 @@
 FROM golang:1.14-alpine as build
 
-ARG VERSION=v1.0.0 \
-    TARGETPLATFORM
+ARG VERSION=v1.0.0
+ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0
@@ -19,7 +19,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM alpine:3.11
 
-WORKDIR /plugin
+WORKDIR /plugins
 
 RUN apk add --no-cache bash ca-certificates
 
