@@ -32,7 +32,7 @@ jobs:
         if: github.ref != 'refs/heads/master'
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kubectl:${{ github.sha }} \
             -f ./build/kubectl/Dockerfile \
@@ -43,7 +43,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kubectl:latest \
             --tag raspbernetes/kubectl:${{ env.VERSION }} \
