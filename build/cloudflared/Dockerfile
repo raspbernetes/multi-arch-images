@@ -5,7 +5,7 @@ ARG TARGETPLATFORM
 ENV GO111MODULE=on \
     CGO_ENABLED=0
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git make
 
 WORKDIR /go/src/github.com/cloudflare/cloudflared/
 
@@ -15,11 +15,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone https://github.com/cloudflare/cloudflared.git . && \
     make cloudflared
 
-FROM gcr.io/distroless/base-debian10:nonroot
+# FROM gcr.io/distroless/static:nonroot
 
-COPY --from=builder --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
+# COPY --from=builder --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
 
-USER nonroot:nonroot
+RUN cp /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
+
+# USER nonroot:nonroot
 
 ENTRYPOINT ["cloudflared", "--no-autoupdate"]
 
