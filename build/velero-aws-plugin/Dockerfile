@@ -19,7 +19,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM alpine:3.11
 
-WORKDIR /plugin
+WORKDIR /plugins
 
 RUN apk add --no-cache bash ca-certificates
 
