@@ -1,0 +1,53 @@
+name: cloudflared
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cloudflared.yml'
+      - 'build/cloudflared/**'
+      - '!build/cloudflared/*.md'
+
+jobs:
+  build:
+    env:
+      VERSION: $(cat build/cloudflared/.version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/cloudflared:${{ github.sha }} \
+            -f ./build/cloudflared/Dockerfile \
+            ./build/cloudflared/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/cloudflared:latest \
+            --tag raspbernetes/cloudflared:${{ env.VERSION }} \
+            --tag k8sathome/cloudflaredd:${{ env.VERSION }} \
+            -f ./build/cloudflared/Dockerfile \
+            ./build/cloudflared/ \
+            --push
