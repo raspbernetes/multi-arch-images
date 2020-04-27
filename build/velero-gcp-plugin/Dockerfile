@@ -25,4 +25,4 @@ RUN apk add --no-cache bash ca-certificates
 
 COPY --from=build /go/src/github.com/vmware-tanzu/velero-plugin-for-gcp/velero-plugin-for-gcp ./velero-plugin-for-gcp
 
-ENTRYPOINT ["/bin/bash", "-c", "cp /plugins/* /target/."]
+ENTRYPOINT ["/bin/bash", "-c", "cp -r /plugins/* /target/."]
