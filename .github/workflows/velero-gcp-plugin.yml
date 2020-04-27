@@ -1,17 +1,17 @@
-name: velero-aws-plugin
+name: velero-gcp-plugin
 
 on:
   push:
     paths:
-      - '.github/workflows/velero-aws-plugin.yml'
-      - 'build/velero-aws-plugin/**'
-      - '!build/velero-aws-plugin/*.md'
+      - '.github/workflows/velero-gcp-plugin.yml'
+      - 'build/velero-gcp-plugin/**'
+      - '!build/velero-gcp-plugin/*.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: $(cat build/velero-aws-plugin/.version)
+      VERSION: $(cat build/velero-gcp-plugin/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -34,9 +34,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/velero-aws-plugin:${{ github.sha }} \
-            -f ./build/velero-aws-plugin/Dockerfile \
-            ./build/velero-aws-plugin/ \
+            --tag raspbernetes/velero-gcp-plugin:${{ github.sha }} \
+            -f ./build/velero-gcp-plugin/Dockerfile \
+            ./build/velero-gcp-plugin/ \
             --push
 
       - name: Build Container Image
@@ -45,9 +45,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag k8sathome/velero-aws-plugin:latest \
-            --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
-            --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
-            -f ./build/velero-aws-plugin/Dockerfile \
-            ./build/velero-aws-plugin/ \
+            --tag k8sathome/velero-gcp-plugin:latest \
+            --tag raspbernetes/velero-gcp-plugin:${{ env.VERSION }} \
+            --tag k8sathome/velero-gcp-plugin:${{ env.VERSION }} \
+            -f ./build/velero-gcp-plugin/Dockerfile \
+            ./build/velero-gcp-plugin/ \
             --push
