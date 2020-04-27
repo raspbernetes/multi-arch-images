@@ -1,16 +1,16 @@
-name: helm-operator
+name: prometheus-operator
 
 on:
   push:
     paths:
-      - '.github/workflows/helm-operator.yml'
-      - 'build/helm-operator/**'
-      - '!build/helm-operator/*.md'
+      - '.github/workflows/prometheus-operator.yml'
+      - 'build/prometheus-operator/**'
+      - '!build/prometheus-operator/*.md'
 
 jobs:
   build:
     env:
-      VERSION: $(cat build/helm-operator/.version)
+      VERSION: $(cat build/prometheus-operator/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,9 +34,10 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/helm-operator:${{ github.sha }} \
-            -f ./build/helm-operator/Dockerfile \
-            --push ./build/helm-operator/
+            --tag raspbernetes/prometheus-operator:${{ github.sha }} \
+            -f ./build/prometheus-operator/Dockerfile \
+            ./build/prometheus-operator/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -44,8 +45,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/helm-operator:latest \
-            --tag raspbernetes/helm-operator:${{ env.VERSION }} \
-            --tag k8sathome/helm-operator:${{ env.VERSION }} \
-            -f ./build/helm-operator/Dockerfile \
-            --push ./build/helm-operator/
+            --tag raspbernetes/prometheus-operator:latest \
+            --tag raspbernetes/prometheus-operator:${{ env.VERSION }} \
+            --tag k8sathome/prometheus-operator:${{ env.VERSION }} \
+            -f ./build/prometheus-operator/Dockerfile \
+            ./build/prometheus-operator/ \
+            --push

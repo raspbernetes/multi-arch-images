@@ -6,13 +6,6 @@ on:
       - '.github/workflows/flux.yml'
       - 'build/flux/**'
       - '!build/flux/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/flux.yml'
-      - 'build/flux/**'
-      - '!build/flux/*.md'
-    branches:
-      - master
 
 jobs:
   build:

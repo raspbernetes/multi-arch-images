@@ -6,13 +6,6 @@ on:
       - '.github/workflows/kubeyaml.yml'
       - 'build/kubeyaml/**'
       - '!build/kubeyaml/*.md'
-  pull_request:
-    paths:
-      - '.github/workflows/kubeyaml.yml'
-      - 'build/kubeyaml/**'
-      - '!build/kubeyaml/*.md'
-    branches:
-      - master
 
 jobs:
   build:

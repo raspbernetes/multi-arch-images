@@ -1,16 +1,16 @@
-name: helm-operator
+name: prometheus-operator-config-reloader
 
 on:
   push:
     paths:
-      - '.github/workflows/helm-operator.yml'
-      - 'build/helm-operator/**'
-      - '!build/helm-operator/*.md'
+      - '.github/workflows/prometheus-operator-config-reloader.yml'
+      - 'build/prometheus-operator-config-reloader/**'
+      - '!build/prometheus-operator-config-reloader/*.md'
 
 jobs:
   build:
     env:
-      VERSION: $(cat build/helm-operator/.version)
+      VERSION: $(cat build/prometheus-operator-config-reloader/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,9 +34,10 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/helm-operator:${{ github.sha }} \
-            -f ./build/helm-operator/Dockerfile \
-            --push ./build/helm-operator/
+            --tag raspbernetes/prometheus-operator-config-reloader:${{ github.sha }} \
+            -f ./build/prometheus-operator-config-reloader/Dockerfile \
+            ./build/prometheus-operator-config-reloader/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -44,8 +45,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/helm-operator:latest \
-            --tag raspbernetes/helm-operator:${{ env.VERSION }} \
-            --tag k8sathome/helm-operator:${{ env.VERSION }} \
-            -f ./build/helm-operator/Dockerfile \
-            --push ./build/helm-operator/
+            --tag raspbernetes/prometheus-operator-config-reloader:latest \
+            --tag raspbernetes/prometheus-operator-config-reloader:${{ env.VERSION }} \
+            --tag k8sathome/prometheus-operator-config-reloader:${{ env.VERSION }} \
+            -f ./build/prometheus-operator-config-reloader/Dockerfile \
+            ./build/prometheus-operator-config-reloader/ \
+            --push
