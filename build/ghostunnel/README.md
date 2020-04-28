@@ -1,3 +1,3 @@
-![velero-aws-plugin](https://github.com/raspbernetes/multi-arch-images/workflows/velero-aws-plugin/badge.svg)
+![ghostunnel](https://github.com/raspbernetes/multi-arch-images/workflows/ghostunnel/badge.svg)
 
-# Velero AWS Plugin
+# square/ghostunnel
