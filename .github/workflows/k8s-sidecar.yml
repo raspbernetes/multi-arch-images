@@ -1,0 +1,53 @@
+name: k8s-sidecar
+
+on:
+  push:
+    paths:
+      - '.github/workflows/k8s-sidecar.yml'
+      - 'build/k8s-sidecar/**'
+      - '!build/k8s-sidecar/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/k8s-sidecar/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/k8s-sidecar:${{ github.sha }} \
+            -f ./build/k8s-sidecar/Dockerfile \
+            ./build/k8s-sidecar/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag k8sathome/k8s-sidecar:latest \
+            --tag raspbernetes/k8s-sidecar:${{ env.VERSION }} \
+            --tag k8sathome/k8s-sidecar:${{ env.VERSION }} \
+            -f ./build/k8s-sidecar/Dockerfile \
+            ./build/k8s-sidecar/ \
+            --push
