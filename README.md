@@ -18,6 +18,7 @@ This repository is only used to store the unofficial docker images that will be 
 | kubeyaml | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kubeyaml)](https://hub.docker.com/r/raspbernetes/kubeyaml) | `arm/arm64/amd64` | N/A |
 | helm-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/helm-operator)](https://hub.docker.com/r/raspbernetes/helm-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/helm-operator/147)](https://github.com/fluxcd/helm-operator/issues/147)|
 | prometheus-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/prometheus-operator)](https://hub.docker.com/r/raspbernetes/prometheus-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/coreos/prometheus-operator/2946)](https://github.com/coreos/prometheus-operator/issues/2946)|
+| ghostunnel | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ghostunnel)](https://hub.docker.com/r/raspbernetes/ghostunnel) | `arm/arm64/amd64` | N/A |
 
 ## Future Images
 
