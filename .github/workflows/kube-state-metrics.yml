@@ -1,17 +1,17 @@
-name: ghostunnel
+name: kube-state-metrics
 
 on:
   push:
     paths:
-      - '.github/workflows/ghostunnel.yml'
-      - 'build/ghostunnel/**'
-      - '!build/ghostunnel/*.md'
+      - '.github/workflows/kube-state-metrics.yml'
+      - 'build/kube-state-metrics/**'
+      - '!build/kube-state-metrics/*.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: $(cat build/ghostunnel/.version)
+      VERSION: $(cat build/kube-state-metrics/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -34,9 +34,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/ghostunnel:${{ github.sha }} \
-            -f ./build/ghostunnel/Dockerfile \
-            ./build/ghostunnel/ \
+            --tag raspbernetes/kube-state-metrics:${{ github.sha }} \
+            -f ./build/kube-state-metrics/Dockerfile \
+            ./build/kube-state-metrics/ \
             --push
 
       - name: Build Container Image
@@ -45,9 +45,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag k8sathome/ghostunnel:latest \
-            --tag raspbernetes/ghostunnel:${{ env.VERSION }} \
-            --tag k8sathome/ghostunnel:${{ env.VERSION }} \
-            -f ./build/ghostunnel/Dockerfile \
-            ./build/ghostunnel/ \
+            --tag k8sathome/kube-state-metrics:latest \
+            --tag raspbernetes/kube-state-metrics:${{ env.VERSION }} \
+            --tag k8sathome/kube-state-metrics:${{ env.VERSION }} \
+            -f ./build/kube-state-metrics/Dockerfile \
+            ./build/kube-state-metrics/ \
             --push
