@@ -90,6 +90,11 @@ jobs:
           curl -sL https://api.github.com/repos/kiwigrid/k8s-sidecar/releases/latest | \
           jq -r ".tag_name" > build/k8s-sidecar/.version
 
+      - name: Fetch ghostunnel release version
+        run: |
+          curl -sL https://api.github.com/repos/square/ghostunnel/releases/latest | \
+          jq -r ".tag_name" > build/ghostunnel/.version
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
