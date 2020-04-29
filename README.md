@@ -21,6 +21,8 @@ This repository is only used to store the unofficial docker images that will be 
 | k8s-sidecar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/k8s-sidecar)](https://hub.docker.com/r/raspbernetes/k8s-sidecar) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/kiwigrid/k8s-sidecar/48)](https://github.com/kiwigrid/k8s-sidecar/issues/48)|
 | ghostunnel | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ghostunnel)](https://hub.docker.com/r/raspbernetes/ghostunnel) | `arm/arm64/amd64` | N/A |
 | kube-state-metrics | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kube-state-metrics)](https://hub.docker.com/r/raspbernetes/kube-state-metrics) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/kube-state-metrics/1037)](https://github.com/kubernetes/kube-state-metrics/issues/1037) |
+| curl | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/curl)](https://hub.docker.com/r/raspbernetes/curl) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/curl/curl-docker/17)](https://github.com/curl/curl-docker/issues/17) |
+
 
 ## Future Images
 
