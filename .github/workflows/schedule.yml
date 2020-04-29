@@ -100,6 +100,12 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
           jq -r ".tag_name" > build/kube-state-metrics/.version
 
+      # DOES NOT CURRENTLY HAVE A RELEASE
+      # - name: Fetch curl release version
+      #   run: |
+      #     curl -sL https://api.github.com/repos/curl/curl-docker/releases/latest | \
+      #     jq -r ".tag_name" > build/curl/.version
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)

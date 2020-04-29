@@ -1,11 +1,11 @@
-name: cloudflared
+name: curl
 
 on:
   push:
     paths:
-      - '.github/workflows/cloudflared.yml'
-      - 'build/cloudflared/**'
-      - '!build/cloudflared/*.md'
+      - '.github/workflows/curl.yml'
+      - 'build/curl/**'
+      - '!build/curl/*.md'
 
 jobs:
   build:
@@ -28,15 +28,20 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Clone Repository
+        run: |
+          git clone https://github.com/curl/curl-docker.git
+          cd curl-docker
+          make setup
+
       - name: Build Container Image
         if: github.ref != 'refs/heads/master'
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/cloudflared:${{ github.sha }} \
-            -f ./build/cloudflared/Dockerfile \
-            ./build/cloudflared/ \
+            --tag raspbernetes/curl:${{ github.sha }} \
+            -f ./curl-docker/alpine/latest/Dockerfile \
+            ./curl-docker/alpine/latest/ \
             --push
 
       - name: Build Container Image
@@ -44,9 +49,9 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/cloudflared:latest \
-            --tag raspbernetes/cloudflared:${{ env.VERSION }} \
-            -f ./build/cloudflared/Dockerfile \
-            ./build/cloudflared/ \
+            --tag raspbernetes/curl:latest \
+            --tag raspbernetes/curl:${{ env.VERSION }} \
+            --tag k8sathome/curl:${{ env.VERSION }} \
+            -f ./curl-docker/alpine/latest/Dockerfile \
+            ./curl-docker/alpine/latest/ \
             --push
