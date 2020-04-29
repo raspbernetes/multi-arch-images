@@ -31,6 +31,8 @@ jobs:
       - name: Clone Repository
         run: |
           git clone https://github.com/curl/curl-docker.git
+          cd curl-docker
+          make setup
 
       - name: Build Container Image
         if: github.ref != 'refs/heads/master'
