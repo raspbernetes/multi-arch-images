@@ -85,6 +85,11 @@ jobs:
           curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
           jq -r ".tag_name" > build/prometheus-operator-config-reloader/.version
 
+      - name: Fetch k8s-sidecar release version
+        run: |
+          curl -sL https://api.github.com/repos/kiwigrid/k8s-sidecar/releases/latest | \
+          jq -r ".tag_name" > build/k8s-sidecar/.version
+
       - name: Fetch ghostunnel release version
         run: |
           curl -sL https://api.github.com/repos/square/ghostunnel/releases/latest | \
