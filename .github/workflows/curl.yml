@@ -9,6 +9,8 @@ on:
 
 jobs:
   build:
+    env:
+      VERSION: $(cat build/cloudflared/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,8 +50,8 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag raspbernetes/curl:latest \
-            --tag raspbernetes/curl:${{ LATEST_RELEASE_VERSION }} \
-            --tag k8sathome/curl:${{ LATEST_RELEASE_VERSION }} \
+            --tag raspbernetes/curl:${{ env.VERSION }} \
+            --tag k8sathome/curl:${{ env.VERSION }} \
             -f ./curl-docker/alpine/latest/Dockerfile \
             ./curl-docker/alpine/latest/ \
             --push
