@@ -9,8 +9,6 @@ on:
 
 jobs:
   build:
-    env:
-      VERSION: $(cat build/curl/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,7 +37,6 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/curl:${{ github.sha }} \
             -f ./curl-docker/alpine/latest/Dockerfile \
             ./curl-docker/alpine/latest/ \
@@ -50,10 +47,9 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/curl:latest \
-            --tag raspbernetes/curl:${{ env.VERSION }} \
-            --tag k8sathome/curld:${{ env.VERSION }} \
+            --tag raspbernetes/curl:${{ LATEST_RELEASE_VERSION }} \
+            --tag k8sathome/curl:${{ LATEST_RELEASE_VERSION }} \
             -f ./curl-docker/alpine/latest/Dockerfile \
             ./curl-docker/alpine/latest/ \
             --push

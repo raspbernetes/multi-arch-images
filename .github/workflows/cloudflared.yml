@@ -47,7 +47,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cloudflared:latest \
             --tag raspbernetes/cloudflared:${{ env.VERSION }} \
-            --tag k8sathome/cloudflaredd:${{ env.VERSION }} \
             -f ./build/cloudflared/Dockerfile \
             ./build/cloudflared/ \
             --push
