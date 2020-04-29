@@ -20,6 +20,7 @@ This repository is only used to store the unofficial docker images that will be 
 | prometheus-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/prometheus-operator)](https://hub.docker.com/r/raspbernetes/prometheus-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/coreos/prometheus-operator/2946)](https://github.com/coreos/prometheus-operator/issues/2946)|
 | k8s-sidecar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/k8s-sidecar)](https://hub.docker.com/r/raspbernetes/k8s-sidecar) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/kiwigrid/k8s-sidecar/48)](https://github.com/kiwigrid/k8s-sidecar/issues/48)|
 | ghostunnel | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ghostunnel)](https://hub.docker.com/r/raspbernetes/ghostunnel) | `arm/arm64/amd64` | N/A |
+| kube-state-metrics | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kube-state-metrics)](https://hub.docker.com/r/raspbernetes/kube-state-metrics) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/kube-state-metrics/1037)](https://github.com/kubernetes/kube-state-metrics/issues/1037) |
 
 ## Future Images
 
