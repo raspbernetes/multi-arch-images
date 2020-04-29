@@ -1,0 +1,53 @@
+name: kube-state-metrics
+
+on:
+  push:
+    paths:
+      - '.github/workflows/kube-state-metrics.yml'
+      - 'build/kube-state-metrics/**'
+      - '!build/kube-state-metrics/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/kube-state-metrics/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/kube-state-metrics:${{ github.sha }} \
+            -f ./build/kube-state-metrics/Dockerfile \
+            ./build/kube-state-metrics/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag k8sathome/kube-state-metrics:latest \
+            --tag raspbernetes/kube-state-metrics:${{ env.VERSION }} \
+            --tag k8sathome/kube-state-metrics:${{ env.VERSION }} \
+            -f ./build/kube-state-metrics/Dockerfile \
+            ./build/kube-state-metrics/ \
+            --push
