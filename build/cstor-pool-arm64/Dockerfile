@@ -1,8 +1,10 @@
-FROM arm64v8/ubuntu AS build
-
-RUN apt-get update && apt-get install -y build-essential wget devscripts debhelper dh-exec dh-autoreconf
+FROM ubuntu AS build
 
 WORKDIR /root
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y build-essential wget devscripts debhelper dh-exec dh-autoreconf
 
 RUN wget http://archive.ubuntu.com/ubuntu/pool/main/j/json-c/json-c_0.11-4ubuntu2.dsc && \
   wget http://archive.ubuntu.com/ubuntu/pool/main/j/json-c/json-c_0.11.orig.tar.gz && \
