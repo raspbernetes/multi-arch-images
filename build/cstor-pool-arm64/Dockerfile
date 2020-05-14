@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:focal AS build
+FROM arm64v8/ubuntu AS build
 
 RUN apt update && apt install -y build-essential wget devscripts debhelper dh-exec dh-autoreconf
 
