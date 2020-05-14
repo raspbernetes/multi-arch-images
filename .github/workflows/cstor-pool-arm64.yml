@@ -29,8 +29,7 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cstor-pool-arm64:${{ github.sha }} \
             -f ./build/cstor-pool-arm64/Dockerfile \
-            ./build/cstor-pool-arm64/ \
-            --push
+            ./build/cstor-pool-arm64/
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -40,5 +39,17 @@ jobs:
             --tag raspbernetes/cstor-pool-arm64:latest \
             --tag raspbernetes/cstor-pool-arm64:${{ env.VERSION }} \
             -f ./build/cstor-pool-arm64/Dockerfile \
-            ./build/cstor-pool-arm64/ \
-            --push
+            ./build/cstor-pool-arm64/
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker push \
+          raspbernetes/cstor-pool-arm64:${{ github.sha }}
+
+      - name: Push Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push \
+          raspbernetes/cstor-pool-arm64:latest \
+          raspbernetes/cstor-pool-arm64:${{ env.VERSION }}
