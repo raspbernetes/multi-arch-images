@@ -22,34 +22,37 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
       - name: Build Container Image
         if: github.ref != 'refs/heads/master'
         run: |
-          docker build \
+          docker buildx build \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cstor-pool-arm64:${{ github.sha }} \
             -f ./build/cstor-pool-arm64/Dockerfile \
-            ./build/cstor-pool-arm64/
+            ./build/cstor-pool-arm64/ \
+            --push
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
         run: |
-          docker build \
+          docker buildx build \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cstor-pool-arm64:latest \
             --tag raspbernetes/cstor-pool-arm64:${{ env.VERSION }} \
             -f ./build/cstor-pool-arm64/Dockerfile \
-            ./build/cstor-pool-arm64/
-
-      - name: Build Container Image
-        if: github.ref != 'refs/heads/master'
-        run: |
-          docker push \
-          raspbernetes/cstor-pool-arm64:${{ github.sha }}
-
-      - name: Push Container Image
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker push \
-          raspbernetes/cstor-pool-arm64:latest \
-          raspbernetes/cstor-pool-arm64:${{ env.VERSION }}
+            ./build/cstor-pool-arm64/ \
+            --push

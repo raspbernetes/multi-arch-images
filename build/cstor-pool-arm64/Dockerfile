@@ -1,6 +1,6 @@
 FROM arm64v8/ubuntu AS build
 
-RUN apt update && apt install -y build-essential wget devscripts debhelper dh-exec dh-autoreconf
+RUN apt-get update && apt-get install -y build-essential wget devscripts debhelper dh-exec dh-autoreconf
 
 WORKDIR /root
 
