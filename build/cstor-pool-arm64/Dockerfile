@@ -11,7 +11,7 @@ RUN wget http://archive.ubuntu.com/ubuntu/pool/main/j/json-c/json-c_0.11-4ubuntu
   wget http://archive.ubuntu.com/ubuntu/pool/main/j/json-c/json-c_0.11-4ubuntu2.debian.tar.xz && \
   dpkg-source -x json-c_0.11-4ubuntu2.dsc && \
   cd json-c-0.11 && \
-  DEB_CFLAGS_SET="-Wno-error=implicit-fallthrough" debuild -us -uc
+  DEB_CFLAGS_SET="-Wno-error=implicit-fallthrough" debuild --no-lintian -us -uc
 
 FROM quay.io/openebs/cstor-pool-arm64:1.9.0 AS run
 
