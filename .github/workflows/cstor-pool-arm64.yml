@@ -1,0 +1,53 @@
+name: cstor-pool-arm64
+
+on:
+  push:
+    paths:
+      - '.github/workflows/cstor-pool-arm64.yml'
+      - 'build/cstor-pool-arm64/**'
+      - '!build/cstor-pool-arm64/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/cstor-pool-arm64/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/cstor-pool-arm64:${{ github.sha }} \
+            -f ./build/cstor-pool-arm64/Dockerfile \
+            ./build/cstor-pool-arm64/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/cstor-pool-arm64:latest \
+            --tag raspbernetes/cstor-pool-arm64:${{ env.VERSION }} \
+            --tag k8sathome/cstor-pool-arm64:${{ env.VERSION }} \
+            -f ./build/cstor-pool-arm64/Dockerfile \
+            ./build/cstor-pool-arm64/ \
+            --push
