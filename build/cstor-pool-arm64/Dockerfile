@@ -13,7 +13,7 @@ RUN wget http://archive.ubuntu.com/ubuntu/pool/main/j/json-c/json-c_0.11-4ubuntu
   cd json-c-0.11 && \
   DEB_CFLAGS_SET="-Wno-error=implicit-fallthrough" debuild --no-lintian -us -uc
 
-FROM quay.io/openebs/cstor-pool-arm64:1.9.0 AS run
+FROM quay.io/openebs/cstor-pool-arm64:1.10.0 AS run
 
 COPY --from=build /root/libjson-c2_0.11-4ubuntu2_arm64.deb /tmp/libjson-c2.deb
 RUN dpkg -i /tmp/libjson-c2.deb && rm /tmp/libjson-c2.deb
