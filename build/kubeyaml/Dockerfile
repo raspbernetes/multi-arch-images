@@ -12,7 +12,7 @@ WORKDIR /home/kubeyaml
 
 RUN /pyinstaller/pyinstaller.sh --noconfirm --clean kubeyaml.py
 
-FROM alpine:3.9
+FROM alpine:3.11
 
 ENTRYPOINT ["/usr/lib/kubeyaml/kubeyaml"]
 COPY --from=pyinstaller /home/kubeyaml/dist/kubeyaml /usr/lib/kubeyaml
