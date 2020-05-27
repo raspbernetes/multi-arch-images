@@ -17,7 +17,9 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM gcr.io/distroless/static:nonroot
 
-COPY --from=builder --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
+WORKDIR /
+
+COPY --from=build --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
 
 RUN cp /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
 
