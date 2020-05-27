@@ -13,7 +13,6 @@ This repository is only used to store the unofficial docker images that will be 
 | fluxd | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/fluxd)](https://hub.docker.com/r/raspbernetes/fluxd) | `arm/arm64/amd64` | N/A|
 | velero-aws-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-aws-plugin)](https://hub.docker.com/r/raspbernetes/velero-aws-plugin) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/vmware-tanzu/velero-plugin-for-aws/18)](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
 | velero-gcp-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-gcp-plugin)](https://hub.docker.com/r/raspbernetes/velero-gcp-plugin) | `arm/arm64/amd64` | N/A|
-| pihole-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/pihole-exporter)](https://hub.docker.com/r/raspbernetes/pihole-exporter) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/eko/pihole-exporter/13)](https://github.com/eko/pihole-exporter/issues/13)|
 | apcupsd-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/apcupsd-exporter)](https://hub.docker.com/r/raspbernetes/apcupsd-exporter) | `arm/arm64/amd64` | N/A |
 | kured | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kured)](https://hub.docker.com/r/raspbernetes/kured) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/weaveworks/kured/23)](https://github.com/weaveworks/kured/issues/23)|
 | kubeyaml | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kubeyaml)](https://hub.docker.com/r/raspbernetes/kubeyaml) | `arm/arm64/amd64` | N/A |
@@ -45,3 +44,4 @@ This repository is only used to store the unofficial docker images that will be 
 |------|---------------|
 | sealed secrets | `v0.10.0` |
 | curl | `7.70.0` |
+| pihole-exporter | `0.0.9` |

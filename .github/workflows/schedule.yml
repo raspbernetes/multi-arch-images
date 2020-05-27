@@ -45,11 +45,6 @@ jobs:
           curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
           jq -r ".tag_name" > build/sops/.version
 
-      - name: Fetch pihole release version
-        run: |
-          curl -sL https://api.github.com/repos/eko/pihole-exporter/releases/latest | \
-          jq -r ".tag_name" > build/pihole-exporter/.version
-
       - name: Fetch kured release version
         run: |
           curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
