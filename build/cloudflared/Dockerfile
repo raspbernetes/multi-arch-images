@@ -21,8 +21,6 @@ WORKDIR /
 
 COPY --from=build --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
 
-RUN cp /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
-
 USER nonroot:nonroot
 
 ENTRYPOINT ["cloudflared", "--no-autoupdate"]
