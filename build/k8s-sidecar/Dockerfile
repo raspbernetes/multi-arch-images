@@ -1,4 +1,4 @@
-FROM python:3.7-alpine3.11
+FROM python:3.8-alpine3.11
 ENV PYTHONUNBUFFERED=1
 ARG VERSION=0.1.110
 
