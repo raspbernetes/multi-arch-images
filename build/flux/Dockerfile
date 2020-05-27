@@ -37,7 +37,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 COPY --from=raspbernetes/fluxd:1.18.0 /usr/local/bin/fluxd /usr/local/bin/fluxd
 RUN chmod +x /usr/local/bin/fluxd
 
-COPY --from=raspbernetes/kustomize:v3.5.4 /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=raspbernetes/kustomize:v3.5.5 /usr/local/bin/kustomize /usr/local/bin/kustomize
 RUN chmod +x /usr/local/bin/kustomize
 
 COPY --from=raspbernetes/sops:v3.5.0 /usr/local/bin/sops /usr/local/bin/sops
