@@ -31,7 +31,6 @@ RUN apt update -y && apt install -y \
 
 WORKDIR /go/src/github.com/falcosecurity/falco
 
-# Checkout Project
 RUN git clone --depth 1 -b ${FALCO_VERSION} https://github.com/falcosecurity/falco.git .
 
 COPY script.sh .
