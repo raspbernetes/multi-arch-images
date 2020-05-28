@@ -13,7 +13,6 @@ This repository is only used to store the unofficial docker images that will be 
 | fluxd | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/fluxd)](https://hub.docker.com/r/raspbernetes/fluxd) | `arm/arm64/amd64` | N/A|
 | velero-aws-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-aws-plugin)](https://hub.docker.com/r/raspbernetes/velero-aws-plugin) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/vmware-tanzu/velero-plugin-for-aws/18)](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
 | velero-gcp-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-gcp-plugin)](https://hub.docker.com/r/raspbernetes/velero-gcp-plugin) | `arm/arm64/amd64` | N/A|
-| pihole-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/pihole-exporter)](https://hub.docker.com/r/raspbernetes/pihole-exporter) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/eko/pihole-exporter/13)](https://github.com/eko/pihole-exporter/issues/13)|
 | apcupsd-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/apcupsd-exporter)](https://hub.docker.com/r/raspbernetes/apcupsd-exporter) | `arm/arm64/amd64` | N/A |
 | kured | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kured)](https://hub.docker.com/r/raspbernetes/kured) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/weaveworks/kured/23)](https://github.com/weaveworks/kured/issues/23)|
 | kubeyaml | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kubeyaml)](https://hub.docker.com/r/raspbernetes/kubeyaml) | `arm/arm64/amd64` | N/A |
@@ -23,6 +22,11 @@ This repository is only used to store the unofficial docker images that will be 
 | ghostunnel | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ghostunnel)](https://hub.docker.com/r/raspbernetes/ghostunnel) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/square/ghostunnel/260)](https://github.com/square/ghostunnel/issues/260) |
 | kube-state-metrics | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kube-state-metrics)](https://hub.docker.com/r/raspbernetes/kube-state-metrics) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/kube-state-metrics/1037)](https://github.com/kubernetes/kube-state-metrics/issues/1037) |
 | cloudflared | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/cloudflared)](https://hub.docker.com/r/raspbernetes/cloudflared) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/cloudflare/cloudflared/140)](https://github.com/cloudflare/cloudflared/issues/140) |
+| csi-external-attacher | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-attacher)](https://hub.docker.com/r/raspbernetes/csi-external-attacher) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/external-attacher/224)](https://github.com/kubernetes-csi/external-attacher/pull/224) |
+| csi-external-provisioner | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-provisioner)](https://hub.docker.com/r/raspbernetes/csi-external-provisioner) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/external-provisioner/381)](https://github.com/kubernetes-csi/external-provisioner/issues/381) |
+| csi-external-resizer | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-resizer)](https://hub.docker.com/r/raspbernetes/csi-external-resizer) | `arm/arm64/amd64` | N/A |
+| csi-external-snapshotter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-snapshotter)](https://hub.docker.com/r/raspbernetes/csi-external-snapshotter) | `arm/arm64/amd64` | N/A |
+| csi-node-driver-registrar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-node-driver-registrar)](https://hub.docker.com/r/raspbernetes/csi-node-driver-registrar) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/node-driver-registrar/48)](https://github.com/kubernetes-csi/node-driver-registrar/issues/48) |
 
 ## Future Images
 
@@ -40,3 +44,4 @@ This repository is only used to store the unofficial docker images that will be 
 |------|---------------|
 | sealed secrets | `v0.10.0` |
 | curl | `7.70.0` |
+| pihole-exporter | `0.0.9` |

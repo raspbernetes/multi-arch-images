@@ -15,13 +15,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone https://github.com/cloudflare/cloudflared.git . && \
     make cloudflared
 
-# FROM gcr.io/distroless/static:nonroot
+FROM gcr.io/distroless/static:nonroot
 
-# COPY --from=builder --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
+WORKDIR /
 
-RUN cp /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
+COPY --from=build --chown=nonroot /go/src/github.com/cloudflare/cloudflared/cloudflared /usr/local/bin/
 
-# USER nonroot:nonroot
+USER nonroot:nonroot
 
 ENTRYPOINT ["cloudflared", "--no-autoupdate"]
 
