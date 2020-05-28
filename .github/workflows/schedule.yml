@@ -99,7 +99,12 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
           jq -r ".tag_name" > build/kube-state-metrics/.version
-
+      
+      - name: Fetch falco relese version
+        run: |
+          curl -sL https://api.github.com/repos/falcosecurity/falco/releases/latest | \
+          jq -r ".tag_name" > build/falco/.version
+          
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
