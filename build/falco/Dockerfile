@@ -7,7 +7,6 @@ ENV GO111MODULE=on \
     FALCO_VERSION=0.23.0  \
     BUILD_TYPE=release
 
-
 RUN apk add --no-cache git make
 
 WORKDIR /go/src/github.com/falcosecurity/falco
@@ -31,7 +30,7 @@ ENV PATH="/root/.local/bin/:${PATH}"
 RUN pip install --user avocado-framework==69.0
 RUN pip install --user avocado-framework-plugin-varianter-yaml-to-mux==69.0
 
-COPY --from=build  /go/src/github.com/falcosecurity/falco/binary/root /
+COPY --from=build /go/src/github.com/falcosecurity/falco/binary/root /
 
 ENTRYPOINT ["entrypoint"]
 CMD ["usage"]

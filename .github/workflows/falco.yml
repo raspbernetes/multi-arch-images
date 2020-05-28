@@ -20,7 +20,8 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
+          qemu-version: latest
 
       - name: Login to GitHub Docker Registry
         run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
@@ -33,9 +34,9 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=FALCO_VERSION=${{ env.VERSION }} \
             --tag raspbernetes/falco:${{ github.sha }} \
-            -f ./build/falco/*/Dockerfile \
+            -f ./build/falco/Dockerfile \
             ./build/falco/ \
             --push
 
@@ -44,9 +45,9 @@ jobs:
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=FALCO_VERSION=${{ env.VERSION }} \
             --tag raspbernetes/falco:latest \
             --tag raspbernetes/falco:${{ env.VERSION }} \
-            -f ./build/falco/*/Dockerfile \
+            -f ./build/falco/Dockerfile \
             ./build/fluxd/ \
             --push
