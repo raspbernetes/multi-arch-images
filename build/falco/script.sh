@@ -10,5 +10,5 @@ KERNELDIR=/lib/modules/$(ls /lib/modules)/build make -j4 all
 popd || exit
 
 # Symbolic Link to /usr/bin/*
-ls -s "$(pwd)/build/userspace/falco/falco" /usr/bin/falco
-ls -s "$(pwd)/build/scripts/falco-driver-loader" /usr/bin/falco-driver-loader
+ln -s "$(pwd)/build/userspace/falco/falco" /usr/bin/falco
+ln -s "$(pwd)/build/scripts/falco-driver-loader" /usr/bin/falco-driver-loader
