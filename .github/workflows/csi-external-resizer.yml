@@ -1,0 +1,53 @@
+name: csi-external-resizer
+
+on:
+  push:
+    paths:
+      - '.github/workflows/csi-external-resizer.yml'
+      - 'build/csi-external-resizer/**'
+      - '!build/csi-external-resizer/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/csi-external-resizer/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/csi-external-resizer:${{ github.sha }} \
+            -f ./build/csi-external-resizer/Dockerfile \
+            ./build/csi-external-resizer/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/csi-external-resizer:latest \
+            --tag raspbernetes/csi-external-resizer:${{ env.VERSION }} \
+            --tag k8sathome/csi-external-resizer:${{ env.VERSION }} \
+            -f ./build/csi-external-resizer/Dockerfile \
+            ./build/csi-external-resizer/ \
+            --push

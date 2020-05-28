@@ -1,17 +1,17 @@
-name: pihole-exporter
+name: csi-node-driver-registrar
 
 on:
   push:
     paths:
-      - '.github/workflows/pihole-exporter.yml'
-      - 'build/pihole-exporter/**'
-      - '!build/pihole-exporter/*.md'
+      - '.github/workflows/csi-node-driver-registrar.yml'
+      - 'build/csi-node-driver-registrar/**'
+      - '!build/csi-node-driver-registrar/*.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: $(cat build/pihole-exporter/.version)
+      VERSION: $(cat build/csi-node-driver-registrar/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -34,9 +34,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/pihole-exporter:${{ github.sha }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            ./build/pihole-exporter/ \
+            --tag raspbernetes/csi-node-driver-registrar:${{ github.sha }} \
+            -f ./build/csi-node-driver-registrar/Dockerfile \
+            ./build/csi-node-driver-registrar/ \
             --push
 
       - name: Build Container Image
@@ -45,9 +45,9 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag raspbernetes/pihole-exporter:latest \
-            --tag raspbernetes/pihole-exporter:${{ env.VERSION }} \
-            --tag k8sathome/pihole-exporter:${{ env.VERSION }} \
-            -f ./build/pihole-exporter/Dockerfile \
-            ./build/pihole-exporter/ \
+            --tag raspbernetes/csi-node-driver-registrar:latest \
+            --tag raspbernetes/csi-node-driver-registrar:${{ env.VERSION }} \
+            --tag k8sathome/csi-node-driver-registrar:${{ env.VERSION }} \
+            -f ./build/csi-node-driver-registrar/Dockerfile \
+            ./build/csi-node-driver-registrar/ \
             --push
