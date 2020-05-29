@@ -27,7 +27,9 @@ RUN apt update -y && apt install -y \
     llvm \
     git \
     curl \
-    kmod
+    kmod \
+    ca-certificates \
+    dkms
 
 WORKDIR /go/src/github.com/falcosecurity/falco
 
@@ -41,4 +43,4 @@ COPY ./docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["/go/src/github.com/falcosecurity/falco/build/userspace/falco/falco"]
+CMD ["/usr/bin/falco"]
