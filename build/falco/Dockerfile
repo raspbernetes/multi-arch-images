@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM ubuntu:focal as build
+FROM --platform=$BUILDPLATFORM arm64v8/ubuntu:latest as build
 
 ARG BUILDPLATFORM
 ARG TARGETPLATFORM
