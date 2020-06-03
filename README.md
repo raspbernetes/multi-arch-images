@@ -45,3 +45,9 @@ This repository is only used to store the unofficial docker images that will be 
 | sealed secrets | `v0.10.0` |
 | curl | `7.70.0` |
 | pihole-exporter | `0.0.9` |
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/raspbernetes/multi-arch-images/graphs/contributors"><img src="https://opencollective.com/raspbernetes/contributors.svg?width=890&button=false" /></a>
