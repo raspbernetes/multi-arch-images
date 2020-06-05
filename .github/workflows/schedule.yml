@@ -120,6 +120,21 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes-csi/node-driver-registrar/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-node-driver-registrar/.version
 
+      # Sometimes a new version will be released but arm64 may be delayed.
+      # This is just based on general observation and may now be automated
+      # or otherwise resolved.
+      - name: Fetch ceph-csi version and confirm arm64 tag
+        run: |
+          export CEPH_CSI_RELEASE_VERSION=$(curl -sL https://api.github.com/repos/ceph/ceph-csi/releases/latest | \
+                  jq -r ".tag_name" | cut -c 2-)
+          export CEPH_CSI_HAS_ARM64=$(curl -sL https://quay.io/v2/cephcsi/cephcsi/tags/list | jq -r .tags[] | grep v$CEPH_CSI_RELEASE_VERSION-arm64)
+
+          if [ -z "$CEPH_CSI_HAS_ARM64" ]; then
+            echo "Ceph CSI has a new release but no arm64 candidate yet."
+          else
+            echo $CEPH_CSI_RELEASE_VERSION > build/ceph-csi/.version
+          fi
+
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
