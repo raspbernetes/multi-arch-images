@@ -9,7 +9,7 @@ RUN apk add make git
 
 WORKDIR /go/node-feature-discovery
 
-RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/node-feature-discovery.git . \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes-sigs/node-feature-discovery.git . \
     && export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) \
     && export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1}
