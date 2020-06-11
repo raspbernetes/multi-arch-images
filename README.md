@@ -28,6 +28,7 @@ This repository is only used to store the unofficial docker images that will be 
 | csi-external-snapshotter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-snapshotter)](https://hub.docker.com/r/raspbernetes/csi-external-snapshotter) | `arm/arm64/amd64` | N/A |
 | csi-node-driver-registrar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-node-driver-registrar)](https://hub.docker.com/r/raspbernetes/csi-node-driver-registrar) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/node-driver-registrar/48)](https://github.com/kubernetes-csi/node-driver-registrar/issues/48) |
 | ceph-csi | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ceph-csi)](https://hub.docker.com/r/raspbernetes/ceph-csi) | `arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/ceph/ceph-csi/issues/1003)](https://github.com/ceph/ceph-csi/issues/1003) |
+| node-feature-discovery | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/node-feature-discovery)](https://hub.docker.com/r/raspbernetes/node-feature-discovery) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-sigs/node-feature-discovery/203)](https://github.com/kubernetes-sigs/node-feature-discovery/issues/203) |
 
 ## Future Images
 

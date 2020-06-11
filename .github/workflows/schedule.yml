@@ -95,6 +95,11 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
           jq -r ".tag_name" > build/kube-state-metrics/.version
 
+      - name: Fetch node-feature-discovery release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/node-feature-discovery/releases/latest | \
+          jq -r ".tag_name" > build/node-feature-discovery/.version
+
       - name: Fetch csi-external-attacher release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
