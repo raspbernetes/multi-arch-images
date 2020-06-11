@@ -7,24 +7,17 @@ ENV GO111MODULE=on \
 
 RUN apk add make git
 
-WORKDIR /opt
-RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/node-feature-discovery.git /go/node-feature-discovery \
+WORKDIR /go/node-feature-discovery
+
+RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/node-feature-discovery.git . \
     && export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) \
     && export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
     && GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1}
 
-WORKDIR /go/node-feature-discovery
-
 RUN go mod download
 
-# Do actual build
-COPY . /go/node-feature-discovery
-
-ARG NFD_VERSION
-ARG HOSTMOUNT_PREFIX
-
 RUN go install \
-  -ldflags "-s -w -X sigs.k8s.io/node-feature-discovery/pkg/version.version=$NFD_VERSION -X sigs.k8s.io/node-feature-discovery/source.pathPrefix=$HOSTMOUNT_PREFIX" \
+  -ldflags "-s -w -X sigs.k8s.io/node-feature-discovery/pkg/version.version=$VERSION -X sigs.k8s.io/node-feature-discovery/source.pathPrefix=$HOSTMOUNT_PREFIX" \
   ./cmd/*
 RUN install -D -m644 nfd-worker.conf.example /etc/kubernetes/node-feature-discovery/nfd-worker.conf
 
