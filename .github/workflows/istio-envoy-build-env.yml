@@ -32,7 +32,7 @@ jobs:
         if: github.ref != 'refs/heads/master'
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/istio-envoy-build-env:${{ github.sha }} \
             -f ./build/istio-envoy-build-env/Dockerfile \
@@ -43,10 +43,10 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm64 \
+            --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/istio-envoy-build-env:latest \
-            --tag raspbernetes/istio-envoy-build-env:${{ env.VERSION }}
+            --tag raspbernetes/istio-envoy-build-env:${{ env.VERSION }} \
             -f ./build/istio-envoy-build-env/Dockerfile \
             ./build/istio-envoy-build-env/ \
             --push
