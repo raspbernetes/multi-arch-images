@@ -14,7 +14,7 @@ RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/kube-state-m
     && GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} \
     && go build -a -installsuffix cgo -ldflags '-s -w -extldflags "-static"' -o kube-state-metrics .
 
-FROM alpine:3.11
+FROM alpine:3.12
 COPY --from=build /opt/kube-state-metrics /
 USER nobody
 ENTRYPOINT ["/kube-state-metrics", "--port=8080", "--telemetry-port=8081"]

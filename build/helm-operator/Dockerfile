@@ -32,7 +32,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     mv /tmp/linux-${GOARCH}/helm /usr/bin/helm3 && \
     go build -o helm-operator ./cmd/helm-operator
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 ENV HELM_HOME=/var/fluxd/helm
 

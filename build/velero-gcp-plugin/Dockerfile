@@ -17,7 +17,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go mod init && \
     go build -mod=mod -o velero-plugin-for-gcp ./velero-plugin-for-gcp
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 WORKDIR /plugins
 

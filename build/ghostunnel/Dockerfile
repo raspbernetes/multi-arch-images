@@ -17,7 +17,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone --depth 1 -b ${VERSION} https://github.com/square/ghostunnel.git . && \
     make clean ghostunnel
 
-FROM alpine:3.11
+FROM alpine:3.12
 WORKDIR /
 RUN apk add --no-cache \
         bash \

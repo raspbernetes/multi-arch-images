@@ -18,7 +18,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone --depth 1 -b ${VERSION} https://github.com/weaveworks/kured.git . && \
     go build -o kured ./cmd/kured
 
-FROM alpine:3.11.6
+FROM alpine:3.12.0
 
 COPY --from=build /usr/bin/kubectl /usr/bin/kubectl
 RUN chmod +x /usr/bin/kubectl
