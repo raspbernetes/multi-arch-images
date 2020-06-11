@@ -100,6 +100,11 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
 
+      - name: Fetch cloudflared release version
+        run: |
+          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
+          jq -r ".[0] .name" > build/cloudflared/.version
+
       - name: Fetch csi-external-provisioner release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-csi/external-provisioner/releases/latest | \
