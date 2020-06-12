@@ -1,0 +1,18 @@
+name: build
+
+on: ['push']
+
+jobs:
+  validate:
+    env:
+      VERSION: $(cat build/kubeyaml/.version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: hadolint
+        uses: reviewdog/action-hadolint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review

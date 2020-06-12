@@ -23,7 +23,6 @@ RUN set -eux; \
     mkdir -p /envoy; \
     cp -r bazel-bin/src/envoy /envoy
 
-# copy the envoy binary
-FROM busybox
+FROM gcr.io/distroless/static:nonroot
 
 COPY --from=builder /envoy /envoy

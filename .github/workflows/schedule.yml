@@ -35,10 +35,8 @@ jobs:
 
       - name: Fetch kustomize release version
         run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest | \
-          jq -r ".tag_name" > build/kustomize/.version && \
-          VERSION=$(cat build/kustomize/.version | cut -c 5-) && \
-          echo $VERSION > build/kustomize/.version
+          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/tags | \
+          jq -r '.[0].name' > build/kustomize/.version
 
       - name: Fetch sops release version
         run: |

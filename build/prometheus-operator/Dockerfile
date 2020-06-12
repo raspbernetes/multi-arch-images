@@ -17,11 +17,8 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go build -mod=vendor -ldflags="-s -X ./pkg/version.Version=$(VERSION)" -o operator ./cmd/operator/main.go
 
 
-FROM quay.io/prometheus/busybox:latest
+FROM gcr.io/distroless/static:nonroot
 
-COPY --from=build /go/src/github.com/coreos/prometheus-operator/operator /bin/operator
+COPY --from=build /go/src/github.com/coreos/prometheus-operator/operator /operator
 
-# On busybox 'nobody' has uid `65534'
-USER 65534
-
-ENTRYPOINT ["/bin/operator"]
+ENTRYPOINT ["/operator"]
