@@ -14,7 +14,13 @@ jobs:
       VERSION: $(cat build/node-feature-discovery/.version)
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+
+      - name: Checkout node-feature-discovery repo
+        uses: actions/checkout@v2
+        with:
+          repository: kubernetes-sigs/node-feature-discovery
+          path: node-feature-discovery
 
       - name: Set up Docker Buildx
         id: buildx
@@ -34,9 +40,11 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=NFD_VERSION=${{ env.VERSION }} \
+		        --build-arg=HOSTMOUNT_PREFIX=/host- \
             --tag raspbernetes/node-feature-discovery:${{ github.sha }} \
-            -f ./build/node-feature-discovery/Dockerfile \
-            ./build/node-feature-discovery/ \
+            -f ./node-feature-discovery/Dockerfile \
+            ./node-feature-discovery/ \
             --push
 
       - name: Build Container Image
@@ -45,9 +53,11 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=NFD_VERSION=${{ env.VERSION }} \
+		        --build-arg=HOSTMOUNT_PREFIX=/host- \
             --tag k8sathome/node-feature-discovery:latest \
             --tag raspbernetes/node-feature-discovery:${{ env.VERSION }} \
             --tag k8sathome/node-feature-discovery:${{ env.VERSION }} \
-            -f ./build/node-feature-discovery/Dockerfile \
-            ./build/node-feature-discovery/ \
+            -f ./node-feature-discovery/Dockerfile \
+            ./node-feature-discovery/ \
             --push
