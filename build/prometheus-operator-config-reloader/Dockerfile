@@ -17,10 +17,8 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go build -mod=vendor -ldflags="-s -X ./pkg/version.Version=$(VERSION)" -o prometheus-config-reloader ./cmd/prometheus-config-reloader/main.go
 
 
-FROM quay.io/prometheus/busybox:latest
+FROM gcr.io/distroless/static:nonroot
 
-COPY --from=build /go/src/github.com/coreos/prometheus-operator/prometheus-config-reloader /bin/prometheus-config-reloader
+COPY --from=build /go/src/github.com/coreos/prometheus-operator/prometheus-config-reloader /prometheus-config-reloader
 
-USER nobody
-
-ENTRYPOINT ["/bin/prometheus-config-reloader"]
+ENTRYPOINT ["/prometheus-config-reloader"]
