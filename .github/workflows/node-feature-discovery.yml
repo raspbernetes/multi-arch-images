@@ -1,0 +1,63 @@
+name: node-feature-discovery
+
+on:
+  push:
+    paths:
+      - '.github/workflows/node-feature-discovery.yml'
+      - 'build/node-feature-discovery/**'
+      - '!build/node-feature-discovery/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/node-feature-discovery/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout node-feature-discovery repo
+        uses: actions/checkout@v2
+        with:
+          repository: kubernetes-sigs/node-feature-discovery
+          path: node-feature-discovery
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=NFD_VERSION=${{ env.VERSION }} \
+            --build-arg=HOSTMOUNT_PREFIX=/host- \
+            --tag raspbernetes/node-feature-discovery:${{ github.sha }} \
+            -f ./node-feature-discovery/Dockerfile \
+            ./node-feature-discovery/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --build-arg=NFD_VERSION=${{ env.VERSION }} \
+            --build-arg=HOSTMOUNT_PREFIX=/host- \
+            --tag k8sathome/node-feature-discovery:latest \
+            --tag raspbernetes/node-feature-discovery:${{ env.VERSION }} \
+            --tag k8sathome/node-feature-discovery:${{ env.VERSION }} \
+            -f ./node-feature-discovery/Dockerfile \
+            ./node-feature-discovery/ \
+            --push
