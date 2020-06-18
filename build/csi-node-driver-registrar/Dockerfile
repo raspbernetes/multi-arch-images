@@ -17,6 +17,6 @@ LABEL description="CSI Node Driver Registrar"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/node-driver-registrar/bin/csi-node-driver-registrar csi-node-driver-registrar
 
-USER nonroot:nonroot
+USER 0:0
 
 ENTRYPOINT ["/csi-node-driver-registrar"]
