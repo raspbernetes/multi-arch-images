@@ -20,4 +20,6 @@ LABEL description="CSI External snapshotter"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-snapshotter/bin/csi-snapshotter csi-snapshotter
 
+USER nonroot:nonroot
+
 ENTRYPOINT ["/csi-snapshotter"]

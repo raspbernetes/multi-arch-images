@@ -17,4 +17,6 @@ LABEL description="CSI External provisioner"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-provisioner/bin/csi-provisioner csi-provisioner
 
+USER nonroot:nonroot
+
 ENTRYPOINT ["/csi-provisioner"]

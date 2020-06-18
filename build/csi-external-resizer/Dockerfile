@@ -17,4 +17,6 @@ LABEL description="CSI External resizer"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-resizer/bin/csi-resizer csi-resizer
 
+USER nonroot:nonroot
+
 ENTRYPOINT ["/csi-resizer"]

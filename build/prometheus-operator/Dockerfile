@@ -19,6 +19,10 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM gcr.io/distroless/static:nonroot
 
-COPY --from=build /go/src/github.com/coreos/prometheus-operator/operator /operator
+WORKDIR /
+
+COPY --from=build /go/src/github.com/coreos/prometheus-operator/operator operator
+
+USER nonroot:nonroot
 
 ENTRYPOINT ["/operator"]

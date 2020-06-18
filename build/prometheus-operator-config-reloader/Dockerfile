@@ -19,6 +19,10 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM gcr.io/distroless/static:nonroot
 
-COPY --from=build /go/src/github.com/coreos/prometheus-operator/prometheus-config-reloader /prometheus-config-reloader
+WORKDIR /
+
+COPY --from=build /go/src/github.com/coreos/prometheus-operator/prometheus-config-reloader prometheus-config-reloader
+
+USER nonroot:nonroot
 
 ENTRYPOINT ["/prometheus-config-reloader"]
