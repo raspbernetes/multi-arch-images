@@ -11,6 +11,8 @@ RUN git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/node-
 
 FROM gcr.io/distroless/static:nonroot
 
+WORKDIR /
+
 LABEL description="CSI Node Driver Registrar"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/node-driver-registrar/bin/csi-node-driver-registrar csi-node-driver-registrar

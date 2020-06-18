@@ -11,6 +11,8 @@ RUN git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/exter
 
 FROM gcr.io/distroless/static:nonroot
 
+WORKDIR /
+
 LABEL description="CSI External resizer"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-resizer/bin/csi-resizer csi-resizer

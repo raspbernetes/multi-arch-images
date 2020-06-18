@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y patch \
 
 FROM gcr.io/distroless/static:nonroot
 
+WORKDIR /
+
 LABEL description="CSI External snapshotter"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-snapshotter/bin/csi-snapshotter csi-snapshotter
