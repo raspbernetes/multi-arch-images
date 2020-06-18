@@ -11,8 +11,12 @@ RUN git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/exter
 
 FROM gcr.io/distroless/static:nonroot
 
+WORKDIR /
+
 LABEL description="CSI External Attacher"
 
 COPY --from=builder /go/src/github.com/kubernetes-csi/external-attacher/bin/csi-attacher csi-attacher
+
+USER nonroot:nonroot
 
 ENTRYPOINT ["/csi-attacher"]

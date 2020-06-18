@@ -17,11 +17,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone https://github.com/mdlayher/apcupsd_exporter.git . && \
     git fetch origin ${VERSION} && \
     go mod vendor && \
-    go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o binary cmd/apcupsd_exporter/main.go && \ 
+    go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o binary cmd/apcupsd_exporter/main.go && \
     upx -f --brute binary
 
 # Use distroless as minimal base image to package the manager binary
 FROM gcr.io/distroless/static:nonroot
+
+WORKDIR /
 
 LABEL name="apcupsd-exporter"
 
@@ -29,4 +31,4 @@ COPY --from=build /go/src/github.com/mdlayher/apcupsd_exporter/binary apcupsd-ex
 
 USER nonroot:nonroot
 
-CMD ["./apcupsd-exporter"]
+CMD ["/apcupsd-exporter"]
