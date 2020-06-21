@@ -3,6 +3,7 @@ ARG VERSION=1.19.0
 FROM golang:1.14-alpine as build
 
 ARG VERSION
+ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0
@@ -20,6 +21,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 FROM alpine:3.12
 
 ARG VERSION
+ARG TARGETPLATFORM
 
 WORKDIR /home/flux
 
