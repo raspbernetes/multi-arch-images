@@ -40,9 +40,9 @@ RUN apk --no-cache add openssl
 
 COPY --from=build /go/bin/kube-bench /usr/local/bin/kube-bench
 
-COPY entrypoint.sh .
+COPY --from=build /go/src/github.com/aquasecurity/kube-bench/entrypoint.sh .
 
-COPY cfg/ cfg/
+COPY --from=build /go/src/github.com/aquasecurity/kube-bench/cfg/ cfg/
 
 ENTRYPOINT ["./entrypoint.sh"]
 
