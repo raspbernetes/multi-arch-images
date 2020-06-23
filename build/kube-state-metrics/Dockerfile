@@ -13,7 +13,7 @@ WORKDIR /opt
 RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/kube-state-metrics.git . \
     && export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) \
     && export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) \
-    && GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} \
+    && GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) \
     && go build -a -installsuffix cgo -ldflags '-s -w -extldflags "-static"' -o kube-state-metrics .
 
 FROM alpine:3.11
