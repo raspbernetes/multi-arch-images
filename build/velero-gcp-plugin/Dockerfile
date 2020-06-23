@@ -12,7 +12,7 @@ WORKDIR /go/src/github.com/vmware-tanzu/velero-plugin-for-gcp
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-gcp.git . && \
     go mod init && \
     go build -mod=mod -o velero-plugin-for-gcp ./velero-plugin-for-gcp

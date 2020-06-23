@@ -14,10 +14,10 @@ SHELL ["/bin/bash", "-c"]
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3); export GOARM=${GOARM:1} && \
+    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/helm-operator.git . && \
     export HELM2_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM2_VERSION ./docker/helm2.version))") && \
-    export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \  
+    export HELM3_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep HELM3_VERSION ./docker/helm3.version))") && \
     export KUBECTL_VERSION=$(echo "$(cut -d'=' -f2 <<< $(grep KUBECTL_VERSION ./docker/kubectl.version))") && \
     echo "HELM2_VERSION=${HELM2_VERSION}" && \
     echo "HELM3_VERSION=${HELM3_VERSION}" && \
