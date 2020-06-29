@@ -15,14 +15,14 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-aws.git . && \
     go mod init && \
-    go build -mod=mod -o velero-plugin-for-aws ./velero-plugin-for-aws
+    go build -mod=mod -o /go/bin/velero-plugin-for-aws ./velero-plugin-for-aws
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 WORKDIR /plugins
 
 RUN apk add --no-cache bash ca-certificates
 
-COPY --from=build /go/src/github.com/vmware-tanzu/velero-plugin-for-aws/velero-plugin-for-aws ./velero-plugin-for-aws
+COPY --from=build /go/bin/velero-plugin-for-aws ./velero-plugin-for-aws
 
 ENTRYPOINT ["/bin/bash", "-c", "cp /plugins/* /target/."]
