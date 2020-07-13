@@ -17,13 +17,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
   GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
   GO111MODULE=on go get github.com/jteeuwen/go-bindata/go-bindata@6025e8de665b && \
   ./operator/scripts/create_assets_gen.sh && \
-  STATIC=0 LDFLAGS='-extldflags -static -s -w' ./common/scripts/gobuild.sh /tmp/bin/ ./operator/cmd/operator
+  STATIC=0 LDFLAGS='-extldflags -static -s -w' ./common/scripts/gobuild.sh ./out ./operator/cmd/operator
 
 FROM istio/operator:${VERSION} as operator
 
 FROM raspbernetes/istio-base:e0817929c81150b95947ed75690021a6c703c4d8
 
-COPY --from=build /tmp/bin/operator /usr/local/bin/operator
+COPY --from=build /go/src/github.com/istio/istio/out/operator /usr/local/bin/operator
 COPY --from=operator /var/lib/istio/manifests/ /var/lib/istio/manifests/
 
 ENTRYPOINT ["/usr/local/bin/operator"]

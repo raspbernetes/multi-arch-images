@@ -48,6 +48,11 @@ jobs:
           curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
           jq -r ".tag_name" > build/kured/.version
 
+      - name: Fetch kube-bench release version
+        run: |
+          curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
+          jq -r ".tag_name" > build/kube-bench/.version
+
       - name: Fetch apcupsd-exporter latest git SHA (no version)
         run: |
           curl -sL https://api.github.com/repos/mdlayher/apcupsd_exporter/commits | \
@@ -99,6 +104,11 @@ jobs:
           jq -r ".tag_name" > build/node-feature-discovery/.version
 
       - name: Fetch csi-external-attacher release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
+
+      - name: Fetch istio release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
