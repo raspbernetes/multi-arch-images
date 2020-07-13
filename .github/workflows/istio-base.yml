@@ -1,0 +1,53 @@
+name: istio-base
+
+on:
+  push:
+    paths:
+      - '.github/workflows/istio-base.yml'
+      - 'build/istio-base/**'
+      - '!build/istio-base/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: $(cat build/istio-base/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/istio-base:${{ github.sha }} \
+            -f ./build/istio-base/Dockerfile \
+            ./build/istio-base/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag k8sathome/istio-base:latest \
+            --tag raspbernetes/istio-base:${{ env.VERSION }} \
+            --tag k8sathome/istio-base:${{ env.VERSION }} \
+            -f ./build/istio-base/Dockerfile \
+            ./build/istio-base/ \
+            --push
