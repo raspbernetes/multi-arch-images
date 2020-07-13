@@ -24,7 +24,7 @@ FROM istio/operator:${VERSION} as operator
 
 FROM ${BASE_DISTRIBUTION}
 
-COPY --from=build ./bin/operator /usr/local/bin/operator
+COPY --from=build /tmp/bin/operator /usr/local/bin/operator
 COPY --from=operator /var/lib/istio/manifests/ /var/lib/istio/manifests/
 
 ENTRYPOINT ["/usr/local/bin/operator"]
