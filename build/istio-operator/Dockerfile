@@ -9,8 +9,6 @@ ENV GO111MODULE=on \
 
 WORKDIR /go/src/github.com/istio/istio
 
-RUN apk add --no-cache git
-
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
   export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
   GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
