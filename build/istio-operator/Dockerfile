@@ -27,3 +27,4 @@ COPY --from=build /go/src/github.com/istio/istio/out/operator /usr/local/bin/ope
 COPY --from=operator /var/lib/istio/manifests/ /var/lib/istio/manifests/
 
 ENTRYPOINT ["/usr/local/bin/operator"]
+
