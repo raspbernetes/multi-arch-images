@@ -1,5 +1,4 @@
 ARG VERSION=1.6.5
-ARG BASE_DISTRIBUTION=default
 
 FROM golang:1.14-alpine as build
 
@@ -22,7 +21,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM istio/operator:${VERSION} as operator
 
-FROM ${BASE_DISTRIBUTION}
+FROM raspbernetes/istio-base:e0817929c81150b95947ed75690021a6c703c4d8
 
 COPY --from=build /tmp/bin/operator /usr/local/bin/operator
 COPY --from=operator /var/lib/istio/manifests/ /var/lib/istio/manifests/
