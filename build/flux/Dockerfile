@@ -57,7 +57,7 @@ COPY --from=raspbernetes/kustomize:v3.5.5 /usr/local/bin/kustomize /usr/local/bi
 RUN chmod +x /usr/local/bin/kustomize
 
 # from: https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/sops.version
-COPY --from=raspbernetes/sops:v3.5.0 /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=raspbernetes/sops:v3.6.0 /usr/local/bin/sops /usr/local/bin/sops
 RUN chmod +x /usr/local/bin/sops
 
 COPY --from=raspbernetes/kubeyaml:0.7.0 /usr/lib/kubeyaml /usr/lib/kubeyaml/
