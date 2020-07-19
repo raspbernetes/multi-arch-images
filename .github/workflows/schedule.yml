@@ -78,6 +78,11 @@ jobs:
           curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
           jq -r ".tag_name" > build/prometheus-operator/.version
 
+      - name: Fetch external-dns release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/external-dns/releases/latest | \
+          jq -r ".tag_name" > build/external-dns/.version
+
       - name: Fetch prometheus-operator-config-reloader release version
         run: |
           curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \

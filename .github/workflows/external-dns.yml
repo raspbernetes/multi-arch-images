@@ -1,0 +1,52 @@
+name: external-dns
+
+on:
+  push:
+    paths:
+      - '.github/workflows/external-dns.yml'
+      - 'build/external-dns/**'
+      - '!build/external-dns/*.md'
+
+jobs:
+  build:
+    env:
+      VERSION: $(cat build/external-dns/.version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64\
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/external-dns:${{ github.sha }} \
+            -f ./build/external-dns/Dockerfile \
+            ./build/external-dns/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/external-dns:latest \
+            --tag raspbernetes/external-dns:${{ env.VERSION }} \
+            -f ./build/external-dns/Dockerfile \
+            ./build/external-dns/ \
+            --push
