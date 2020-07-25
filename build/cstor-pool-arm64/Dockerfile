@@ -15,7 +15,7 @@ WORKDIR /root/json-c-0.11
 
 RUN DEB_CFLAGS_SET="-Wno-error=implicit-fallthrough" debuild --no-lintian -us -uc
 
-FROM quay.io/openebs/cstor-pool-arm64:1.10.0 AS run
+FROM quay.io/openebs/cstor-pool-arm64:1.12.0 AS run
 
 COPY --from=build /root/libjson-c2_0.11-4ubuntu2_arm64.deb /tmp/libjson-c2.deb
 
