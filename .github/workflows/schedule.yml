@@ -28,11 +28,6 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
           jq -r '.[0].name' > build/helm-operator/.version
 
-      - name: Fetch gatekeeper release version
-        run: |
-          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
-          jq -r ".tag_name" > build/gatekeeper/.version
-
       - name: Fetch kustomize release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/tags | \
@@ -72,11 +67,6 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
           jq -r ".tag_name" > build/velero-gcp-plugin/.version
-
-      - name: Fetch prometheus-operator release version
-        run: |
-          curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
-          jq -r ".tag_name" > build/prometheus-operator/.version
 
       - name: Fetch external-dns release version
         run: |
