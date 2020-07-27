@@ -45,6 +45,7 @@ This repository is only used to store the unofficial docker images that will be 
 
 | Name | Since version |
 |------|---------------|
+| cstor-pool-arm64 | `1.11.0` |
 | curl | `7.70.0` |
 | gatekeeper | `v3.1.0-beta.11` |
 | pihole-exporter | `0.0.9` |
