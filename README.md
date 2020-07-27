@@ -17,7 +17,6 @@ This repository is only used to store the unofficial docker images that will be 
 | external-dns | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/external-dns)](https://hub.docker.com/r/raspbernetes/external-dns) | `arm64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-sigs/external-dns/1443)](https://github.com/kubernetes-sigs/external-dns/issues/1443) |
 | flagger | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flagger)](https://hub.docker.com/r/raspbernetes/flagger) | `arm64` | N/A |
 | flux | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flux)](https://hub.docker.com/r/raspbernetes/flux) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/flux/1761)](https://github.com/fluxcd/flux/issues/1761)|
-| gatekeeper | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/gatekeeper)](https://hub.docker.com/r/raspbernetes/gatekeeper) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/open-policy-agent/gatekeeper/496)](https://github.com/open-policy-agent/gatekeeper/issues/496)|
 | ghostunnel | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ghostunnel)](https://hub.docker.com/r/raspbernetes/ghostunnel) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/square/ghostunnel/260)](https://github.com/square/ghostunnel/issues/260) |
 | helm-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/helm-operator)](https://hub.docker.com/r/raspbernetes/helm-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/helm-operator/147)](https://github.com/fluxcd/helm-operator/issues/147)|
 | k8s-sidecar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/k8s-sidecar)](https://hub.docker.com/r/raspbernetes/k8s-sidecar) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/kiwigrid/k8s-sidecar/48)](https://github.com/kiwigrid/k8s-sidecar/issues/48)|
@@ -46,9 +45,10 @@ This repository is only used to store the unofficial docker images that will be 
 
 | Name | Since version |
 |------|---------------|
-| sealed secrets | `v0.10.0` |
 | curl | `7.70.0` |
+| gatekeeper | `v3.1.0-beta.11` |
 | pihole-exporter | `0.0.9` |
+| sealed secrets | `v0.10.0` |
 
 ## Contributors
 

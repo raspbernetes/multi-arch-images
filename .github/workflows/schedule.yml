@@ -28,11 +28,6 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
           jq -r '.[0].name' > build/helm-operator/.version
 
-      - name: Fetch gatekeeper release version
-        run: |
-          curl -sL https://api.github.com/repos/open-policy-agent/gatekeeper/releases/latest | \
-          jq -r ".tag_name" > build/gatekeeper/.version
-
       - name: Fetch kustomize release version
         run: |
           curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/tags | \
