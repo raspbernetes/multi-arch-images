@@ -31,14 +31,6 @@ This repository is only used to store the unofficial docker images that will be 
 | velero-aws-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-aws-plugin)](https://hub.docker.com/r/raspbernetes/velero-aws-plugin) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/vmware-tanzu/velero-plugin-for-aws/18)](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)|
 | velero-gcp-plugin | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/velero-gcp-plugin)](https://hub.docker.com/r/raspbernetes/velero-gcp-plugin) | `arm/arm64/amd64` | N/A|
 
-## Future Images
-
-> _**Note:** These are images that we would like to support in the future, if you have time feel free to open a PR._
-
-| Name | Upstream Issue |
-|------|----------------|
-| istio | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/istio/istio/21094)](https://github.com/istio/istio/issues/21094)|
-
 ## Deprecated Images
 
 > _**Note:** These are images that we used to support but now have official support from the upstream developers._
