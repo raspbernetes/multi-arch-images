@@ -23,7 +23,6 @@ FROM istio/pilot:${VERSION} as pilot
 
 FROM raspbernetes/istio-base:e0817929c81150b95947ed75690021a6c703c4d8
 
-ARG TARGETPLATFORM
 ARG VERSION=1.6.5
 
 COPY --from=build /go/src/github.com/istio/istio/out/pilot-discovery /usr/local/bin/pilot-discovery

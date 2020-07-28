@@ -1,5 +1,4 @@
 ARG VERSION=1.6.5
-ARG BASE_DISTRIBUTION=default
 
 FROM golang:1.14 as build
 
