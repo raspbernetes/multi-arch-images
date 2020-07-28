@@ -1,0 +1,53 @@
+name: istio-proxyv2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/istio-proxyv2.yml'
+      - 'build/istio-proxyv2/**'
+      - '!build/istio-proxyv2/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1800
+    env:
+      VERSION: $(cat build/istio-proxyv2/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/istio-proxyv2:${{ github.sha }} \
+            -f ./build/istio-proxyv2/Dockerfile \
+            ./build/istio-proxyv2/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/istio-proxyv2:latest \
+            --tag raspbernetes/istio-proxyv2:${{ env.VERSION }} \
+            -f ./build/istio-proxyv2/Dockerfile \
+            ./build/istio-proxyv2/ \
+            --push
