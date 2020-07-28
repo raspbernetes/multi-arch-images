@@ -21,7 +21,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
 
 FROM istio/pilot:${VERSION} as pilot
 
-FROM raspbernetes/istio-base:e0817929c81150b95947ed75690021a6c703c4d8
+FROM raspbernetes/istio-base:2020-07-10
 
 ARG VERSION=1.6.5
 
