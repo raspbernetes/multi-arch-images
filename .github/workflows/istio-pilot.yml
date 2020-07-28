@@ -1,0 +1,53 @@
+name: istio-pilot
+
+on:
+  push:
+    paths:
+      - '.github/workflows/istio-pilot.yml'
+      - 'build/istio-pilot/**'
+      - '!build/istio-pilot/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1800
+    env:
+      VERSION: $(cat build/istio-pilot/.version)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/istio-pilot:${{ github.sha }} \
+            -f ./build/istio-pilot/Dockerfile \
+            ./build/istio-pilot/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/arm64 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/istio-pilot:latest \
+            --tag raspbernetes/istio-pilot:${{ env.VERSION }} \
+            -f ./build/istio-pilot/Dockerfile \
+            ./build/istio-pilot/ \
+            --push
