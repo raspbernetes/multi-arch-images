@@ -103,10 +103,10 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
 
-      - name: Fetch istio release version
-        run: |
-          curl -sL https://api.github.com/repos/istio/istio/releases/tags | \
-          jq -r ".tag_name" | cut -c 2- > build/istio-operator/.version
+      # - name: Fetch istio release version
+      #   run: |
+      #     curl -sL https://api.github.com/repos/istio/istio/tags | \
+      #     jq -r ".tag_name" | cut -c 2- > build/istio-operator/.version
 
       - name: Fetch cloudflared release version
         run: |
