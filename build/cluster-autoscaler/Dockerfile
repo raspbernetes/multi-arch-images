@@ -7,7 +7,7 @@ ENV GO111MODULE=off \
 
 RUN apk add --no-cache git make
 
-WORKDIR /go/src/github.com/kubernetes/autoscaler/
+WORKDIR /go/src/k8s.io/autoscaler/
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
   export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
@@ -20,7 +20,7 @@ FROM gcr.io/distroless/static:nonroot
 
 WORKDIR /
 
-COPY --from=build --chown=nonroot /go/src/github.com/kubernetes/autoscaler/cluster-autoscaler .
+COPY --from=build --chown=nonroot /go/src/k8s.io/autoscaler/cluster-autoscaler .
 
 USER nonroot:nonroot
 
