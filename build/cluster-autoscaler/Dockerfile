@@ -20,7 +20,7 @@ FROM gcr.io/distroless/static:nonroot
 
 WORKDIR /
 
-COPY --from=build --chown=nonroot /go/src/k8s.io/autoscaler/cluster-autoscaler .
+COPY --from=build --chown=nonroot /go/src/k8s.io/autoscaler/cluster-autoscaler/cluster-autoscaler .
 
 USER nonroot:nonroot
 
