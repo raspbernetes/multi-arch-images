@@ -2,7 +2,7 @@ FROM golang:1.14-alpine as build
 
 ARG TARGETPLATFORM
 
-ENV GO111MODULE=on \
+ENV GO111MODULE=off \
   CGO_ENABLED=0
 
 RUN apk add --no-cache git make
