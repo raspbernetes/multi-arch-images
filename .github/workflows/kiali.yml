@@ -35,7 +35,7 @@ jobs:
           docker buildx build \
             --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
-            --tag remicode/kiali:${{ github.sha }} \
+            --tag raspbernetes/kiali:${{ github.sha }} \
             -f ./build/kiali/Dockerfile \
             ./build/kiali/ \
             --push
