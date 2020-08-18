@@ -35,7 +35,7 @@ RUN mkdir -p /certs
 
 WORKDIR /app
 
-COPY entrypoint.sh /
+COPY --from=builder /app/entrypoint.sh /
 RUN chmod a+x /entrypoint.sh
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
