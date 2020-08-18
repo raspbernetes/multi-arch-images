@@ -26,11 +26,11 @@ RUN apk add --update ca-certificates openssl
 
 USER 1001:1001
 
-COPY --from=buillder /go/bin/dex /usr/local/bin/dex
+COPY --from=builder /go/bin/dex /usr/local/bin/dex
 
 # Import frontend assets and set the correct CWD directory so the assets
 # are in the default path.
-COPY --from=buillder /go/src/github.com/dexidp/dex/web /web
+COPY --from=builder /go/src/github.com/dexidp/dex/web /web
 
 WORKDIR /
 
