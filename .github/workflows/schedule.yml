@@ -17,126 +17,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      - name: Fetch flux release version
-        run: |
-          curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
-          jq -r ".tag_name" > build/flux/.version
-
-      - name: Fetch cluster-autoscaler release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes/autoscaler/releases/latest | \
-          jq -r ".tag_name" > build/cluster-autoscaler/.version
-
-      # This API endpoint will need to change when helm-operator has an official release
-      - name: Fetch helm-operator release version
-        run: |
-          curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
-          jq -r '.[0].name' > build/helm-operator/.version
-
-      - name: Fetch kustomize release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/tags | \
-          jq -r '.[0].name' > build/kustomize/.version
-
-      - name: Fetch sops release version
-        run: |
-          curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
-          jq -r ".tag_name" > build/sops/.version
-
-      - name: Fetch kured release version
-        run: |
-          curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
-          jq -r ".tag_name" > build/kured/.version
-
-      - name: Fetch kube-bench release version
-        run: |
-          curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
-          jq -r ".tag_name" > build/kube-bench/.version
-
       - name: Fetch apcupsd-exporter latest git SHA (no version)
         run: |
           curl -sL https://api.github.com/repos/mdlayher/apcupsd_exporter/commits | \
           jq -r '.[0] .sha' > build/apcupsd-exporter/.version
-
-      - name: Fetch kubeyaml release version
-        run: |
-          curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
-          jq -r ".tag_name" > build/kubeyaml/.version
-
-      - name: Fetch Velero AWS plugin release version
-        run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
-          jq -r ".tag_name" > build/velero-aws-plugin/.version
-
-      - name: Fetch Velero GCP plugin release version
-        run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
-          jq -r ".tag_name" > build/velero-gcp-plugin/.version
-
-      - name: Fetch external-dns release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/external-dns/releases/latest | \
-          jq -r ".tag_name" > build/external-dns/.version
-
-      - name: Fetch prometheus-operator-config-reloader release version
-        run: |
-          curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
-          jq -r ".tag_name" > build/prometheus-operator-config-reloader/.version
-
-      - name: Fetch k8s-sidecar release version
-        run: |
-          curl -sL https://api.github.com/repos/kiwigrid/k8s-sidecar/releases/latest | \
-          jq -r ".tag_name" > build/k8s-sidecar/.version
-
-      - name: Fetch ghostunnel release version
-        run: |
-          curl -sL https://api.github.com/repos/square/ghostunnel/releases/latest | \
-          jq -r ".tag_name" > build/ghostunnel/.version
-
-      - name: Fetch kube-state-metrics release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
-          jq -r ".tag_name" > build/kube-state-metrics/.version
-
-      - name: Fetch node-feature-discovery release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/node-feature-discovery/releases/latest | \
-          jq -r ".tag_name" > build/node-feature-discovery/.version
-
-      - name: Fetch csi-external-attacher release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
-
-      # - name: Fetch istio release version
-      #   run: |
-      #     curl -sL https://api.github.com/repos/istio/istio/tags | \
-      #     jq -r ".tag_name" | cut -c 2- > build/istio-operator/.version
-
-      - name: Fetch cloudflared release version
-        run: |
-          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
-          jq -r ".[0] .name" > build/cloudflared/.version
-
-      - name: Fetch csi-external-provisioner release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-provisioner/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-provisioner/.version
-
-      - name: Fetch csi-external-resizer release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-resizer/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-resizer/.version
-
-      - name: Fetch csi-external-snapshotter release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-snapshotter/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-snapshotter/.version
-
-      - name: Fetch csi-node-driver-registrar release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/node-driver-registrar/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-node-driver-registrar/.version
 
       # Sometimes a new version will be released but arm64 may be delayed.
       # This is just based on general observation and may now be automated
@@ -152,6 +36,127 @@ jobs:
           else
             echo $CEPH_CSI_RELEASE_VERSION > build/ceph-csi/.version
           fi
+
+      - name: Fetch cloudflared release version
+        run: |
+          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
+          jq -r ".[0] .name" > build/cloudflared/.version
+
+      - name: Fetch cluster-autoscaler release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes/autoscaler/releases/latest | \
+          jq -r ".tag_name" > build/cluster-autoscaler/.version
+
+      - name: Fetch csi-external-attacher release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
+
+      - name: Fetch csi-external-provisioner release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/external-provisioner/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-external-provisioner/.version
+
+      - name: Fetch csi-external-resizer release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/external-resizer/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-external-resizer/.version
+
+      - name: Fetch csi-node-driver-registrar release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/node-driver-registrar/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-node-driver-registrar/.version
+
+      - name: Fetch csi-external-snapshotter release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-csi/external-snapshotter/releases/latest | \
+          jq -r ".tag_name" | cut -c 2- > build/csi-external-snapshotter/.version
+
+      - name: Fetch dex release version
+        run: |
+          curl -sL https://api.github.com/repos/dexidp/dex/tags | \
+          jq -r '.[0].name' > build/dex/.version
+
+      - name: Fetch dex-k8s-authenticator release version
+        run: |
+          curl -sL https://api.github.com/repos/mintel/dex-k8s-authenticator/releases/latest | \
+          jq -r ".tag_name" > build/dex-k8s-authenticator/.version
+
+      - name: Fetch external-dns release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/external-dns/releases/latest | \
+          jq -r ".tag_name" > build/external-dns/.version
+
+      - name: Fetch flux release version
+        run: |
+          curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
+          jq -r ".tag_name" > build/flux/.version
+
+      - name: Fetch ghostunnel release version
+        run: |
+          curl -sL https://api.github.com/repos/square/ghostunnel/releases/latest | \
+          jq -r ".tag_name" > build/ghostunnel/.version
+
+      # This API endpoint will need to change when helm-operator has an official release
+      - name: Fetch helm-operator release version
+        run: |
+          curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
+          jq -r '.[0].name' > build/helm-operator/.version
+
+      - name: Fetch k8s-sidecar release version
+        run: |
+          curl -sL https://api.github.com/repos/kiwigrid/k8s-sidecar/releases/latest | \
+          jq -r ".tag_name" > build/k8s-sidecar/.version
+
+      - name: Fetch kube-bench release version
+        run: |
+          curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
+          jq -r ".tag_name" > build/kube-bench/.version
+
+      - name: Fetch kube-state-metrics release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
+          jq -r ".tag_name" > build/kube-state-metrics/.version
+
+      - name: Fetch kubeyaml release version
+        run: |
+          curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
+          jq -r ".tag_name" > build/kubeyaml/.version
+
+      - name: Fetch kured release version
+        run: |
+          curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
+          jq -r ".tag_name" > build/kured/.version
+
+      - name: Fetch kustomize release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/tags | \
+          jq -r '.[0].name' > build/kustomize/.version
+
+      - name: Fetch node-feature-discovery release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/node-feature-discovery/releases/latest | \
+          jq -r ".tag_name" > build/node-feature-discovery/.version
+
+      - name: Fetch prometheus-operator-config-reloader release version
+        run: |
+          curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
+          jq -r ".tag_name" > build/prometheus-operator-config-reloader/.version
+
+      - name: Fetch sops release version
+        run: |
+          curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
+          jq -r ".tag_name" > build/sops/.version
+
+      - name: Fetch Velero AWS plugin release version
+        run: |
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
+          jq -r ".tag_name" > build/velero-aws-plugin/.version
+
+      - name: Fetch Velero GCP plugin release version
+        run: |
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
+          jq -r ".tag_name" > build/velero-gcp-plugin/.version
 
       - name: Check for modified files
         id: git-check
