@@ -1,1 +1,1 @@
-# dex-k8s-authenticator
+# dex
