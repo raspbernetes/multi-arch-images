@@ -1,0 +1,52 @@
+name: dex
+
+on:
+  push:
+    paths:
+      - '.github/workflows/dex.yml'
+      - 'build/dex/**'
+      - '!build/dex/*.md'
+
+jobs:
+  build:
+    env:
+      VERSION: $(cat build/dex/.version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+
+      - name: Login to GitHub Docker Registry
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Container Image
+        if: github.ref != 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/dex:${{ github.sha }} \
+            -f ./build/dex/Dockerfile \
+            ./build/dex/ \
+            --push
+
+      - name: Build Container Image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64,linux/arm/v7 \
+            --build-arg=VERSION=${{ env.VERSION }} \
+            --tag raspbernetes/dex:latest \
+            --tag raspbernetes/dex:${{ env.VERSION }} \
+            -f ./build/dex/Dockerfile \
+            ./build/dex/ \
+            --push
