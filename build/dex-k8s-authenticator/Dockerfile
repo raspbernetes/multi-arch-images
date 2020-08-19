@@ -15,7 +15,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
   git clone --depth 1 -b ${VERSION} https://github.com/mintel/dex-k8s-authenticator.git . && \
   make build
 
-FROM alpine:3.10.3
+FROM alpine:3.12.0
 
 # Dex connectors, such as GitHub and Google logins require root certificates.
 # Proper installations should manage those certificates, but it's a bad user
