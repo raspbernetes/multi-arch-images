@@ -6,8 +6,11 @@ ARG TARGETPLATFORM
 
 WORKDIR /go/src/github.com/kubernetes-csi/external-provisioner/
 
-RUN git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/external-provisioner.git . \
-     && GOARCH=$(echo $TARGETPLATFORM | cut -f2 -d '/') make build
+RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
+     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
+     export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+     git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/external-provisioner.git . && \
+     BUILD_PLATFORMS="$GOOS;$GOARCH" make build
 
 FROM gcr.io/distroless/static:nonroot
 
