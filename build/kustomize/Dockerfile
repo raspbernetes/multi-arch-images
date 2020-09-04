@@ -1,6 +1,6 @@
 FROM golang:1.14-alpine as build
 
-ARG VERSION=v3.5.4
+ARG VERSION=v3.8.2
 ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
@@ -13,9 +13,15 @@ WORKDIR /go/src/github.com/kubernetes-sigs/kustomize
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-    git clone --depth 1 -b ${VERSION} https://github.com/kubernetes-sigs/kustomize.git . && \
+    git clone --depth 1 -b kustomize/${VERSION} https://github.com/kubernetes-sigs/kustomize.git . && \
     cd ./kustomize && \
-    go build -o kustomize .
+    go build \
+      -ldflags="\
+        -X 'sigs.k8s.io/kustomize/api/provenance.version=kustomize/${VERSION}' \
+        -X 'sigs.k8s.io/kustomize/api/provenance.gitCommit=$(git rev-parse --verify HEAD)' \
+        -X 'sigs.k8s.io/kustomize/api/provenance.buildDate=$(date -u -Iseconds)' \
+      " \
+      -o kustomize .
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
