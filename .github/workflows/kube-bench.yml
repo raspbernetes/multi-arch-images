@@ -38,9 +38,9 @@ jobs:
             --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
             --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
             --tag raspbernetes/kube-bench:${{ github.sha }} \
-            -f ./build/kube-bench/Dockerfile \
+            --file ./build/kube-bench/Dockerfile \
             ./build/kube-bench/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -52,6 +52,6 @@ jobs:
             --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
             --tag raspbernetes/kube-bench:latest \
             --tag raspbernetes/kube-bench:${{ env.VERSION }} \
-            -f ./build/kube-bench/Dockerfile \
+            --file ./build/kube-bench/Dockerfile \
             ./build/kube-bench/ \
-            --push
+            --output "type=image,push=true"

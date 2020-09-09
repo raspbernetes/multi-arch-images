@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kube-state-metrics:${{ github.sha }} \
-            -f ./build/kube-state-metrics/Dockerfile \
+            --file ./build/kube-state-metrics/Dockerfile \
             ./build/kube-state-metrics/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag k8sathome/kube-state-metrics:latest \
             --tag raspbernetes/kube-state-metrics:${{ env.VERSION }} \
             --tag k8sathome/kube-state-metrics:${{ env.VERSION }} \
-            -f ./build/kube-state-metrics/Dockerfile \
+            --file ./build/kube-state-metrics/Dockerfile \
             ./build/kube-state-metrics/ \
-            --push
+            --output "type=image,push=true"

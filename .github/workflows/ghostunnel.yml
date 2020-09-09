@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/ghostunnel:${{ github.sha }} \
-            -f ./build/ghostunnel/Dockerfile \
+            --file ./build/ghostunnel/Dockerfile \
             ./build/ghostunnel/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag k8sathome/ghostunnel:latest \
             --tag raspbernetes/ghostunnel:${{ env.VERSION }} \
             --tag k8sathome/ghostunnel:${{ env.VERSION }} \
-            -f ./build/ghostunnel/Dockerfile \
+            --file ./build/ghostunnel/Dockerfile \
             ./build/ghostunnel/ \
-            --push
+            --output "type=image,push=true"

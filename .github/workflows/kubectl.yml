@@ -36,9 +36,9 @@ jobs:
             --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kubectl:${{ github.sha }} \
-            -f ./build/kubectl/Dockerfile \
+            --file ./build/kubectl/Dockerfile \
             ./build/kubectl/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/kubectl:latest \
             --tag raspbernetes/kubectl:${{ env.VERSION }} \
             --tag k8sathome/kubectld:${{ env.VERSION }} \
-            -f ./build/kubectl/Dockerfile \
+            --file ./build/kubectl/Dockerfile \
             ./build/kubectl/ \
-            --push
+            --output "type=image,push=true"

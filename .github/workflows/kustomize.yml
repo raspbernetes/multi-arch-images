@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kustomize:${{ github.sha }} \
-            -f ./build/kustomize/Dockerfile \
+            --file ./build/kustomize/Dockerfile \
             ./build/kustomize/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/kustomize:latest \
             --tag raspbernetes/kustomize:${{ env.VERSION }} \
             --tag k8sathome/kustomize:${{ env.VERSION }} \
-            -f ./build/kustomize/Dockerfile \
+            --file ./build/kustomize/Dockerfile \
             ./build/kustomize/ \
-            --push
+            --output "type=image,push=true"

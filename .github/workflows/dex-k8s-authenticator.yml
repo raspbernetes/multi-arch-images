@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/dex-k8s-authenticator:${{ github.sha }} \
-            -f ./build/dex-k8s-authenticator/Dockerfile \
+            --file ./build/dex-k8s-authenticator/Dockerfile \
             ./build/dex-k8s-authenticator/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -48,6 +48,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/dex-k8s-authenticator:latest \
             --tag raspbernetes/dex-k8s-authenticator:${{ env.VERSION }} \
-            -f ./build/dex-k8s-authenticator/Dockerfile \
+            --file ./build/dex-k8s-authenticator/Dockerfile \
             ./build/dex-k8s-authenticator/ \
-            --push
+            --output "type=image,push=true"

@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/flux:${{ github.sha }} \
-            -f ./build/flux/Dockerfile \
+            --file ./build/flux/Dockerfile \
             ./build/flux/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/flux:latest \
             --tag raspbernetes/flux:${{ env.VERSION }} \
             --tag k8sathome/fluxd:${{ env.VERSION }} \
-            -f ./build/flux/Dockerfile \
+            --file ./build/flux/Dockerfile \
             ./build/flux/ \
-            --push
+            --output "type=image,push=true"

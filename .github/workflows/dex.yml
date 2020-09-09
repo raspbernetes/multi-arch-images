@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/dex:${{ github.sha }} \
-            -f ./build/dex/Dockerfile \
+            --file ./build/dex/Dockerfile \
             ./build/dex/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -48,6 +48,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/dex:latest \
             --tag raspbernetes/dex:${{ env.VERSION }} \
-            -f ./build/dex/Dockerfile \
+            --file ./build/dex/Dockerfile \
             ./build/dex/ \
-            --push
+            --output "type=image,push=true"

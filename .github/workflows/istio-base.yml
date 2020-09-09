@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/istio-base:${{ github.sha }} \
-            -f ./build/istio-base/Dockerfile \
+            --file ./build/istio-base/Dockerfile \
             ./build/istio-base/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag k8sathome/istio-base:latest \
             --tag raspbernetes/istio-base:${{ env.VERSION }} \
             --tag k8sathome/istio-base:${{ env.VERSION }} \
-            -f ./build/istio-base/Dockerfile \
+            --file ./build/istio-base/Dockerfile \
             ./build/istio-base/ \
-            --push
+            --output "type=image,push=true"

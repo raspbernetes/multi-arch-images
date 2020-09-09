@@ -43,9 +43,9 @@ jobs:
             --build-arg=NFD_VERSION=${{ env.VERSION }} \
             --build-arg=HOSTMOUNT_PREFIX=/host- \
             --tag raspbernetes/node-feature-discovery:${{ github.sha }} \
-            -f ./node-feature-discovery/Dockerfile \
+            --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -58,6 +58,6 @@ jobs:
             --tag k8sathome/node-feature-discovery:latest \
             --tag raspbernetes/node-feature-discovery:${{ env.VERSION }} \
             --tag k8sathome/node-feature-discovery:${{ env.VERSION }} \
-            -f ./node-feature-discovery/Dockerfile \
+            --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
-            --push
+            --output "type=image,push=true"

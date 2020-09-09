@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/csi-external-snapshotter:${{ github.sha }} \
-            -f ./build/csi-external-snapshotter/Dockerfile \
+            --file ./build/csi-external-snapshotter/Dockerfile \
             ./build/csi-external-snapshotter/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/csi-external-snapshotter:latest \
             --tag raspbernetes/csi-external-snapshotter:${{ env.VERSION }} \
             --tag k8sathome/csi-external-snapshotter:${{ env.VERSION }} \
-            -f ./build/csi-external-snapshotter/Dockerfile \
+            --file ./build/csi-external-snapshotter/Dockerfile \
             ./build/csi-external-snapshotter/ \
-            --push
+            --output "type=image,push=true"

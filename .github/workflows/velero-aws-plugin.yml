@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/velero-aws-plugin:${{ github.sha }} \
-            -f ./build/velero-aws-plugin/Dockerfile \
+            --file ./build/velero-aws-plugin/Dockerfile \
             ./build/velero-aws-plugin/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag k8sathome/velero-aws-plugin:latest \
             --tag raspbernetes/velero-aws-plugin:${{ env.VERSION }} \
             --tag k8sathome/velero-aws-plugin:${{ env.VERSION }} \
-            -f ./build/velero-aws-plugin/Dockerfile \
+            --file ./build/velero-aws-plugin/Dockerfile \
             ./build/velero-aws-plugin/ \
-            --push
+            --output "type=image,push=true"

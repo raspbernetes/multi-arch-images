@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/velero-gcp-plugin:${{ github.sha }} \
-            -f ./build/velero-gcp-plugin/Dockerfile \
+            --file ./build/velero-gcp-plugin/Dockerfile \
             ./build/velero-gcp-plugin/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag k8sathome/velero-gcp-plugin:latest \
             --tag raspbernetes/velero-gcp-plugin:${{ env.VERSION }} \
             --tag k8sathome/velero-gcp-plugin:${{ env.VERSION }} \
-            -f ./build/velero-gcp-plugin/Dockerfile \
+            --file ./build/velero-gcp-plugin/Dockerfile \
             ./build/velero-gcp-plugin/ \
-            --push
+            --output "type=image,push=true"

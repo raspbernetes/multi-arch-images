@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kubeyaml:${{ github.sha }} \
-            -f ./build/kubeyaml/Dockerfile \
+            --file ./build/kubeyaml/Dockerfile \
             ./build/kubeyaml/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/kubeyaml:latest \
             --tag raspbernetes/kubeyaml:${{ env.VERSION }} \
             --tag k8sathome/kubeyaml:${{ env.VERSION }} \
-            -f ./build/kubeyaml/Dockerfile \
+            --file ./build/kubeyaml/Dockerfile \
             ./build/kubeyaml/ \
-            --push
+            --output "type=image,push=true"

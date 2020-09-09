@@ -37,9 +37,9 @@ jobs:
             --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/istio-pilot:${{ github.sha }} \
-            -f ./build/istio-pilot/Dockerfile \
+            --file ./build/istio-pilot/Dockerfile \
             ./build/istio-pilot/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/istio-pilot:latest \
             --tag raspbernetes/istio-pilot:${{ env.VERSION }} \
-            -f ./build/istio-pilot/Dockerfile \
+            --file ./build/istio-pilot/Dockerfile \
             ./build/istio-pilot/ \
-            --push
+            --output "type=image,push=true"

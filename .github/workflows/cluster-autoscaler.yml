@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cluster-autoscaler:${{ github.sha }} \
-            -f ./build/cluster-autoscaler/Dockerfile \
+            --file ./build/cluster-autoscaler/Dockerfile \
             ./build/cluster-autoscaler/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -48,6 +48,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/cluster-autoscaler:latest \
             --tag raspbernetes/cluster-autoscaler:${{ env.VERSION }} \
-            -f ./build/cluster-autoscaler/Dockerfile \
+            --file ./build/cluster-autoscaler/Dockerfile \
             ./build/cluster-autoscaler/ \
-            --push
+            --output "type=image,push=true"

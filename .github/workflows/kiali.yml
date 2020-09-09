@@ -37,9 +37,9 @@ jobs:
             --platform linux/arm64 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kiali:${{ github.sha }} \
-            -f ./build/kiali/Dockerfile \
+            --file ./build/kiali/Dockerfile \
             ./build/kiali/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/kiali:latest \
             --tag raspbernetes/kiali:${{ env.VERSION }} \
-            -f ./build/kiali/Dockerfile \
+            --file ./build/kiali/Dockerfile \
             ./build/kiali/ \
-            --push
+            --output "type=image,push=true"

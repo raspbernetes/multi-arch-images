@@ -36,9 +36,9 @@ jobs:
             --platform linux/arm64\
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/external-dns:${{ github.sha }} \
-            -f ./build/external-dns/Dockerfile \
+            --file ./build/external-dns/Dockerfile \
             ./build/external-dns/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -48,6 +48,6 @@ jobs:
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/external-dns:latest \
             --tag raspbernetes/external-dns:${{ env.VERSION }} \
-            -f ./build/external-dns/Dockerfile \
+            --file ./build/external-dns/Dockerfile \
             ./build/external-dns/ \
-            --push
+            --output "type=image,push=true"

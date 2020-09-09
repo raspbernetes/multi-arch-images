@@ -36,9 +36,9 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --build-arg=VERSION=${{ env.VERSION }} \
             --tag raspbernetes/apcupsd-exporter:${{ github.sha }} \
-            -f ./build/apcupsd-exporter/Dockerfile \
+            --file ./build/apcupsd-exporter/Dockerfile \
             ./build/apcupsd-exporter/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -49,6 +49,6 @@ jobs:
             --tag raspbernetes/apcupsd-exporter:latest \
             --tag raspbernetes/apcupsd-exporter:${{ env.VERSION }} \
             --tag k8sathome/apcupsd-exporter:${{ env.VERSION }} \
-            -f ./build/apcupsd-exporter/Dockerfile \
+            --file ./build/apcupsd-exporter/Dockerfile \
             ./build/apcupsd-exporter/ \
-            --push
+            --output "type=image,push=true"
