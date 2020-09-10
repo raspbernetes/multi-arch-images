@@ -30,3 +30,4 @@ FROM gcr.io/distroless/static:nonroot
 COPY --from=build /go/src/github.com/kubernetes-sigs/kustomize/kustomize/kustomize /usr/local/bin/kustomize
 
 USER nonroot:nonroot
+

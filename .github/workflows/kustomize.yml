@@ -19,8 +19,13 @@ jobs:
         run: |
           BASE_DIR=build/kustomize
           VERSION=$(cat ${BASE_DIR}/.version)
+          # .version is "v3.3.1" for older versions, but "kustomize/v3.8.2" for newer ones
+          # strip everything before the slash for the docker tag to be able to work with both
+          DOCKER_TAG=$(sed 's|.*/||' < ${BASE_DIR}/.version)
+
           echo ::set-output name=version::${VERSION}
           echo ::set-output name=base_dir::${BASE_DIR}
+          echo ::set-output name=docker_tag::${DOCKER_TAG}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -64,5 +69,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/kustomize:latest
-            raspbernetes/kustomize${{ steps.prep.outputs.version }}
+            raspbernetes/kustomize${{ steps.prep.outputs.docker_tag }}
 
