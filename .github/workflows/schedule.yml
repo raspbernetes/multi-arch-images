@@ -17,11 +17,6 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      - name: Fetch apcupsd-exporter latest git SHA (no version)
-        run: |
-          curl -sL https://api.github.com/repos/mdlayher/apcupsd_exporter/commits | \
-          jq -r '.[0] .sha' > build/apcupsd-exporter/.version
-
       # Sometimes a new version will be released but arm64 may be delayed.
       # This is just based on general observation and may now be automated
       # or otherwise resolved.
@@ -102,11 +97,6 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
           jq -r '.[0].name' > build/helm-operator/.version
-
-      - name: Fetch k8s-sidecar release version
-        run: |
-          curl -sL https://api.github.com/repos/kiwigrid/k8s-sidecar/releases/latest | \
-          jq -r ".tag_name" > build/k8s-sidecar/.version
 
       - name: Fetch kube-bench release version
         run: |

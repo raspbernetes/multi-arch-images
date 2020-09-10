@@ -10,7 +10,7 @@ WORKDIR /go/src/github.com/aquasecurity/kube-bench/
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone https://github.com/aquasecurity/kube-bench.git . && \
     go install -a -ldflags "-X github.com/aquasecurity/kube-bench/cmd.KubeBenchVersion=${VERSION} -w"
 

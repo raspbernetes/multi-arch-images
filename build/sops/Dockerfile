@@ -12,7 +12,7 @@ WORKDIR /go/src/github.com/mozilla/sops
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/mozilla/sops.git . && \
     go build -o sops ./cmd/sops
 

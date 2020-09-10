@@ -13,7 +13,7 @@ RUN apk update && \
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone https://github.com/mdlayher/apcupsd_exporter.git . && \
     git fetch origin ${VERSION} && \
     go mod vendor && \
