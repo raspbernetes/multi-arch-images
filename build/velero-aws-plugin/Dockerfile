@@ -12,7 +12,7 @@ WORKDIR /go/src/github.com/vmware-tanzu/velero-plugin-for-aws
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-aws.git . && \
     go mod init && \
     go build -mod=mod -o /go/bin/velero-plugin-for-aws ./velero-plugin-for-aws

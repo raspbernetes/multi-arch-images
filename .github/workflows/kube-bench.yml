@@ -18,15 +18,16 @@ jobs:
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
+        uses: crazy-max/ghaction-docker-buildx@v3
         with:
           buildx-version: latest
+          qemu-version: latest
 
-      - name: Login to GitHub Docker Registry
-        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build Container Image
         if: github.ref != 'refs/heads/master'
@@ -37,9 +38,9 @@ jobs:
             --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
             --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
             --tag raspbernetes/kube-bench:${{ github.sha }} \
-            -f ./build/kube-bench/Dockerfile \
+            --file ./build/kube-bench/Dockerfile \
             ./build/kube-bench/ \
-            --push
+            --output "type=image,push=true"
 
       - name: Build Container Image
         if: github.ref == 'refs/heads/master'
@@ -51,6 +52,6 @@ jobs:
             --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
             --tag raspbernetes/kube-bench:latest \
             --tag raspbernetes/kube-bench:${{ env.VERSION }} \
-            -f ./build/kube-bench/Dockerfile \
+            --file ./build/kube-bench/Dockerfile \
             ./build/kube-bench/ \
-            --push
+            --output "type=image,push=true"
