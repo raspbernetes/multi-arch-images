@@ -16,6 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Prepare
+        id: prep
+        run: |
+          BASE_DIR=build/dex
+          VERSION=$(cat ${BASE_DIR}/.version)
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=base_dir::${BASE_DIR}
+
       - name: Checkout node-feature-discovery repo
         uses: actions/checkout@v2
         with:
