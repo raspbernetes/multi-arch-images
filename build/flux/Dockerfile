@@ -14,7 +14,7 @@ WORKDIR /go/src/github.com/fluxcd/flux
 
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/fluxcd/flux.git . && \
     go build -o fluxd -ldflags "-X main.version=${VERSION}" ./cmd/fluxd
 
