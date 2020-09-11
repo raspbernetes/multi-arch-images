@@ -9,19 +9,31 @@ on:
 
 jobs:
   build:
-    env:
-      VERSION: $(cat build/kube-bench/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Prepare
+        id: prep
+        run: |
+          BASE_DIR=build/kube-bench
+          VERSION=$(cat ${BASE_DIR}/.version)
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=base_dir::${BASE_DIR}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
       - name: Set up Docker Buildx
         id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v3
+        uses: docker/setup-buildx-action@v1
         with:
-          buildx-version: latest
-          qemu-version: latest
+          install: true
+          version: latest
+          driver-opts: image=moby/buildkit:master
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -29,29 +41,28 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Container Image
+      - name: Build and Push
         if: github.ref != 'refs/heads/master'
-        run: |
-          docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
-            --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
-            --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-            --tag raspbernetes/kube-bench:${{ github.sha }} \
-            --file ./build/kube-bench/Dockerfile \
-            ./build/kube-bench/ \
-            --output "type=image,push=true"
+        uses: docker/build-push-action@v2
+        with:
+          build-args: VERSION=${{ steps.prep.outputs.version }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/kube-bench:${{ github.sha }}
 
-      - name: Build Container Image
+      - name: Build and Push
         if: github.ref == 'refs/heads/master'
-        run: |
-          docker buildx build \
-            --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            --build-arg=VERSION=${{ env.VERSION }} \
-            --build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
-            --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-            --tag raspbernetes/kube-bench:latest \
-            --tag raspbernetes/kube-bench:${{ env.VERSION }} \
-            --file ./build/kube-bench/Dockerfile \
-            ./build/kube-bench/ \
-            --output "type=image,push=true"
+        uses: docker/build-push-action@v2
+        with:
+          build-args: VERSION=${{ steps.prep.outputs.version }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/kube-bench:latest
+            raspbernetes/kube-bench:${{ env.VERSION }}
+
