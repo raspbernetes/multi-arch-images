@@ -9,8 +9,6 @@ on:
 
 jobs:
   build:
-    env:
-      VERSION: $(cat build/kubectl/.version)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

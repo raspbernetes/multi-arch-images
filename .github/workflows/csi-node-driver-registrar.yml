@@ -10,8 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      VERSION: $(cat build/csi-node-driver-registrar/.version)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
