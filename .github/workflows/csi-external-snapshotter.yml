@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/csi-external-snapshotter:latest
-            raspbernetes/csi-external-snapshotter:${{ env.VERSION }}
+            raspbernetes/csi-external-snapshotter${{ steps.prep.outputs.version }}

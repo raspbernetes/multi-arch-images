@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/kube-state-metrics:latest
-            raspbernetes/kube-state-metrics:${{ env.VERSION }}
+            raspbernetes/kube-state-metrics${{ steps.prep.outputs.version }}
 

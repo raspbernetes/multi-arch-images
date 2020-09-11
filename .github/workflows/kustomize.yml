@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/kustomize:latest
-            raspbernetes/kustomize:${{ env.VERSION }}
+            raspbernetes/kustomize${{ steps.prep.outputs.version }}
 

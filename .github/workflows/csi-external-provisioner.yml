@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/csi-external-provisioner:latest
-            raspbernetes/csi-external-provisioner:${{ env.VERSION }}
+            raspbernetes/csi-external-provisioner${{ steps.prep.outputs.version }}

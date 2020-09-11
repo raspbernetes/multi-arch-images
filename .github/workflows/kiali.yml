@@ -65,5 +65,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/kiali:latest
-            raspbernetes/kiali:${{ env.VERSION }}
+            raspbernetes/kiali${{ steps.prep.outputs.version }}
 

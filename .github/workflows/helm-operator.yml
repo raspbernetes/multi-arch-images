@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/helm-operator:latest
-            raspbernetes/helm-operator:${{ env.VERSION }}
+            raspbernetes/helm-operator${{ steps.prep.outputs.version }}
 

@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/istio-operator:latest
-            raspbernetes/istio-operator:${{ env.VERSION }}
+            raspbernetes/istio-operator${{ steps.prep.outputs.version }}

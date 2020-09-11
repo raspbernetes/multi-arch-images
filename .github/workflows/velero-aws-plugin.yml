@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/velero-aws-plugin:latest
-            raspbernetes/velero-aws-plugin:${{ env.VERSION }}
+            raspbernetes/velero-aws-plugin${{ steps.prep.outputs.version }}
 

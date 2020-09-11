@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/flagger:latest
-            raspbernetes/flagger:${{ env.VERSION }}
+            raspbernetes/flagger${{ steps.prep.outputs.version }}

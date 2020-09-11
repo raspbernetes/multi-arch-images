@@ -64,5 +64,5 @@ jobs:
           push: true
           tags: |
             raspbernetes/sops:latest
-            raspbernetes/sops:${{ env.VERSION }}
+            raspbernetes/sops${{ steps.prep.outputs.version }}
 

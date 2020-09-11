@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/external-dns:latest
-            raspbernetes/external-dns:${{ env.VERSION }}
+            raspbernetes/external-dns${{ steps.prep.outputs.version }}

@@ -65,4 +65,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/istio-pilot:latest
-            raspbernetes/istio-pilot:${{ env.VERSION }}
+            raspbernetes/istio-pilot${{ steps.prep.outputs.version }}
