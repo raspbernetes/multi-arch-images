@@ -46,19 +46,19 @@ jobs:
       # and those images have to exist in the registry beforehand.
       - name: Pull, retag, and repush amd64 image
         run: |
-          docker pull quay.io/cephcsi/cephcsi:v${{ env.VERSION }}
-          docker tag quay.io/cephcsi/cephcsi:v${{ env.VERSION }} raspbernetes/ceph-csi:v${{ env.VERSION }}-amd64
-          docker push raspbernetes/ceph-csi:v${{ env.VERSION }}-amd64
+          docker pull quay.io/cephcsi/cephcsi:v${{ steps.prep.outputs.version }}
+          docker tag quay.io/cephcsi/cephcsi:v${{ steps.prep.outputs.version }} raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-amd64
+          docker push raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-amd64
 
       - name: Pull, retag, and repush arm64 image
         run: |
-          docker pull quay.io/cephcsi/cephcsi:v${{ env.VERSION }}-arm64
-          docker tag quay.io/cephcsi/cephcsi:v${{ env.VERSION }}-arm64 raspbernetes/ceph-csi:v${{ env.VERSION }}-arm64
-          docker push raspbernetes/ceph-csi:v${{ env.VERSION }}-arm64
+          docker pull quay.io/cephcsi/cephcsi:v${{ steps.prep.outputs.version }}-arm64
+          docker tag quay.io/cephcsi/cephcsi:v${{ steps.prep.outputs.version }}-arm64 raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-arm64
+          docker push raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-arm64
 
       - name: Build Multiarch Manifest
         if: github.ref == 'refs/heads/master'
         run: |
-          docker manifest create raspbernetes/ceph-csi:v${{ env.VERSION }} raspbernetes/ceph-csi:v${{ env.VERSION }}-amd64 raspbernetes/ceph-csi:v${{ env.VERSION }}-arm64
-          docker manifest annotate --arch arm64 raspbernetes/ceph-csi:v${{ env.VERSION }} raspbernetes/ceph-csi:v${{ env.VERSION }}-arm64
-          docker manifest push raspbernetes/ceph-csi:v${{ env.VERSION }}
+          docker manifest create raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }} raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-amd64 raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-arm64
+          docker manifest annotate --arch arm64 raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }} raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}-arm64
+          docker manifest push raspbernetes/ceph-csi:v${{ steps.prep.outputs.version }}
