@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/csi-external-resizer:latest
-            raspbernetes/csi-external-resizer${{ steps.prep.outputs.version }}
+            raspbernetes/csi-external-resizer:${{ steps.prep.outputs.version }}

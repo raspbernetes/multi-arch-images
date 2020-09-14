@@ -64,5 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/kube-bench:latest
-            raspbernetes/kube-bench${{ steps.prep.outputs.version }}
-
+            raspbernetes/kube-bench:${{ steps.prep.outputs.version }}

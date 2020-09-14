@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/velero-gcp-plugin:latest
-            raspbernetes/velero-gcp-plugin${{ steps.prep.outputs.version }}
+            raspbernetes/velero-gcp-plugin:${{ steps.prep.outputs.version }}

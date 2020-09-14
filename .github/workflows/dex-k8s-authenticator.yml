@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/dex-k8s-authenticator:latest
-            raspbernetes/dex-k8s-authenticator${{ steps.prep.outputs.version }}
+            raspbernetes/dex-k8s-authenticator:${{ steps.prep.outputs.version }}

@@ -64,5 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/kubeyaml:latest
-            raspbernetes/kubeyaml${{ steps.prep.outputs.version }}
-
+            raspbernetes/kubeyaml:${{ steps.prep.outputs.version }}

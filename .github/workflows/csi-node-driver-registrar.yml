@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/csi-node-driver-registrar:latest
-            raspbernetes/csi-node-driver-registrar${{ steps.prep.outputs.version }}
+            raspbernetes/csi-node-driver-registrar:${{ steps.prep.outputs.version }}

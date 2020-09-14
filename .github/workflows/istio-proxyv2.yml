@@ -65,4 +65,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/istio-proxyv2:latest
-            raspbernetes/istio-proxyv2${{ steps.prep.outputs.version }}
+            raspbernetes/istio-proxyv2:${{ steps.prep.outputs.version }}
