@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine as build
+FROM golang:1.15-alpine as build
 
 ARG VERSION=1.3.0
 ARG KUBECTL_VERSION=v1.15.10
