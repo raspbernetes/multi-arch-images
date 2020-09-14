@@ -1,18 +1,20 @@
 FROM golang:1.14-alpine as build
 
-ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT=""
 
 ENV GO111MODULE=on \
-    CGO_ENABLED=0
+    CGO_ENABLED=0 \
+    GOOS=${TARGETOS} \
+    GOARCH=${TARGETARCH} \
+    GOARM=${TARGETVARIANT}
 
 RUN apk add --no-cache git make
 
 WORKDIR /go/src/github.com/cloudflare/cloudflared/
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
-    export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-    export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-    git clone https://github.com/cloudflare/cloudflared.git . && \
+RUN git clone https://github.com/cloudflare/cloudflared.git . && \
     make cloudflared
 
 FROM gcr.io/distroless/static:nonroot
