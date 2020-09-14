@@ -64,5 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/kured:latest
-            raspbernetes/kured${{ steps.prep.outputs.version }}
-
+            raspbernetes/kured:${{ steps.prep.outputs.version }}
