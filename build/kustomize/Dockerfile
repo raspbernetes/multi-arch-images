@@ -1,6 +1,6 @@
 FROM golang:1.14-alpine as build
 
-ARG VERSION=v3.8.2
+ARG VERSION=kustomize/v3.8.2
 ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
@@ -17,7 +17,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
   cd ./kustomize && \
   go build \
   -ldflags="\
-  -X 'sigs.k8s.io/kustomize/api/provenance.version=kustomize/${VERSION}' \
+  -X 'sigs.k8s.io/kustomize/api/provenance.version=${VERSION}' \
   -X 'sigs.k8s.io/kustomize/api/provenance.gitCommit=$(git rev-parse --verify HEAD)' \
   -X 'sigs.k8s.io/kustomize/api/provenance.buildDate=$(date -u -Iseconds)' \
   " \
