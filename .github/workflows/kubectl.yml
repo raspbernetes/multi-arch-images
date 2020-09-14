@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/kubectl:latest
-            raspbernetes/kubectl${{ steps.prep.outputs.version }}
+            raspbernetes/kubectl:${{ steps.prep.outputs.version }}

@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/ghostunnel:latest
-            raspbernetes/ghostunnel${{ steps.prep.outputs.version }}
+            raspbernetes/ghostunnel:${{ steps.prep.outputs.version }}

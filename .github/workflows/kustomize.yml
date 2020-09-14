@@ -69,5 +69,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/kustomize:latest
-            raspbernetes/kustomize${{ steps.prep.outputs.docker_tag }}
-
+            raspbernetes/kustomize:${{ steps.prep.outputs.docker_tag }}

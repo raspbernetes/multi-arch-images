@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/flux:latest
-            raspbernetes/flux${{ steps.prep.outputs.version }}
+            raspbernetes/flux:${{ steps.prep.outputs.version }}

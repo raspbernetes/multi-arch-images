@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/cluster-autoscaler:latest
-            raspbernetes/cluster-autoscaler${{ steps.prep.outputs.version }}
+            raspbernetes/cluster-autoscaler:${{ steps.prep.outputs.version }}

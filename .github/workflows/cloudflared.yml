@@ -64,4 +64,4 @@ jobs:
           push: true
           tags: |
             raspbernetes/cloudflared:latest
-            raspbernetes/cloudflared${{ steps.prep.outputs.version }}
+            raspbernetes/cloudflared:${{ steps.prep.outputs.version }}
