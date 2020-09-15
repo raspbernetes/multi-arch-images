@@ -1,19 +1,19 @@
 FROM golang:1.14-alpine as builder
 
-ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT=""
 ARG VERSION=v2.24.0
 
-ENV GO111MODULE=on
+ENV GOOS=${TARGETOS} \
+  GOARCH=${TARGETARCH} \
+  GOARM=${TARGETVARIANT}
 
-RUN apk add --no-cache git make bash alpine-sdk
+RUN apk add --no-cache --update alpine-sdk  git make bash
 
 WORKDIR /go/src/github.com/dexidp/dex
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
-  export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-  export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-  git clone --depth 1 -b ${VERSION} https://github.com/dexidp/dex.git . && \
-  cd /go/src/github.com/dexidp/dex && \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/dexidp/dex.git . && \
   make release-binary
 
 FROM alpine:3.12

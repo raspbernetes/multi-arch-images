@@ -1,18 +1,21 @@
 FROM golang:1.14-alpine as builder
 
-ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT=""
 ARG VERSION=v1.2.0
 
-ENV GO111MODULE=on
+ENV GO111MODULE=on \
+  CGO_ENABLED=0 \
+  GOOS=${TARGETOS} \
+  GOARCH=${TARGETARCH} \
+  GOARM=${TARGETVARIANT}
 
 RUN apk add --no-cache git make bash alpine-sdk
 
 WORKDIR /app
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
-  export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-  export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-  git clone --depth 1 -b ${VERSION} https://github.com/mintel/dex-k8s-authenticator.git . && \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/mintel/dex-k8s-authenticator.git . && \
   make build
 
 FROM alpine:3.12.0
