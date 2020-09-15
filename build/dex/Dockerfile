@@ -5,18 +5,15 @@ ARG TARGETARCH
 ARG TARGETVARIANT=""
 ARG VERSION=v2.24.0
 
-ENV GO111MODULE=on \
-  CGO_ENABLED=0 \
-  GOOS=${TARGETOS} \
+ENV GOOS=${TARGETOS} \
   GOARCH=${TARGETARCH} \
   GOARM=${TARGETVARIANT}
 
-RUN apk add --no-cache git make bash alpine-sdk
+RUN apk add --no-cache --update alpine-sdk  git make bash
 
 WORKDIR /go/src/github.com/dexidp/dex
 
 RUN git clone --depth 1 -b ${VERSION} https://github.com/dexidp/dex.git . && \
-  cd /go/src/github.com/dexidp/dex && \
   make release-binary
 
 FROM alpine:3.12
