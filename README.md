@@ -1,5 +1,7 @@
 # Multi Architecture Docker Images
 
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fraspbernetes%2Fmulti-arch-images?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fraspbernetes%2Fmulti-arch-images.svg?type=shield"/></a>
+
 This repository is only used to store the unofficial docker images that will be compatible with non supported architectures. Once there is official support from the upstream maintainers it is anticipated that these will become deprecated.
 
 ## Available Images
@@ -73,7 +75,6 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/raspbernetes#sponsor)]
 
 <a href="https://opencollective.com/raspbernetes/sponsor/0/website" target="_blank"><img src="https://opencollective.com/raspbernetes/sponsor/0/avatar.svg"></a> <a href="https://opencollective.com/raspbernetes/sponsor/1/website" target="_blank"><img src="https://opencollective.com/raspbernetes/sponsor/1/avatar.svg"></a>
-<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fraspbernetes%2Fmulti-arch-images?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fraspbernetes%2Fmulti-arch-images.svg?type=shield"/></a>
 
 ## License
 
