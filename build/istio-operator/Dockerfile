@@ -2,20 +2,22 @@ ARG VERSION=1.6.5
 
 FROM golang:1.14 as build
 
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT=""
 ARG VERSION=1.6.5
-ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
-  CGO_ENABLED=0
+  CGO_ENABLED=0 \
+  GOOS=${TARGETOS} \
+  GOARCH=${TARGETARCH} \
+  GOARM=${TARGETVARIANT}
 
 WORKDIR /go/src/github.com/istio/istio
 
 RUN git clone --depth 1 -b ${VERSION} https://github.com/istio/istio.git .
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
-  export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-  export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-  GO111MODULE=on go get github.com/jteeuwen/go-bindata/go-bindata@6025e8de665b && \
+RUN go get github.com/jteeuwen/go-bindata/go-bindata@6025e8de665b && \
   ./operator/scripts/create_assets_gen.sh && \
   STATIC=0 LDFLAGS='-extldflags -static -s -w' ./common/scripts/gobuild.sh /go/src/github.com/istio/istio/out/operator ./operator/cmd/operator
 
