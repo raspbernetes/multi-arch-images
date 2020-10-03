@@ -11,7 +11,6 @@ This repository is only used to store the unofficial docker images that will be 
 | apcupsd-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/apcupsd-exporter)](https://hub.docker.com/r/raspbernetes/apcupsd-exporter) | `arm/arm64/amd64` | N/A |
 | cloudflared | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/cloudflared)](https://hub.docker.com/r/raspbernetes/cloudflared) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/cloudflare/cloudflared/140)](https://github.com/cloudflare/cloudflared/issues/140) |
 | cluster-autoscaler | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/cluster-autoscaler)](https://hub.docker.com/r/raspbernetes/cluster-autoscaler) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/autoscaler/3419)](https://github.com/kubernetes/autoscaler/issues/3419) |
-| ceph-csi | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/ceph-csi)](https://hub.docker.com/r/raspbernetes/ceph-csi) | `arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/ceph/ceph-csi/1003)](https://github.com/ceph/ceph-csi/issues/1003) |
 | csi-external-attacher | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-attacher)](https://hub.docker.com/r/raspbernetes/csi-external-attacher) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/external-attacher/224)](https://github.com/kubernetes-csi/external-attacher/pull/224) |
 | csi-external-provisioner | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-provisioner)](https://hub.docker.com/r/raspbernetes/csi-external-provisioner) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/external-provisioner/381)](https://github.com/kubernetes-csi/external-provisioner/issues/381) |
 | csi-external-resizer | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-resizer)](https://hub.docker.com/r/raspbernetes/csi-external-resizer) | `arm/arm64/amd64` | N/A |
@@ -46,10 +45,11 @@ This repository is only used to store the unofficial docker images that will be 
 
 ## Deprecated Images
 
-> _**Note:** These are images that we used to support but now have official support from the upstream developers._
+> _**Note:** These are images that we used to support but now have official support from the upstream developers. Updates are no longer released by Raspbernetes._
 
 | Name | Since version |
 |------|---------------|
+| [ceph-csi](https://quay.io/cephcsi/cephcsi) | `3.0.0` |
 | cstor-pool-arm64 | `1.11.0` |
 | curl | `7.70.0` |
 | gatekeeper | `v3.1.0-beta.11` |
