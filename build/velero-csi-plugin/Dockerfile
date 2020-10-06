@@ -15,9 +15,8 @@ WORKDIR /go/src/github.com/vmware-tanzu/velero-plugin-for-csi
 
 RUN apk add --no-cache git
 
-RUN git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-csi.git . && \
-    go mod init && \
-    go build -mod=mod -o /go/bin/velero-plugin-for-csi ./velero-plugin-for-csi
+RUN git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-csi.git .
+RUN go build -mod=mod -o /go/bin/velero-plugin-for-csi .
 
 FROM alpine:3.12
 
