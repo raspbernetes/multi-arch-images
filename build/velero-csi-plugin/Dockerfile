@@ -1,6 +1,6 @@
 FROM golang:1.14-alpine as build
 
-ARG VERSION=v1.1.0
+ARG VERSION=v0.1.1
 ARG TARGETPLATFORM
 
 ENV GO111MODULE=on \
