@@ -3,11 +3,11 @@ name: Get latest release versions
 on:
   push:
     paths:
-      - '.github/workflows/schedule.yml'
+      - ".github/workflows/schedule.yml"
     branches:
       - master
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   get-version:
@@ -139,6 +139,11 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
           jq -r ".tag_name" > build/velero-aws-plugin/.version
+
+      - name: Fetch Velero CSI plugin release version
+        run: |
+          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-csi/releases/latest | \
+          jq -r ".tag_name" > build/velero-csi-plugin/.version
 
       - name: Fetch Velero GCP plugin release version
         run: |
