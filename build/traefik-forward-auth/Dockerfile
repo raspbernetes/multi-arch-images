@@ -26,3 +26,5 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=build --chown=nonroot /traefik-forward-auth /
 
 USER nonroot:nonroot
+
+ENTRYPOINT ["/traefik-forward-auth"]
