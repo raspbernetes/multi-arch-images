@@ -48,7 +48,7 @@ jobs:
           build-args: VERSION=${{ steps.prep.outputs.version }}
           context: ${{ steps.prep.outputs.base_dir }}/
           file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             raspbernetes/cloudflared:${{ github.sha }}
@@ -60,7 +60,7 @@ jobs:
           build-args: VERSION=${{ steps.prep.outputs.version }}
           context: ${{ steps.prep.outputs.base_dir }}/
           file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             raspbernetes/cloudflared:latest
