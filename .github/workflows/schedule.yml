@@ -57,11 +57,6 @@ jobs:
           curl -sL https://api.github.com/repos/mintel/dex-k8s-authenticator/releases/latest | \
           jq -r ".tag_name" > build/dex-k8s-authenticator/.version
 
-      - name: Fetch external-dns release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/external-dns/releases/latest | \
-          jq -r ".tag_name" > build/external-dns/.version
-
       - name: Fetch flux release version
         run: |
           curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \

@@ -17,7 +17,6 @@ This repository is only used to store the unofficial docker images that will be 
 | csi-external-snapshotter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-snapshotter)](https://hub.docker.com/r/raspbernetes/csi-external-snapshotter) | `arm/arm64/amd64` | N/A |
 | csi-node-driver-registrar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-node-driver-registrar)](https://hub.docker.com/r/raspbernetes/csi-node-driver-registrar) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/node-driver-registrar/48)](https://github.com/kubernetes-csi/node-driver-registrar/issues/48) |
 | dex-k8s-authenticator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/dex-k8s-authenticator)](https://hub.docker.com/r/raspbernetes/dex-k8s-authenticator) | `arm/arm64/amd64` | N/A |
-| external-dns | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/external-dns)](https://hub.docker.com/r/raspbernetes/external-dns) | `arm64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-sigs/external-dns/1443)](https://github.com/kubernetes-sigs/external-dns/issues/1443) |
 | flagger | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flagger)](https://hub.docker.com/r/raspbernetes/flagger) | `arm64` | N/A |
 | flux | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flux)](https://hub.docker.com/r/raspbernetes/flux) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/flux/1761)](https://github.com/fluxcd/flux/issues/1761)|
 | helm-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/helm-operator)](https://hub.docker.com/r/raspbernetes/helm-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/helm-operator/147)](https://github.com/fluxcd/helm-operator/issues/147)|
@@ -52,6 +51,7 @@ This repository is only used to store the unofficial docker images that will be 
 | cstor-pool-arm64 | `1.11.0` |
 | curl | `7.70.0` |
 | [dex](https://hub.docker.com/r/dexidp/dex/tags) | `v2.26.0` |
+| [external-dns](https://hub.docker.com/r/bitnami/external-dns/tags) | `0.7.5` |
 | gatekeeper | `v3.1.0-beta.11` |
 | [ghostunnel](https://hub.docker.com/r/ghostunnel/ghostunnel/tags) | `v1.5.3` |
 | pihole-exporter | `0.0.9` |
