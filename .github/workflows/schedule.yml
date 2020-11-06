@@ -67,11 +67,6 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
           jq -r ".tag_name" > build/flux/.version
 
-      - name: Fetch ghostunnel release version
-        run: |
-          curl -sL https://api.github.com/repos/square/ghostunnel/releases/latest | \
-          jq -r ".tag_name" > build/ghostunnel/.version
-
       # This API endpoint will need to change when helm-operator has an official release
       - name: Fetch helm-operator release version
         run: |
