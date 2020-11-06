@@ -16,7 +16,6 @@ This repository is only used to store the unofficial docker images that will be 
 | csi-external-resizer | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-resizer)](https://hub.docker.com/r/raspbernetes/csi-external-resizer) | `arm/arm64/amd64` | N/A |
 | csi-external-snapshotter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-external-snapshotter)](https://hub.docker.com/r/raspbernetes/csi-external-snapshotter) | `arm/arm64/amd64` | N/A |
 | csi-node-driver-registrar | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/csi-node-driver-registrar)](https://hub.docker.com/r/raspbernetes/csi-node-driver-registrar) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-csi/node-driver-registrar/48)](https://github.com/kubernetes-csi/node-driver-registrar/issues/48) |
-| dex | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/dex)](https://hub.docker.com/r/raspbernetes/dex) | `arm/arm64/amd64` | N/A |
 | dex-k8s-authenticator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/dex-k8s-authenticator)](https://hub.docker.com/r/raspbernetes/dex-k8s-authenticator) | `arm/arm64/amd64` | N/A |
 | external-dns | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/external-dns)](https://hub.docker.com/r/raspbernetes/external-dns) | `arm64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-sigs/external-dns/1443)](https://github.com/kubernetes-sigs/external-dns/issues/1443) |
 | flagger | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flagger)](https://hub.docker.com/r/raspbernetes/flagger) | `arm64` | N/A |
@@ -53,6 +52,7 @@ This repository is only used to store the unofficial docker images that will be 
 | [ceph-csi](https://quay.io/cephcsi/cephcsi) | `3.0.0` |
 | cstor-pool-arm64 | `1.11.0` |
 | curl | `7.70.0` |
+| [dex](https://hub.docker.com/r/dexidp/dex/tags) | `v2.26.0` |
 | gatekeeper | `v3.1.0-beta.11` |
 | pihole-exporter | `0.0.9` |
 | prometheus-operator | `v0.39.0` |
