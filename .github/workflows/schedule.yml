@@ -68,6 +68,11 @@ jobs:
           curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
           jq -r '.[0].name' > build/helm-operator/.version
 
+      - name: Fetch helm-operator release version
+        run: |
+          curl -sL https://api.github.com/repos/cilium/hubble-ui/tags | \
+          jq -r '.[0].name' > build/hubble-ui/.version
+
       - name: Fetch kube-bench release version
         run: |
           curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
