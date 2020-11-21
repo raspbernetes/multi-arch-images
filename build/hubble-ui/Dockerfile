@@ -8,7 +8,8 @@ WORKDIR /src/github.com/cilium/hubble-ui
 RUN git clone --depth=1 -b ${VERSION} https://github.com/cilium/hubble-ui .
 
 # The upstream Dockerfile begins here; https://github.com/cilium/hubble-ui/blob/master/Dockerfile
-FROM node:14.4.0-alpine as stage1
+# node:14.5.0-alpine is used as node:14.4.0-alpine does not contain an arm/v7 manifest
+FROM node:14.5.0-alpine as stage1
 # for arm64 images, we require build-base and python to compile some npm modules
 RUN apk add bash python build-base
 
