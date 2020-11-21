@@ -2,7 +2,7 @@ ARG VERSION=v1.21.0
 
 FROM quay.io/kiali/kiali:${VERSION} as console
 
-FROM golang:1.14 as builder
+FROM golang:1.15 as builder
 
 ARG VERSION
 
