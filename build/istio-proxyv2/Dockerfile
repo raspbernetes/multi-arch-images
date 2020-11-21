@@ -1,7 +1,7 @@
 
 ARG VERSION=1.6.5
 
-FROM golang:1.14 as build
+FROM golang:1.15 as build
 
 ARG TARGETOS
 ARG TARGETARCH
