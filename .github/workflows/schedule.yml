@@ -52,6 +52,11 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes-csi/external-snapshotter/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-external-snapshotter/.version
 
+      - name: Fetch descheduler release version
+        run: |
+          curl -sL https://api.github.com/repos/kubernetes-sigs/descheduler/tags | \
+          jq -r ".[0] .name" > build/descheduler/.version
+
       - name: Fetch dex-k8s-authenticator release version
         run: |
           curl -sL https://api.github.com/repos/mintel/dex-k8s-authenticator/releases/latest | \
