@@ -53,7 +53,7 @@ COPY --from=build /go/src/github.com/fluxcd/flux/fluxd /usr/local/bin/fluxd
 RUN chmod +x /usr/local/bin/fluxd
 
 # from: https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/kustomize.version
-COPY --from=raspbernetes/kustomize:v3.8.4 /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=raspbernetes/kustomize:v3.8.7 /usr/local/bin/kustomize /usr/local/bin/kustomize
 RUN chmod +x /usr/local/bin/kustomize
 
 # from: https://raw.githubusercontent.com/fluxcd/flux/${VERSION}/docker/sops.version
