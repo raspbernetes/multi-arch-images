@@ -8,7 +8,7 @@ WORKDIR /src/github.com/cilium/hubble-ui
 RUN git clone --depth=1 -b ${VERSION} https://github.com/cilium/hubble-ui .
 
 # The upstream Dockerfile begins here; https://github.com/cilium/hubble-ui/blob/master/backend/Dockerfile
-FROM docker.io/library/golang:1.14.9-alpine3.12 as stage1
+FROM docker.io/library/golang:1.15.5-alpine3.12 as stage1
 RUN apk add bash
 WORKDIR /app
 
