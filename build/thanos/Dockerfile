@@ -13,10 +13,12 @@ ENV GO111MODULE=on \
 
 WORKDIR /go/src/github.com/thanos-io/thanos
 
-RUN apk update && apk upgrade && apk add --no-cache alpine-sdk git make
+RUN apk update && apk upgrade && apk add --no-cache alpine-sdk git make  patch
 
-RUN git clone --depth 1 -b "${VERSION}" https://github.com/thanos-io/thanos.git . && \
-  make build
+COPY build.make.patch /build.make.patch
+
+RUN git clone --depth 1 -b "${VERSION}" https://github.com/thanos-io/thanos.git .
+RUN patch -u release-tools/build.make -i /build.make.patch && make build
 
 FROM quay.io/prometheus/busybox:latest
 LABEL maintainer="The Thanos Authors"
