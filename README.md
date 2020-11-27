@@ -32,13 +32,13 @@ This repository is only used to store the unofficial docker images that will be 
 
 ## Istio Images
 
-| Name | Docker Image | Architecture | Upstream Issue |
-|------|--------------|--------------|----------------|
-| base | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-base)](https://hub.docker.com/r/raspbernetes/istio-base) | `arm64/amd64` | N/A |
-| envoy | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-envoy)](https://hub.docker.com/r/raspbernetes/istio-envoy) | `arm64` | N/A |
-| operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-operator)](https://hub.docker.com/r/raspbernetes/istio-operator) | `arm64/amd64` | N/A |
-| pilot | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-pilot)](https://hub.docker.com/r/raspbernetes/istio-pilot) | `arm64` | N/A |
-| proxyv2 | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-proxyv2)](https://hub.docker.com/r/raspbernetes/istio-proxyv2) | `arm64` | N/A |
+| Name | Docker Image | Architecture |
+|------|--------------|--------------|
+| base | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-base)](https://hub.docker.com/r/raspbernetes/istio-base) | `arm64/amd64` |
+| envoy | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-envoy)](https://hub.docker.com/r/raspbernetes/istio-envoy) | `arm64` |
+| operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-operator)](https://hub.docker.com/r/raspbernetes/istio-operator) | `arm64/amd64` |
+| pilot | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-pilot)](https://hub.docker.com/r/raspbernetes/istio-pilot) | `arm64` |
+| proxyv2 | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/istio-proxyv2)](https://hub.docker.com/r/raspbernetes/istio-proxyv2) | `arm64` |
 
 ## Deprecated Images
 
