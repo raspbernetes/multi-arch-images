@@ -7,7 +7,7 @@ This repository is only used to store the unofficial docker images that will be 
 ## Available Images
 
 | Name | Docker Image | Architecture | Upstream Issue |
-|------|--------------|--------------|----------------|
+|------|--------------|--------------|:--------------:|
 | apcupsd-exporter | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/apcupsd-exporter)](https://hub.docker.com/r/raspbernetes/apcupsd-exporter) | `arm/arm64/amd64` | N/A |
 | cloudflared | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/cloudflared)](https://hub.docker.com/r/raspbernetes/cloudflared) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/cloudflare/cloudflared/140)](https://github.com/cloudflare/cloudflared/issues/140) |
 | cluster-autoscaler | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/cluster-autoscaler)](https://hub.docker.com/r/raspbernetes/cluster-autoscaler) | `arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/autoscaler/3419)](https://github.com/kubernetes/autoscaler/issues/3419) |
@@ -21,7 +21,6 @@ This repository is only used to store the unofficial docker images that will be 
 | flux | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/flux)](https://hub.docker.com/r/raspbernetes/flux) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/flux/1761)](https://github.com/fluxcd/flux/issues/1761)|
 | helm-operator | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/helm-operator)](https://hub.docker.com/r/raspbernetes/helm-operator) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/fluxcd/helm-operator/147)](https://github.com/fluxcd/helm-operator/issues/147)|
 | kube-bench | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kube-bench)](https://hub.docker.com/r/raspbernetes/kube-bench) | `arm/arm64/amd64` | N/A |
-| kube-state-metrics | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kube-state-metrics)](https://hub.docker.com/r/raspbernetes/kube-state-metrics) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes/kube-state-metrics/1037)](https://github.com/kubernetes/kube-state-metrics/issues/1037) |
 | kubeyaml | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kubeyaml)](https://hub.docker.com/r/raspbernetes/kubeyaml) | `arm/arm64/amd64` | N/A |
 | kured | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kured)](https://hub.docker.com/r/raspbernetes/kured) | `arm/arm64/amd64` |[![GitHub issue status](https://img.shields.io/github/issues/detail/state/weaveworks/kured/23)](https://github.com/weaveworks/kured/issues/23)|
 | kustomize | [![Docker Pulls](https://img.shields.io/docker/pulls/raspbernetes/kustomize)](https://hub.docker.com/r/raspbernetes/kustomize) | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/kubernetes-sigs/kustomize/2235)](https://github.com/kubernetes-sigs/kustomize/issues/2235)|
@@ -54,9 +53,10 @@ This repository is only used to store the unofficial docker images that will be 
 | [external-dns](https://hub.docker.com/r/bitnami/external-dns/tags) | `0.7.5` |
 | gatekeeper | `v3.1.0-beta.11` |
 | [ghostunnel](https://hub.docker.com/r/ghostunnel/ghostunnel/tags) | `v1.5.3` |
+| [kube-state-metrics](k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-alpha.3) | `v2.0.0-alpha.3` |
 | pihole-exporter | `0.0.9` |
 | prometheus-operator | `v0.39.0` |
-| sealed secrets | `v0.10.0` |
+| sealed-secrets | `v0.10.0` |
 | k8s-sidecar | `0.1.193` |
 
 ## Contributors

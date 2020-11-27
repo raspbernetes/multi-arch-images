@@ -83,11 +83,6 @@ jobs:
           curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
           jq -r ".tag_name" > build/kube-bench/.version
 
-      - name: Fetch kube-state-metrics release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes/kube-state-metrics/releases/latest | \
-          jq -r ".tag_name" > build/kube-state-metrics/.version
-
       - name: Fetch kubeyaml release version
         run: |
           curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
