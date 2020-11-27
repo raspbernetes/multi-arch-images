@@ -125,6 +125,11 @@ jobs:
           curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
           jq -r ".tag_name" > build/sops/.version
 
+      - name: Fetch thanos release version
+        run: |
+          curl -sL https://api.github.com/repos/thanos-io/thanos/releases/latest | \
+          jq -r ".tag_name" > build/thanos/.version
+
       - name: Fetch traefik-forward-auth release version
         run: |
           curl -sL https://api.github.com/repos/thomseddon/traefik-forward-auth/releases/latest | \

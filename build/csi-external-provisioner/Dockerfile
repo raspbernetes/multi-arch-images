@@ -8,9 +8,9 @@ WORKDIR /go/src/github.com/kubernetes-csi/external-provisioner/
 
 COPY build.make.patch /build.make.patch
 
-RUN apt-get update && apt-get install -y patch file 
+RUN apt-get update && apt-get install -y patch file
 RUN git clone --depth 1 -b "v${VERSION}" https://github.com/kubernetes-csi/external-provisioner.git . \
-     && patch -u release-tools/build.make -i /build.make.patch && GOARCH=$(echo $TARGETPLATFORM | cut -f2 -d '/') make build
+  && patch -u release-tools/build.make -i /build.make.patch && GOARCH=$(echo $TARGETPLATFORM | cut -f2 -d '/') make build
 
 FROM gcr.io/distroless/static:nonroot
 
