@@ -1,6 +1,6 @@
 FROM golang:1.15-alpine as build
 
-ARG VERSION=1.3.0
+ARG VERSION=1.5.1
 ARG KUBECTL_VERSION=v1.15.10
 ARG TARGETPLATFORM
 
@@ -16,9 +16,11 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     curl -L -o /usr/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${GOARCH}/kubectl" && \
     git clone --depth 1 -b ${VERSION} https://github.com/weaveworks/kured.git . && \
-    go build -o kured ./cmd/kured
+    go build -ldflags "-X main.version=${VERSION}" -o kured ./cmd/kured
 
 FROM alpine:3.12.1
+
+RUN apk add --no-cache tzdata
 
 COPY --from=build /usr/bin/kubectl /usr/bin/kubectl
 RUN chmod +x /usr/bin/kubectl
