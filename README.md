@@ -55,6 +55,7 @@ This repository is only used to store the unofficial docker images that will be 
 | [external-dns](https://hub.docker.com/r/bitnami/external-dns/tags) | `0.7.5` |
 | gatekeeper | `v3.1.0-beta.11` |
 | [ghostunnel](https://hub.docker.com/r/ghostunnel/ghostunnel/tags) | `v1.5.3` |
+| [kiali](https://quay.io/repository/kiali/kiali?tab=tags) | `v1.28.0` |
 | [kube-state-metrics](k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-alpha.3) | `v2.0.0-alpha.3` |
 | pihole-exporter | `0.0.9` |
 | prometheus-operator | `v0.39.0` |
