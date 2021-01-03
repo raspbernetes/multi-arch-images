@@ -50,7 +50,7 @@ This repository is only used to store the unofficial docker images that will be 
 |------|---------------|
 | [ceph-csi](https://quay.io/cephcsi/cephcsi) | `3.0.0` |
 | cstor-pool-arm64 | `1.11.0` |
-| curl | `7.70.0` |
+| [curl](https://hub.docker.com/r/curlimages/curl/tags?page=1&ordering=last_updated&name=7.70.0) | `7.70.0` |
 | [dex](https://hub.docker.com/r/dexidp/dex/tags) | `v2.26.0` |
 | [external-dns](https://hub.docker.com/r/bitnami/external-dns/tags) | `0.7.5` |
 | gatekeeper | `v3.1.0-beta.11` |
