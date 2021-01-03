@@ -59,7 +59,7 @@ This repository is only used to store the unofficial docker images that will be 
 | [kube-state-metrics](k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-alpha.3) | `v2.0.0-alpha.3` |
 | pihole-exporter | `0.0.9` |
 | prometheus-operator | `v0.39.0` |
-| sealed-secrets | `v0.10.0` |
+| [sealed-secrets](https://quay.io/repository/bitnami/sealed-secrets-controller?tab=tags) | `v0.10.0` |
 | k8s-sidecar | `0.1.193` |
 
 ## Contributors
