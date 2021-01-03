@@ -1,1 +1,0 @@
-# istio-proxyv2
