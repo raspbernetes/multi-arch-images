@@ -18,7 +18,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     git clone --depth 1 -b ${VERSION} https://github.com/weaveworks/kured.git . && \
     go build -ldflags "-X main.version=${VERSION}" -o kured ./cmd/kured
 
-FROM alpine:3.12.1
+FROM alpine:3.12.3
 
 RUN apk add --no-cache tzdata
 
