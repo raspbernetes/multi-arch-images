@@ -10,7 +10,7 @@ ENV GO111MODULE=on \
   GOARCH=${TARGETARCH} \
   GOARM=${TARGETVARIANT}
 
-RUN apk add --no-cache git ca-certificates
+RUN apk add --no-cache git ca-certificates curl
 
 WORKDIR /go/src/github.com/infracloudio/botkube/
 
