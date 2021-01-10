@@ -17,6 +17,11 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - name: Fetch botkube release version
+        run: |
+          curl -sL https://api.github.com/repos/infracloudio/botkube/tags | \
+          jq -r ".[0] .name" > build/cloudflared/.version
+
       - name: Fetch cloudflared release version
         run: |
           curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
