@@ -20,7 +20,7 @@ jobs:
       - name: Fetch botkube release version
         run: |
           curl -sL https://api.github.com/repos/infracloudio/botkube/tags | \
-          jq -r ".[0] .name" > build/cloudflared/.version
+          jq -r ".[0] .name" > build/botkube/.version
 
       - name: Fetch cloudflared release version
         run: |
