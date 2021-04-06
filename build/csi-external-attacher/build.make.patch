@@ -1,11 +1,11 @@
---- build.make	2020-09-25 12:33:11.986705136 +0100
-+++ build.make.new	2020-09-25 14:17:41.915499663 +0100
-@@ -74,7 +74,7 @@
+--- build.make	2021-02-22 01:04:14.360366942 -0700
++++ build.make.new	2021-02-22 01:10:34.248096878 -0700
+@@ -79,7 +79,7 @@
  $(CMDS:%=build-%): build-%: check-go-version-go
  	mkdir -p bin
  	echo '$(BUILD_PLATFORMS)' | tr ';' '\n' | while read -r os arch suffix; do \
--		if ! (set -x; CGO_ENABLED=0 GOOS="$$os" GOARCH="$$arch" go build $(GOFLAGS_VENDOR) -a -ldflags '-X main.version=$(REV) -extldflags "-static"' -o "./bin/$*$$suffix" ./cmd/$*); then \
-+		if ! (set -x; CGO_ENABLED=0 GOOS="$$os" go build $(GOFLAGS_VENDOR) -a -ldflags '-X main.version=$(REV) -extldflags "-static"' -o "./bin/$*$$suffix" ./cmd/$*); then \
+-		if ! (set -x; CGO_ENABLED=0 GOOS="$$os" GOARCH="$$arch" go build $(GOFLAGS_VENDOR) -a -ldflags '$(FULL_LDFLAGS)' -o "./bin/$*$$suffix" ./cmd/$*); then \
++		if ! (set -x; CGO_ENABLED=0 GOOS="$$os" go build $(GOFLAGS_VENDOR) -a -ldflags '$(FULL_LDFLAGS)' -o "./bin/$*$$suffix" ./cmd/$*); then \
  			echo "Building $* for GOOS=$$os GOARCH=$$arch failed, see error(s) above."; \
  			exit 1; \
  		fi; \

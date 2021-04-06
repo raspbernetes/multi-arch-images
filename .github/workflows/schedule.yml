@@ -3,11 +3,11 @@ name: Get latest release versions
 on:
   push:
     paths:
-      - ".github/workflows/schedule.yml"
+      - '.github/workflows/schedule.yml'
     branches:
       - master
   schedule:
-    - cron: "0 10 * * *"
+    - cron: '0 10 * * *'
 
 jobs:
   get-version:
@@ -21,11 +21,6 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/infracloudio/botkube/tags | \
           jq -r ".[0] .name" > build/botkube/.version
-
-      - name: Fetch cloudflared release version
-        run: |
-          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
-          jq -r ".[0] .name" > build/cloudflared/.version
 
       - name: Fetch cluster-autoscaler release version
         run: |
@@ -97,23 +92,6 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
           jq -r ".tag_name" > build/kured/.version
-
-      # kustomize hosts different artifacts in one repo. releases and tags are named $COMPONENT/$VERSION
-      # so in order to get the newest kustomize release, retrieve a full page of 100 releases, and pick the
-      # first (newest) release having the prefix 'kustomize/' in its tag name. so this breaks as soon as
-      # they release 100 other items without releasing kustomize at least once.
-      - name: Fetch kustomize release version
-        run: |
-          KUSTOMIZE_VERSION=$(
-            curl -sL "https://api.github.com/repos/kubernetes-sigs/kustomize/releases?per_page=100" | \
-            jq -r '[ .[].tag_name | select(test("kustomize/.*")) ] | first // empty'
-          )
-
-          if [[ -z "${KUSTOMIZE_VERSION}" ]]; then
-            echo "Could not determine Kustomize version."
-          else
-            echo "${KUSTOMIZE_VERSION}" > build/kustomize/.version
-          fi
 
       - name: Fetch node-feature-discovery release version
         run: |

@@ -2,7 +2,7 @@ FROM golang:1.15-alpine as build
 
 ARG TARGETOS
 ARG TARGETARCH
-ARG VERSION=v1.18.2
+ARG VERSION=1.18.2
 
 WORKDIR /home/alpine
 

@@ -30,4 +30,5 @@ COPY --from=build /go/bin/botkube /go/bin/botkube
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=build /usr/local/bin/kubectl /usr/local/bin/kubectl
 
-ENTRYPOINT /go/bin/botkube
+ENTRYPOINT ["/go/bin/botkube"]
+
