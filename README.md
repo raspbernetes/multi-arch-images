@@ -25,6 +25,7 @@ This repository is only used to store the unofficial docker images that will be 
 | [thanos](https://hub.docker.com/r/raspbernetes/thanos)                                 | `arm64/amd64`     | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/thanos-io/thanos/1851)](https://github.com/thanos-io/thanos/issues/1851)                                           |
 | [traefik-forward-auth](https://hub.docker.com/r/raspbernetes/traefik-forward-auth)     | `arm64/amd64`     | N/A                                                                                                                                                                                          |
 | [velero-aws-plugin](https://hub.docker.com/r/raspbernetes/velero-aws-plugin)           | `arm/arm64/amd64` | [![GitHub issue status](https://img.shields.io/github/issues/detail/state/vmware-tanzu/velero-plugin-for-aws/18)](https://github.com/vmware-tanzu/velero-plugin-for-aws/issues/18)           |
+| [velero-csi-plugin](https://hub.docker.com/r/raspbernetes/velero-csi-plugin)           | `arm/arm64/amd64` | N/A                                                                                                                                                                                          |
 | [velero-gcp-plugin](https://hub.docker.com/r/raspbernetes/velero-gcp-plugin)           | `arm/arm64/amd64` | N/A                                                                                                                                                                                          |
 
 <!--
@@ -55,6 +56,8 @@ This repository is only used to store the unofficial docker images that will be 
 | prometheus-operator                                                                            | `v0.39.0`        |
 | [sealed-secrets](https://quay.io/repository/bitnami/sealed-secrets-controller?tab=tags)        | `v0.10.0`        |
 | k8s-sidecar                                                                                    | `0.1.193`        |
+| **[DEPRECATED]** flux                                                                          | `1.22.1`         |
+| **[DEPRECATED]** helm-operator                                                                 | `v1.2.03`        |
 
 ## Contributors
 

@@ -62,18 +62,7 @@ jobs:
           curl -sL https://api.github.com/repos/mintel/dex-k8s-authenticator/releases/latest | \
           jq -r ".tag_name" > build/dex-k8s-authenticator/.version
 
-      - name: Fetch flux release version
-        run: |
-          curl -sL https://api.github.com/repos/fluxcd/flux/releases/latest | \
-          jq -r ".tag_name" > build/flux/.version
-
-      # This API endpoint will need to change when helm-operator has an official release
-      - name: Fetch helm-operator release version
-        run: |
-          curl -sL https://api.github.com/repos/fluxcd/helm-operator/tags | \
-          jq -r '.[0].name' > build/helm-operator/.version
-
-      - name: Fetch helm-operator release version
+      - name: Fetch hubble-ui release version
         run: |
           curl -sL https://api.github.com/repos/cilium/hubble-ui/tags | \
           jq -r '.[0].name' > build/hubble-ui/.version
