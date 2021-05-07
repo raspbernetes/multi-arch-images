@@ -1,20 +1,21 @@
 diff --git a/Makefile b/Makefile
-index c6e81d52..659fa555 100644
+index 82e975f..57e6f1b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -9,15 +9,6 @@ SHA=''
- arch = $(shell uname -m)
- # Run `DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect quay.io/prometheus/busybox:latest` to get SHA
- # Update at 2020.07.06
+@@ -11,15 +11,6 @@ arch = $(shell uname -m)
+ # just visit https://quay.io/repository/prometheus/busybox?tag=latest&tab=tags.
+ # TODO(bwplotka): Pinning is important but somehow quay kills the old images, so make sure to update regularly (dependabot?)
+ # Update at 2020.2.01
 -ifeq ($(arch), x86_64)
 -    # amd64
--    SHA="248b7ec76e03e6b4fbb796fc3cdd2f91dad45546a6d7dee61c322475e0e8a08f"
+-    SHA="14d68ca3d69fceaa6224250c83d81d935c053fb13594c811038c461194599973"
 -else ifeq ($(arch), armv8)
 -    # arm64
--    SHA="69508e8fdc516eacbacc0379c03c971e3043706cc8211e6bddb35d903edc3628"
+-    SHA="4dd2d3bba195563e6cb2b286f23dc832d0fda6c6662e6de2e86df454094b44d8"
 -else
 -    echo >&2 "only support amd64 or arm64 arch" && exit 1
 -endif
 
  # Ensure everything works even if GOPATH is not set, which is often the case.
  # The `go env GOPATH` will work for all cases for Go 1.8+.
+
