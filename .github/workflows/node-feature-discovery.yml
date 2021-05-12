@@ -14,7 +14,7 @@ jobs:
       VERSION: $(cat build/node-feature-discovery/.version)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Prepare
         id: prep
@@ -25,7 +25,7 @@ jobs:
           echo ::set-output name=base_dir::${BASE_DIR}
 
       - name: Checkout node-feature-discovery repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
         with:
           repository: kubernetes-sigs/node-feature-discovery
           path: node-feature-discovery
