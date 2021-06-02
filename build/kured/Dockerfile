@@ -16,7 +16,8 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
     git clone --depth 1 -b ${VERSION} https://github.com/weaveworks/kured.git . && \
-    go build -ldflags "-X main.version=${VERSION}" -o kured ./cmd/kured/*.go
+    go build -ldflags "-X main.version=${VERSION}" -o kured ./cmd/kured/*.go && \
+    go test ./...
 
 FROM alpine:3.13
 
