@@ -11,7 +11,6 @@ RUN apk add --no-cache git curl
 
 WORKDIR /go/src/github.com/weaveworks/kured
 
-# hadolint ignore SC1072
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
