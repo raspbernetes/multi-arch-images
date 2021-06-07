@@ -1,21 +1,13 @@
 diff --git a/Makefile b/Makefile
-index 82e975f..57e6f1b 100644
+index 5fb123e7..464f656d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -11,15 +11,6 @@ arch = $(shell uname -m)
- # just visit https://quay.io/repository/prometheus/busybox?tag=latest&tab=tags.
- # TODO(bwplotka): Pinning is important but somehow quay kills the old images, so make sure to update regularly (dependabot?)
- # Update at 2020.2.01
--ifeq ($(arch), x86_64)
--    # amd64
--    SHA="14d68ca3d69fceaa6224250c83d81d935c053fb13594c811038c461194599973"
+@@ -14,7 +14,7 @@ arch = $(shell uname -m)
+ ifeq ($(arch), x86_64)
+     # amd64
+     BASE_DOCKER_SHA="de4af55df1f648a334e16437c550a2907e0aed4f0b0edf454b0b215a9349bdbb"
 -else ifeq ($(arch), armv8)
--    # arm64
--    SHA="4dd2d3bba195563e6cb2b286f23dc832d0fda6c6662e6de2e86df454094b44d8"
--else
--    echo >&2 "only support amd64 or arm64 arch" && exit 1
--endif
-
- # Ensure everything works even if GOPATH is not set, which is often the case.
- # The `go env GOPATH` will work for all cases for Go 1.8+.
-
++else ifeq ($(arch), $(filter $(arch), armv8 aarch64))
+     # arm64
+     BASE_DOCKER_SHA="5591971699f6cf8abf6776495385e9d62751111a8cba56bf4946cf1d0de425ed"
+ else
