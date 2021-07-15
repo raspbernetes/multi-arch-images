@@ -3,11 +3,11 @@ name: Get latest release versions
 on:
   push:
     paths:
-      - '.github/workflows/schedule.yml'
+      - ".github/workflows/schedule.yml"
     branches:
       - master
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   get-version:
@@ -21,6 +21,11 @@ jobs:
         run: |
           curl -sL https://api.github.com/repos/infracloudio/botkube/tags | \
           jq -r ".[0] .name" > build/botkube/.version
+
+      - name: Fetch cloudflared release version
+        run: |
+          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
+          jq -r ".[0] .name" > build/cloudflared/.version
 
       - name: Fetch cluster-autoscaler release version
         run: |
