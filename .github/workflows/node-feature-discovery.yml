@@ -53,8 +53,8 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target full \
             --build-arg=HOSTMOUNT_PREFIX=/host- \
-            --build-arg BASE_IMAGE_FULL="debian:buster-slim" \
-            --build-arg BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
+            --build-arg=BASE_IMAGE_FULL="debian:buster-slim" \
+            --build-arg=BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
             --tag raspbernetes/node-feature-discovery:${{ github.sha }} \
             --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
@@ -67,8 +67,8 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target minimal \
             --build-arg=HOSTMOUNT_PREFIX=/host- \
-            --build-arg BASE_IMAGE_FULL="debian:buster-slim" \
-            --build-arg BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
+            --build-arg=BASE_IMAGE_FULL="debian:buster-slim" \
+            --build-arg=BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
             --tag raspbernetes/node-feature-discovery:${{ github.sha }}-minimal \
             --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
@@ -81,8 +81,8 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target full \
             --build-arg=HOSTMOUNT_PREFIX=/host- \
-            --build-arg BASE_IMAGE_FULL="debian:buster-slim" \
-            --build-arg BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
+            --build-arg=BASE_IMAGE_FULL="debian:buster-slim" \
+            --build-arg=BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
             --tag k8sathome/node-feature-discovery:latest \
             --tag raspbernetes/node-feature-discovery:${{ env.VERSION }} \
             --tag k8sathome/node-feature-discovery:${{ env.VERSION }} \
@@ -97,8 +97,8 @@ jobs:
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target minimal \
             --build-arg=HOSTMOUNT_PREFIX=/host- \
-            --build-arg BASE_IMAGE_FULL="debian:buster-slim" \
-            --build-arg BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
+            --build-arg=BASE_IMAGE_FULL="debian:buster-slim" \
+            --build-arg=BASE_IMAGE_MINIMAL="gcr.io/distroless/base" \
             --tag k8sathome/node-feature-discovery:latest-minimal \
             --tag raspbernetes/node-feature-discovery:${{ env.VERSION }}-minimal \
             --tag k8sathome/node-feature-discovery:${{ env.VERSION }}-minimal \
