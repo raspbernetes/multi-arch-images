@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Container Image - Git Reference
+      - name: Build Full Container Image - Git Reference
         if: github.ref != 'refs/heads/master'
         run: |
           docker buildx build --build-arg=VERSION=$${ env.VERSION }} \
@@ -59,6 +59,10 @@ jobs:
             --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
             --output "type=image,push=true"
+
+      - name: Build Minimal Container Image - Git Reference
+        if: github.ref != 'refs/heads/master'
+        run: |
           docker buildx build --build-arg=VERSION=$${ env.VERSION }} \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target minimal \
@@ -70,7 +74,7 @@ jobs:
             ./node-feature-discovery/ \
             --output "type=image,push=true"
 
-      - name: Build Container Image - Release
+      - name: Build Full Container Image - Release
         if: github.ref == 'refs/heads/master'
         run: |
           docker buildx build --build-arg=VERSION=$${ env.VERSION }} \
@@ -85,6 +89,10 @@ jobs:
             --file ./node-feature-discovery/Dockerfile \
             ./node-feature-discovery/ \
             --output "type=image,push=true"
+
+      - name: Build Minimal Container Image - Release
+        if: github.ref == 'refs/heads/master'
+        run: |
           docker buildx build --build-arg=VERSION=$${ env.VERSION }} \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --target minimal \
