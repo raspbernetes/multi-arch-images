@@ -1,19 +1,17 @@
 diff --git a/Dockerfile b/Dockerfile
-index 3f76cc2..e8b30a7 100644
+index 3f76cc2..cb4520b 100644
 --- a/Dockerfile
 +++ b/Dockerfile
-@@ -1,12 +1,14 @@
- ARG BASE_IMAGE_FULL
- ARG BASE_IMAGE_MINIMAL
-+ARG TARGETARCH
+@@ -3,10 +3,11 @@ ARG BASE_IMAGE_MINIMAL
 
  # Build node feature discovery
  FROM golang:1.16.7-buster as builder
++ARG TARGETARCH
 
  # Download the grpc_health_probe bin
- RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
+-RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
 -    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-+    GRPC_HEALTH_PROBE_ARCH=${TARGETARCH} && \
++RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 GRPC_HEALTH_PROBE_ARCH=${TARGETARCH} && \
 +    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-${GRPC_HEALTH_PROBE_ARCH} && \
      chmod +x /bin/grpc_health_probe
 
