@@ -36,11 +36,10 @@ jobs:
 
     - name: Patch node-feature-discovery Dockerfile
       id: patch
-      env:
-        NFD_BASE_DIR: node-feature-discovery
       run: |
+        NFD_BASE_DIR=node-feature-discovery
         echo ::set-output name=nfd_base_dir::${NFD_BASE_DIR}
-        patch -i ${{ steps.prep.outputs.base_dir }}/build.Dockerfile.patch -u ${{ NFD_BASE_DIR }}/Dockerfile
+        patch -i ${{ steps.prep.outputs.base_dir }}/build.Dockerfile.patch -u ${NFD_BASE_DIR}/Dockerfile
 
   build:
     runs-on: ubuntu-20.04
