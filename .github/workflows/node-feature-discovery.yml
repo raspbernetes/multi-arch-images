@@ -8,12 +8,9 @@ on:
     - '!build/node-feature-discovery/*.md'
 
 jobs:
-  prepare:
+  build:
     runs-on: ubuntu-20.04
-    outputs:
-      version: ${{ steps.prep.outputs.version }}
-      base_dir: ${{ steps.prep.outputs.base_dir }}
-      nfd_base_dir: ${{ steps.patch.outputs.nfd_base_dir }}
+    needs: prepare
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,111 +20,105 @@ jobs:
       run: |
         BASE_DIR=build/node-feature-discovery
         VERSION=$(cat ${BASE_DIR}/.version)
+        NFD_BASE_DIR=node-feature-discovery
         echo ::set-output name=base_dir::${BASE_DIR}
         echo ::set-output name=version::${VERSION}
+        echo ::set-output name=nfd_base_dir::${NFD_BASE_DIR}
 
     - name: Checkout node-feature-discovery repo
       uses: actions/checkout@v2
       with:
         repository: kubernetes-sigs/node-feature-discovery
-        branch: ${{ steps.prep.outputs.version }}
+        ref: ${{ steps.prep.outputs.version }}
         path: node-feature-discovery
-        depth: 1
 
     - name: Patch node-feature-discovery Dockerfile
       id: patch
       run: |
-        NFD_BASE_DIR=node-feature-discovery
-        echo ::set-output name=nfd_base_dir::${NFD_BASE_DIR}
-        patch -i ${{ steps.prep.outputs.base_dir }}/build.Dockerfile.patch -u ${NFD_BASE_DIR}/Dockerfile
+        patch -i ${{ steps.prep.outputs.base_dir }}/build.Dockerfile.patch -u ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
 
-  build:
-    runs-on: ubuntu-20.04
-    needs: prepare
-    steps:
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64,arm
 
-      - name: Set up QEMU
-        id: qemu
-        uses: docker/setup-qemu-action@v1
-        with:
-          platforms: amd64,arm64,arm
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Build Full Container Image - Git Reference
+      if: github.ref != 'refs/heads/master'
+      uses: docker/build-push-action@v2
+      with:
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        target: full
+        build-args: |
+          VERSION=${{ steps.prep.outputs.version }}
+          BASE_IMAGE_FULL="debian:buster-slim"
+          BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
+          HOSTMOUNT_PREFIX=/host-
+        file: ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
+        context: ${{ steps.prep.outputs.nfd_base_dir }}
+        tags: raspbernetes/node-feature-discovery:${{ github.sha }}
+        push: true
 
-      - name: Build Full Container Image - Git Reference
-        if: github.ref != 'refs/heads/master'
-        uses: docker/build-push-action@v2
-        with:
-          plaforms: linux/amd64,linux/arm64,linux/arm/v7
-          target: full
-          build-args: |
-            VERSION=${{ needs.prepare.outputs.version }}
-            BASE_IMAGE_FULL="debian:buster-slim"
-            BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
-            HOSTMOUNT_PREFIX=/host-
-          file: ${{ needs.prepare.outputs.nfd_base_dir }}/Dockerfile
-          context: ${{ needs.prepare.outputs.nfd_base_dir }}
-          tags: raspbernetes/node-feature-discovery:${{ github.sha }}
-          push: true
+    - name: Build Minimal Container Image - Git Reference
+      if: github.ref != 'refs/heads/master'
+      uses: docker/build-push-action@v2
+      with:
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        target: minimal
+        build-args: |
+          VERSION=${{ steps.prep.outputs.version }}
+          BASE_IMAGE_FULL="debian:buster-slim"
+          BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
+          HOSTMOUNT_PREFIX=/host-
+        file: ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
+        context: ${{ steps.prep.outputs.nfd_base_dir }}
+        tags: raspbernetes/node-feature-discovery:${{ github.sha }}-minimal
+        push: true
 
-      - name: Build Minimal Container Image - Git Reference
-        if: github.ref != 'refs/heads/master'
-        uses: docker/build-push-action@v2
-        with:
-          plaforms: linux/amd64,linux/arm64,linux/arm/v7
-          target: minimal
-          build-args: |
-            VERSION=${{ needs.prepare.outputs.version }}
-            BASE_IMAGE_FULL="debian:buster-slim"
-            BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
-            HOSTMOUNT_PREFIX=/host-
-          file: ${{ needs.prepare.outputs.nfd_base_dir }}/Dockerfile
-          context: ${{ needs.prepare.outputs.nfd_base_dir }}
-          tags: raspbernetes/node-feature-discovery:${{ github.sha }}-minimal
-          push: true
+    - name: Build Full Container Image - Release
+      if: github.ref == 'refs/heads/master'
+      uses: docker/build-push-action@v2
+      with:
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        target: full
+        build-args: |
+          VERSION=${{ steps.prep.outputs.version }}
+          BASE_IMAGE_FULL="debian:buster-slim"
+          BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
+          HOSTMOUNT_PREFIX=/host-
+        file: ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
+        context: ${{ steps.prep.outputs.nfd_base_dir }}
+        tags: |
+          k8sathome/node-feature-discovery:latest
+          k8sathome/node-feature-discovery:${{ steps.prep.outputs.version }}
+          raspbernetes/node-feature-discovery:${{ steps.prep.outputs.version }}
+        push: true
 
-      - name: Build Full Container Image - Release
-        if: github.ref == 'refs/heads/master'
-        uses: docker/build-push-action@v2
-        with:
-          plaforms: linux/amd64,linux/arm64,linux/arm/v7
-          target: full
-          build-args: |
-            VERSION=${{ needs.prepare.outputs.version }}
-            BASE_IMAGE_FULL="debian:buster-slim"
-            BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
-            HOSTMOUNT_PREFIX=/host-
-          file: ${{ needs.prepare.outputs.nfd_base_dir }}/Dockerfile
-          context: ${{ needs.prepare.outputs.nfd_base_dir }}
-          tags: |
-            k8sathome/node-feature-discovery:latest
-            k8sathome/node-feature-discovery:${{ needs.prepare.outputs.version }}
-            raspbernetes/node-feature-discovery:${{ needs.prepare.outputs.version }}
-          push: true
-
-      - name: Build Minimal Container Image - Release
-        if: github.ref == 'refs/heads/master'
-        uses: docker/build-push-action@v2
-        with:
-          plaforms: linux/amd64,linux/arm64,linux/arm/v7
-          target: minimal
-          build-args: |
-            VERSION=${{ needs.prepare.outputs.version }}
-            BASE_IMAGE_FULL="debian:buster-slim"
-            BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
-            HOSTMOUNT_PREFIX=/host-
-          file: ${{ needs.prepare.outputs.nfd_base_dir }}/Dockerfile
-          context: ${{ needs.prepare.outputs.nfd_base_dir }}
-          tags: |
-            k8sathome/node-feature-discovery:latest-minimal
-            k8sathome/node-feature-discovery:${{ needs.prepare.outputs.version }}-minimal
-            raspbernetes/node-feature-discovery:${{ needs.prepare.outputs.version }}-minimal
-          push: true
+    - name: Build Minimal Container Image - Release
+      if: github.ref == 'refs/heads/master'
+      uses: docker/build-push-action@v2
+      with:
+        platforms: linux/amd64,linux/arm64,linux/arm/v7
+        target: minimal
+        build-args: |
+          VERSION=${{ steps.prep.outputs.version }}
+          BASE_IMAGE_FULL="debian:buster-slim"
+          BASE_IMAGE_MINIMAL="gcr.io/distroless/base"
+          HOSTMOUNT_PREFIX=/host-
+        file: ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
+        context: ${{ steps.prep.outputs.nfd_base_dir }}
+        tags: |
+          k8sathome/node-feature-discovery:latest-minimal
+          k8sathome/node-feature-discovery:${{ steps.prep.outputs.version }}-minimal
+          raspbernetes/node-feature-discovery:${{ steps.prep.outputs.version }}-minimal
+        push: true
