@@ -19,7 +19,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          BASE_DIR=build/dex
+          BASE_DIR=build/prometheus-operator-config-reloader
           VERSION=$(cat ${BASE_DIR}/.version)
           echo ::set-output name=version::${VERSION}
           echo ::set-output name=base_dir::${BASE_DIR}
