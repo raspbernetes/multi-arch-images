@@ -1,5 +1,6 @@
 FROM golang:1.15-alpine as build
 
+ARG VERSION
 ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT=""
@@ -14,7 +15,7 @@ RUN apk add --no-cache git ca-certificates curl
 
 WORKDIR /go/src/github.com/infracloudio/botkube/
 
-RUN git clone https://github.com/infracloudio/botkube.git . && \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/infracloudio/botkube.git . && \
   go build -o /go/bin/botkube ./cmd/botkube
 
 RUN wget -q https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/${GOARCH}/kubectl -O /usr/local/bin/kubectl \
