@@ -16,8 +16,7 @@ RUN apk add --no-cache git
 WORKDIR /go/src/github.com/vmware-tanzu/velero-plugin-for-gcp
 
 RUN git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-gcp.git . && \
-    go mod init && \
-    go build -mod=mod -o /go/bin/velero-plugin-for-gcp ./velero-plugin-for-gcp
+    go build -o /go/bin/velero-plugin-for-gcp ./velero-plugin-for-gcp
 
 FROM alpine:3.12
 
