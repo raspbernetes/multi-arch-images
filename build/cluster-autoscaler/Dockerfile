@@ -15,7 +15,7 @@ RUN apk add --no-cache git make
 
 WORKDIR /go/src/k8s.io/autoscaler/
 
-RUN git clone https://github.com/kubernetes/autoscaler.git . && \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/autoscaler.git . && \
   cd cluster-autoscaler && \
   make build-binary
 

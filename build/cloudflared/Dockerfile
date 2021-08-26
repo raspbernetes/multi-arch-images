@@ -1,5 +1,6 @@
 FROM golang:1.15-alpine as build
 
+ARG VERSION
 ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT=""
@@ -14,7 +15,7 @@ RUN apk add --no-cache git make
 
 WORKDIR /go/src/github.com/cloudflare/cloudflared/
 
-RUN git clone https://github.com/cloudflare/cloudflared.git . && \
+RUN git clone --depth 1 -b ${VERSION} https://github.com/cloudflare/cloudflared.git . && \
     make cloudflared
 
 FROM gcr.io/distroless/static:nonroot
