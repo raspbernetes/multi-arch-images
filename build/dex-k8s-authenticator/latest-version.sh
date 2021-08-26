@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/mintel/dex-k8s-authenticator/re
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

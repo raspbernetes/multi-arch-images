@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/thomseddon/traefik-forward-auth
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/coreos/prometheus-operator/rele
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

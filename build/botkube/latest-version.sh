@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/infracloudio/botkube/tags" | jq
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

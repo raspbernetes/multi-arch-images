@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/vmware-tanzu/velero-plugin-for-
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

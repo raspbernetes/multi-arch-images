@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/mozilla/sops/releases/latest" |
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

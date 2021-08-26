@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/thanos-io/thanos/releases/lates
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          

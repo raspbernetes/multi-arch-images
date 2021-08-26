@@ -4,4 +4,3 @@ version=$(curl -sL "https://api.github.com/repos/kubernetes-sigs/node-feature-di
 version="${version#*v}"
 version="${version#*release-}"
 printf "%s" "${version}"
-          
