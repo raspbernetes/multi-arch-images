@@ -17,7 +17,7 @@ WORKDIR /go/src/k8s.io/autoscaler/
 
 RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes/autoscaler.git . && \
   cd cluster-autoscaler && \
-  make build-binary
+  make build
 
 FROM gcr.io/distroless/static:nonroot
 
