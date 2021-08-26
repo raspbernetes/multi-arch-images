@@ -3,16 +3,35 @@ name: build
 on: ['push']
 
 jobs:
-  validate:
-    env:
-      VERSION: $(cat build/kubeyaml/.version)
+  images:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: hadolint
-        uses: reviewdog/action-hadolint@v1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+
+      - id: unique-list
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
+
+      - name: "Add Image Metadata"
+        id: meta
+        uses: docker/metadata-action@v3
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+          images: ${{ LIST OF IMAGES }}
+          labels: |
+            org.opencontainers.image.title=Raspbernetes
+
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

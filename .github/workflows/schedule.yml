@@ -16,21 +16,19 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.PAT }}
+          fetch-depth: 1
 
-      - name: Fetch botkube release version
+      - name: Fetch new app versions
         run: |
-          curl -sL https://api.github.com/repos/infracloudio/botkube/tags | \
-          jq -r ".[0] .name" > build/botkube/.version
-
-      - name: Fetch cloudflared release version
-        run: |
-          curl -sL https://api.github.com/repos/cloudflare/cloudflared/tags | \
-          jq -r ".[0] .name" > build/cloudflared/.version
-
-      - name: Fetch cluster-autoscaler release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes/autoscaler/releases/latest | \
-          jq -r ".tag_name" > build/cluster-autoscaler/.version
+          find ./build -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | while read app; do
+            if test -f "./build/${app}/latest-version.sh"; then
+              version=$(bash "./build/${app}/latest-version.sh")
+              if [[ ! -z "${version}" || "${version}" != "null" ]]; then
+                echo "${version}" | tee "./build/${app}/.version" > /dev/null
+                echo "${app} ${version}"
+              fi
+            fi
+          done
 
       - name: Fetch csi-external-attacher release version
         run: |
@@ -57,76 +55,6 @@ jobs:
           curl -sL https://api.github.com/repos/kubernetes-csi/external-snapshotter/releases/latest | \
           jq -r ".tag_name" | cut -c 2- > build/csi-external-snapshotter/.version
 
-      - name: Fetch descheduler release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/descheduler/tags | \
-          jq -r ".[0] .name" > build/descheduler/.version
-
-      - name: Fetch dex-k8s-authenticator release version
-        run: |
-          curl -sL https://api.github.com/repos/mintel/dex-k8s-authenticator/releases/latest | \
-          jq -r ".tag_name" > build/dex-k8s-authenticator/.version
-
-      - name: Fetch hubble-ui release version
-        run: |
-          curl -sL https://api.github.com/repos/cilium/hubble-ui/tags | \
-          jq -r '.[0].name' > build/hubble-ui/.version
-
-      - name: Fetch kube-bench release version
-        run: |
-          curl -sL https://api.github.com/repos/aquasecurity/kube-bench/releases/latest | \
-          jq -r ".tag_name" > build/kube-bench/.version
-
-      - name: Fetch kubeyaml release version
-        run: |
-          curl -sL https://api.github.com/repos/squaremo/kubeyaml/releases/latest | \
-          jq -r ".tag_name" > build/kubeyaml/.version
-
-      - name: Fetch kured release version
-        run: |
-          curl -sL https://api.github.com/repos/weaveworks/kured/releases/latest | \
-          jq -r ".tag_name" > build/kured/.version
-
-      - name: Fetch node-feature-discovery release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-sigs/node-feature-discovery/releases/latest | \
-          jq -r ".tag_name" > build/node-feature-discovery/.version
-
-      - name: Fetch prometheus-operator-config-reloader release version
-        run: |
-          curl -sL https://api.github.com/repos/coreos/prometheus-operator/releases/latest | \
-          jq -r ".tag_name" > build/prometheus-operator-config-reloader/.version
-
-      - name: Fetch sops release version
-        run: |
-          curl -sL https://api.github.com/repos/mozilla/sops/releases/latest | \
-          jq -r ".tag_name" > build/sops/.version
-
-      - name: Fetch thanos release version
-        run: |
-          curl -sL https://api.github.com/repos/thanos-io/thanos/releases/latest | \
-          jq -r ".tag_name" > build/thanos/.version
-
-      - name: Fetch traefik-forward-auth release version
-        run: |
-          curl -sL https://api.github.com/repos/thomseddon/traefik-forward-auth/releases/latest | \
-          jq -r ".tag_name" > build/traefik-forward-auth/.version
-
-      - name: Fetch Velero AWS plugin release version
-        run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-aws/releases/latest | \
-          jq -r ".tag_name" > build/velero-aws-plugin/.version
-
-      - name: Fetch Velero CSI plugin release version
-        run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-csi/releases/latest | \
-          jq -r ".tag_name" > build/velero-csi-plugin/.version
-
-      - name: Fetch Velero GCP plugin release version
-        run: |
-          curl -sL https://api.github.com/repos/vmware-tanzu/velero-plugin-for-gcp/releases/latest | \
-          jq -r ".tag_name" > build/velero-gcp-plugin/.version
-
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
@@ -134,9 +62,10 @@ jobs:
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git config --global user.name 'Michael Fornaro'
-          git config --global user.email '20387402+xUnholy@users.noreply.github.com'
-          git commit -sam "Adding new release version" || exit 0
+          git config --global user.name 'Github Bot'
+          git config --global user.email 'bot@users.noreply.github.com'
+          git add -A
+          git commit -sam "[Auto Generation] Adding new release version" || exit 0
 
       - name: Push changes
         uses: ad-m/github-push-action@master
