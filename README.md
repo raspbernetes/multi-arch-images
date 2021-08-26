@@ -49,11 +49,13 @@ This repository is only used to store the unofficial docker images that will be 
 | [external-dns](https://hub.docker.com/r/bitnami/external-dns/tags)                             | `0.7.5`          |
 | gatekeeper                                                                                     | `v3.1.0-beta.11` |
 | [ghostunnel](https://hub.docker.com/r/ghostunnel/ghostunnel/tags)                              | `v1.5.3`         |
+| [hubble]() | `TBC`         |
 | [kiali](https://quay.io/repository/kiali/kiali?tab=tags)                                       | `v1.28.0`        |
 | [kube-state-metrics](k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-alpha.3)          | `v2.0.0-alpha.3` |
 | [kustomize](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv4.0.5)      | `v4.0.5`         |
 | pihole-exporter                                                                                | `0.0.9`          |
 | prometheus-operator                                                                            | `v0.39.0`        |
+| [prometheus-operator-config-reloader]() | `TBC`         |
 | [sealed-secrets](https://quay.io/repository/bitnami/sealed-secrets-controller?tab=tags)        | `v0.10.0`        |
 | k8s-sidecar                                                                                    | `0.1.193`        |
 | **[DEPRECATED]** flux                                                                          | `1.22.1`         |
