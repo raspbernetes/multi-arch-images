@@ -5,7 +5,7 @@ on:
     paths:
       - ".github/workflows/schedule.yml"
     branches:
-      - master
+      - main
   schedule:
     - cron: "0 10 * * *"
 
@@ -43,6 +43,6 @@ jobs:
           git commit -sam "[Auto Generation] Adding new release version" || exit 0
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@main
         with:
           github_token: ${{ secrets.PAT }}

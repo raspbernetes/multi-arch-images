@@ -57,7 +57,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Build Full Container Image - Git Reference
-      if: github.ref != 'refs/heads/master'
+      if: github.ref != 'refs/heads/main'
       uses: docker/build-push-action@v2
       with:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -73,7 +73,7 @@ jobs:
         push: true
 
     - name: Build Minimal Container Image - Git Reference
-      if: github.ref != 'refs/heads/master'
+      if: github.ref != 'refs/heads/main'
       uses: docker/build-push-action@v2
       with:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -89,7 +89,7 @@ jobs:
         push: true
 
     - name: Build Full Container Image - Release
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       uses: docker/build-push-action@v2
       with:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -108,7 +108,7 @@ jobs:
         push: true
 
     - name: Build Minimal Container Image - Release
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       uses: docker/build-push-action@v2
       with:
         platforms: linux/amd64,linux/arm64,linux/arm/v7
