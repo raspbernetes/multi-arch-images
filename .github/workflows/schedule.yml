@@ -30,31 +30,6 @@ jobs:
             fi
           done
 
-      - name: Fetch csi-external-attacher release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-attacher/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-attacher/.version
-
-      - name: Fetch csi-external-provisioner release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-provisioner/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-provisioner/.version
-
-      - name: Fetch csi-external-resizer release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-resizer/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-resizer/.version
-
-      - name: Fetch csi-node-driver-registrar release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/node-driver-registrar/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-node-driver-registrar/.version
-
-      - name: Fetch csi-external-snapshotter release version
-        run: |
-          curl -sL https://api.github.com/repos/kubernetes-csi/external-snapshotter/releases/latest | \
-          jq -r ".tag_name" | cut -c 2- > build/csi-external-snapshotter/.version
-
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
