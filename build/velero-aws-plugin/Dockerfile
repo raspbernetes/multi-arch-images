@@ -16,8 +16,7 @@ RUN apk add --no-cache git
 WORKDIR /go/src/github.com/vmware-tanzu/velero-plugin-for-aws
 
 RUN git clone --depth 1 -b ${VERSION} https://github.com/vmware-tanzu/velero-plugin-for-aws.git . && \
-    go mod init && \
-    go build -mod=mod -o /go/bin/velero-plugin-for-aws ./velero-plugin-for-aws
+    go build -o /go/bin/velero-plugin-for-aws ./velero-plugin-for-aws
 
 FROM alpine:3.12
 
