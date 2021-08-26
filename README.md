@@ -55,6 +55,7 @@ This repository is only used to store the unofficial docker images that will be 
 | [kustomize](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv4.0.5)      | `v4.0.5`         |
 | pihole-exporter                                                                                | `0.0.9`          |
 | prometheus-operator                                                                            | `v0.39.0`        |
+| [prometheus-operator-config-reloader]() | `TBC`         |
 | [sealed-secrets](https://quay.io/repository/bitnami/sealed-secrets-controller?tab=tags)        | `v0.10.0`        |
 | k8s-sidecar                                                                                    | `0.1.193`        |
 | **[DEPRECATED]** flux                                                                          | `1.22.1`         |
