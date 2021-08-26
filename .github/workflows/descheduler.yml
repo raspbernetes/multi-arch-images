@@ -33,7 +33,7 @@ jobs:
         with:
           install: true
           version: latest
-          driver-opts: image=moby/buildkit:main
+          driver-opts: image=moby/buildkit:latest
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
