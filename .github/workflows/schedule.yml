@@ -43,6 +43,6 @@ jobs:
           git commit -sam "[Auto Generation] Adding new release version" || exit 0
 
       - name: Push changes
-        uses: ad-m/github-push-action@main
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT }}
