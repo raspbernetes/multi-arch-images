@@ -1,18 +1,20 @@
 FROM golang:1.15-alpine as build
 
-ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT=""
 
-ENV GO111MODULE=off \
-  CGO_ENABLED=0
+ENV GO111MODULE=on \
+  CGO_ENABLED=0 \
+  GOOS=${TARGETOS} \
+  GOARCH=${TARGETARCH} \
+  GOARM=${TARGETVARIANT}
 
 RUN apk add --no-cache git make
 
 WORKDIR /go/src/k8s.io/autoscaler/
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
-  export GOARCH=$(echo ${TARGETPLATFORM} | cut -d / -f2) && \
-  GOARM=$(echo ${TARGETPLATFORM} | cut -d / -f3 | cut -c2-) && \
-  git clone https://github.com/kubernetes/autoscaler.git . && \
+RUN git clone https://github.com/kubernetes/autoscaler.git . && \
   cd cluster-autoscaler && \
   make build-binary
 
