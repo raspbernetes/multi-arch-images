@@ -15,8 +15,8 @@ WORKDIR /go/src/sigs.k8s.io/descheduler
 
 RUN apk add --no-cache git make
 
-RUN git clone https://github.com/kubernetes-sigs/descheduler.git . && \
-  VERSION=${VERSION} make
+RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes-sigs/descheduler.git . && \
+  make
 
 FROM scratch
 
