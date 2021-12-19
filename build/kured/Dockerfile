@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine as build
+FROM golang:1.17-alpine as build
 
 ARG VERSION=1.7.0
 ARG TARGETPLATFORM
@@ -18,7 +18,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d / -f1) && \
     go build -ldflags "-X main.version=${VERSION}" -o kured ./cmd/kured/*.go && \
     go test ./...
 
-FROM alpine:3.13
+FROM alpine:3.15
 
 RUN apk add --no-cache ca-certificates tzdata
 
