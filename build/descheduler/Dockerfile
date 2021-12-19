@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine
+FROM golang:1.17.3
 
 ARG VERSION
 ARG TARGETOS
@@ -13,12 +13,12 @@ ENV GO111MODULE=on \
 
 WORKDIR /go/src/sigs.k8s.io/descheduler
 
-RUN apk add --no-cache git make
-
 RUN git clone --depth 1 -b ${VERSION} https://github.com/kubernetes-sigs/descheduler.git . && \
   make
 
 FROM scratch
+
+USER 1000
 
 COPY --from=0 /go/src/sigs.k8s.io/descheduler/_output/bin/descheduler /bin/descheduler
 
