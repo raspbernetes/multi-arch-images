@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine as build
+FROM golang:1.17.1 as build
 
 ARG VERSION
 ARG TARGETOS
@@ -10,8 +10,6 @@ ENV GO111MODULE=on \
     GOOS=${TARGETOS} \
     GOARCH=${TARGETARCH} \
     GOARM=${TARGETVARIANT}
-
-RUN apk add --no-cache git make
 
 WORKDIR /go/src/github.com/cloudflare/cloudflared/
 
