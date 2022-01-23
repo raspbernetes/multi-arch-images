@@ -1,18 +1,22 @@
 diff --git a/Dockerfile b/Dockerfile
-index 3f76cc2..cb4520b 100644
+index 6dff093..61cbed2 100644
 --- a/Dockerfile
 +++ b/Dockerfile
-@@ -3,10 +3,11 @@ ARG BASE_IMAGE_MINIMAL
-
+@@ -4,6 +4,17 @@ ARG BASE_IMAGE_MINIMAL
  # Build node feature discovery
- FROM golang:1.16.7-buster as builder
+ FROM golang:1.17.2-buster as builder
+
++ARG VERSION
++ARG TARGETOS
 +ARG TARGETARCH
-
- # Download the grpc_health_probe bin
--RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
--    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-+RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 GRPC_HEALTH_PROBE_ARCH=${TARGETARCH} && \
-+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-${GRPC_HEALTH_PROBE_ARCH} && \
-     chmod +x /bin/grpc_health_probe
-
- # Get (cache) deps in a separate layer
++ARG TARGETVARIANT=""
++
++ENV GO111MODULE=on \
++    CGO_ENABLED=0 \
++    GOOS=${TARGETOS} \
++    GOARCH=${TARGETARCH} \
++    GOARM=${TARGETVARIANT}
++
+ # Build and install the grpc-health-probe binary
+ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.6 && \
+ 	go install github.com/grpc-ecosystem/grpc-health-probe@${GRPC_HEALTH_PROBE_VERSION} \
