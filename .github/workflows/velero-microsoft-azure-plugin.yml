@@ -1,0 +1,66 @@
+name: velero-microsoft-azure-plugin
+
+on:
+  push:
+    paths:
+      - '.github/workflows/velero-microsoft-azure-plugin.yml'
+      - 'build/velero-microsoft-azure-plugin/**'
+      - '!build/velero-microsoft-azure-plugin/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare
+        id: prep
+        run: |
+          BASE_DIR=build/velero-microsoft-azure-plugin
+          VERSION=$(cat ${BASE_DIR}/.version)
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=base_dir::${BASE_DIR}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+          version: latest
+
+      - name: Login to DockerHubs
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and Push
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          build-args: VERSION=${{ steps.prep.outputs.version }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/velero-microsoft-azure-plugin:${{ github.sha }}
+
+      - name: Build and Push
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          build-args: VERSION=${{ steps.prep.outputs.version }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/velero-microsoft-azure-plugin:latest
+            raspbernetes/velero-microsoft-azure-plugin:${{ steps.prep.outputs.version }}
