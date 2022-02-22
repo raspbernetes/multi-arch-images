@@ -1,0 +1,80 @@
+name: percona-xtradb-cluster-operator
+
+on:
+  push:
+    paths:
+      - '.github/workflows/percona-xtradb-cluster-operator.yml'
+      - 'build/percona-xtradb-cluster-operator/**'
+      - '!build/percona-xtradb-cluster-operator/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare
+        id: prep
+        run: |
+          BASE_DIR=build/percona-xtradb-cluster-operator
+          VERSION=$(cat ${BASE_DIR}/.version)
+          GIT_COMMIT=$(git rev-parse --short HEAD)
+          GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          BUILD_TIME=$(date '+%FT%TZ')
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=git_commit::${GIT_COMMIT}
+          echo ::set-output name=git_branch::${GIT_BRANCH}
+          echo ::set-output name=build_time::${BUILD_TIME}
+          echo ::set-output name=base_dir::${BASE_DIR}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+          version: latest
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and Push
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          build-args: | 
+            VERSION=${{ steps.prep.outputs.version }}
+            GIT_COMMIT=${{ steps.prep.outputs.git_commit }}
+            GIT_BRANCH=${{ steps.prep.outputs.git_branch }}
+            BUILD_TIME=${{ steps.prep.outputs.build_time }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/percona-xtradb-cluster-operator:${{ github.sha }}
+
+      - name: Build and Push
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          build-args: | 
+            VERSION=${{ steps.prep.outputs.version }}
+            GIT_COMMIT=${{ steps.prep.outputs.git_commit }}
+            GIT_BRANCH=${{ steps.prep.outputs.git_branch }}
+            BUILD_TIME=${{ steps.prep.outputs.build_time }}
+          context: ${{ steps.prep.outputs.base_dir }}/
+          file: ${{ steps.prep.outputs.base_dir }}/Dockerfile
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: |
+            raspbernetes/percona-xtradb-cluster-operator:latest
+            raspbernetes/percona-xtradb-cluster-operator:${{ steps.prep.outputs.version }}
