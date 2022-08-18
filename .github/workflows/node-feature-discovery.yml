@@ -31,11 +31,6 @@ jobs:
         ref: ${{ steps.prep.outputs.version }}
         path: node-feature-discovery
 
-    - name: Patch node-feature-discovery Dockerfile
-      id: patch
-      run: |
-        patch -i ${{ steps.prep.outputs.base_dir }}/build.Dockerfile.patch -u ${{ steps.prep.outputs.nfd_base_dir }}/Dockerfile
-
     - name: Set up QEMU
       id: qemu
       uses: docker/setup-qemu-action@v1
