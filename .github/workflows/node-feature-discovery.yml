@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3.1.0
 
     - name: Prepare
       id: prep
@@ -25,7 +25,7 @@ jobs:
         echo ::set-output name=nfd_base_dir::${NFD_BASE_DIR}
 
     - name: Checkout node-feature-discovery repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3.1.0
       with:
         repository: kubernetes-sigs/node-feature-discovery
         ref: ${{ steps.prep.outputs.version }}
